@@ -83,28 +83,6 @@ is **the code that runs that result**.
 
 ![FA3D video demo](docs/FA3D/demo.gif)
 
-The top-left stack holds a **3D mesh crop per detected face**, one colour per person — the
-colour is pinned to the tracking ID, so it stays the same as frames go by.
-The full clip (95 s, H.264) is [`docs/FA3D/demo_full.mp4`](docs/FA3D/demo_full.mp4); the
-version that covers the whole face with the dense mesh is
-[`docs/FA3D/demo_3d.mp4`](docs/FA3D/demo_3d.mp4).
-
-```bash
-python eval/FA3D/infer.py --ckpt runs/fa3d/<run>/best.pth --source <video> \
-    --corner3d 0.24 --max-faces 4 --drop-empty
-```
-
-| | |
-|---|---|
-| Detection | every frame — **if there is no face, nothing is drawn** |
-| Tracking | the landmarks set the next crop; if the box jumps, re-detect immediately |
-| Smoothing | **once, on the 62-d parameters** (so landmarks and mesh come from one value) |
-
-> ⚠ **Smoothing is off by default.** §2.4 of the paper argues against temporal filtering —
-> it *"reduces precision and introduces frame delay"* — which is why the authors reached for
-> short-video-synthesis during **training** instead of post-processing. When you do turn it
-> on (`--lmk-smooth`), the frame is labelled `smoothing`, and **it is never used for evaluation.**
-
 ### Evaluation
 
 NME follows the paper's convention: **the mean of three yaw-bin means**, not a plain average.
@@ -123,13 +101,6 @@ convention and the same ground truth for the comparison to mean anything.
 
 > ⚠ **The weights the authors released do not reproduce the paper's numbers.** Measured with the same evaluation code, mb1 comes out at 3.683 / 4.600 — **consistently 0.09–0.10 worse** than the paper's M+R (3.590 / 4.500) on both benchmarks. So the reproduction target of this project is **the released weights**, not the paper's table.
 
-> ⚠⚠ **This NME is effectively a pose metric.** It barely measures how well the 3D face
-> shape is recovered — replacing the predicted shape with ground truth improves it by only
-> 1.3%, and emitting no shape at all (the mean face) is *better* still. **So the 3.622 above
-> means "we reproduced the pose"**, not "we get the 3D face right." Shape accuracy is measured
-> separately with `python scripts/FA3D/shape_accuracy.py`
-> 👉 [Phase 6](LAB/FA3D/Exp/Phase_6_지표가_형상을_안_잰다.md)
-
 > For the full experiment log, see [LAB/FA3D/FA3D.md](LAB/FA3D/FA3D.md).
 
 ### Predictions — AFLW2000-3D
@@ -143,33 +114,6 @@ released weights on that image**. The [worst 50](docs/FA3D/aflw2000_grid_worst.j
 ### 3D reconstruction — the same prediction, redrawn from a new viewpoint
 
 ![dense 3D reconstruction](docs/FA3D/pred_3d.jpg)
-
-Plotting 68 points on the image **cannot show z** — even though z is exactly what separates
-3DDFA_V2 from 2D alignment. So columns 3–5 **re-render the same prediction from other
-angles**. In the last row (|yaw| 80°) only one cheek is visible in the input, yet a frontal
-face comes back.
-
-> Columns 3–5 **exaggerate the identity deviation from the mean face ×3** and colour the
-> displacement along the normal (🔴 outward · 🔵 inward). BFM's 40-d shape basis is a **small
-> perturbation** on top of the mean face, so drawn as-is **even the ground truth looks the
-> same from person to person.**
-
-### ⚡ Inference speed
-
-`python scripts/FA3D/bench_backbone.py` — RTX 6000 Ada, batch 1, **inference path only**
-(neither the lrr head nor the synergy cycle exists in this repository's models).
-
-| Backbone | Params | MACs | CPU 1 thread | GPU b1 | GPU b128 throughput |
-|---|---:|---:|---:|---:|---:|
-| `mobilenet_v1` (paper default) | 3.3M | 177M | 6.12 ms | 1.78 ms | 23,162 img/s |
-| `mobilenet_v1_x05` | 850K | 46M | **2.83 ms** | 1.81 ms | 45,253 img/s |
-| `mobilenet_v2` (SynergyNet) | 2.3M | 93M | 6.01 ms | 3.44 ms | 18,312 img/s |
-| `mobilenet_v2_x05` | 767K | 30M | 3.85 ms | 3.79 ms | 25,864 img/s |
-
-> The paper reports 6.2 ms on CPU for MobileNet — the same place.
-> ⚠ **Parameter count is not a proxy for latency.** MobileNetV2 has 30% fewer parameters and
-> half the MACs of V1, yet it is the same on CPU and twice as slow on GPU — depthwise and
-> inverted-residual blocks are bound by memory bandwidth, not arithmetic.
 
 ## 🚀 Install
 
@@ -286,7 +230,8 @@ Pierrot_FR_Infer/
 
 The lrr head and the synergy cycle **cost nothing at inference** (they are not on the
 `predict()` path). This repository goes one step further and **never builds the modules at
-all**, so the numbers in the speed table above are the numbers of the model that actually ships.
+all**, so its parameter counts and latencies are those of the model that actually ships
+(`python scripts/FA3D/bench_backbone.py`).
 
 ## 🤗 Reference
 
