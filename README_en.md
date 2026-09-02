@@ -5,7 +5,7 @@
 <h1 align="center">🎭 PIERROT FACE — FA3D</h1>
 
 <p align="center">
-  <b>3D dense face alignment (a 3DDFA_V2 reimplementation) — inference distribution</b>
+  <b>PyTorch-based Face algorithms</b>
 </p>
 
 <p align="center">
