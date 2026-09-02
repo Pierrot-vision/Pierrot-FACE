@@ -121,24 +121,6 @@ cp paths.local.env.example paths.local.env
 #   PIERROTFR_CKPT_ROOT 를 학습 저장소의 runs/ 로 가리키는 것이 핵심이다
 ```
 
-**최소 준비물은 BFM 세 파일입니다.** 3DDFA_V2 오피셜 저장소의 `configs/` 에서
-가져와 `$PIERROTFR_FA3D_DATA_ROOT/bfm/` 에 두세요:
-
-```
-bfm_noneck_v3.pkl                  38,365 정점 3DMM 기저
-param_mean_std_62d_120x120.pkl     62-d Z-score 통계 (모델 출력 공간)
-tri.pkl                            76,073 삼각형 — 메쉬 렌더용
-```
-
-지표를 재려면 3DDFA v1 이 배포한 평가셋(`test.data/` · `test.configs/`)이,
-형상 정확도까지 재려면 300W-LP 전처리본(`train.configs/`)이 더 필요합니다.
-무엇이 있고 무엇이 없는지는 실행할 때 알려 줍니다.
-
-> 검증 환경: RTX 6000 Ada / torch 2.x / CUDA 12.
-> ffmpeg 이 있으면 영상이 H.264 로 저장됩니다 (없으면 `--gif` 를 쓰세요).
-> 얼굴 검출기는 **FaceBoxes → MTCNN → Haar cascade** 순으로 폴백하므로,
-> 아무것도 설치하지 않아도 데모는 돕니다 (정면만 잡히는 대신).
-
 ## ⚡ 실행
 
 **`.sh` 스크립트는 인자를 받지 않습니다.** 바꿀 값은 각 파일 상단의

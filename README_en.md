@@ -130,25 +130,6 @@ cp paths.local.env.example paths.local.env
 #   The key one is PIERROTFR_CKPT_ROOT — point it at the training runs/ directory
 ```
 
-**The minimum you need is three BFM files.** Take them from the official 3DDFA_V2
-repository's `configs/` and drop them into `$PIERROTFR_FA3D_DATA_ROOT/bfm/`:
-
-```
-bfm_noneck_v3.pkl                  38,365-vertex 3DMM basis
-param_mean_std_62d_120x120.pkl     62-d Z-score statistics (the model's output space)
-tri.pkl                            76,073 triangles — for mesh rendering
-```
-
-To compute metrics you also need the evaluation sets released with 3DDFA v1
-(`test.data/` · `test.configs/`); to compute shape accuracy you additionally need the
-preprocessed 300W-LP (`train.configs/`). Every entry point tells you what is present and
-what is missing.
-
-> Verified on: RTX 6000 Ada / torch 2.x / CUDA 12.
-> With ffmpeg present, video is written as H.264 (otherwise use `--gif`).
-> The face detector falls back **FaceBoxes → MTCNN → Haar cascade**, so the demo runs with
-> nothing extra installed — at the cost of catching frontal faces only.
-
 ## ⚡ Quick start
 
 **The `.sh` scripts take no arguments.** What you would change lives in the
