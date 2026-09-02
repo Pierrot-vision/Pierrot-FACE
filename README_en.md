@@ -85,11 +85,6 @@ is **the code that runs that result**.
 
 ### Evaluation
 
-NME follows the paper's convention: **the mean of three yaw-bin means**, not a plain average.
-Every number below was **measured with this repository's `eval/FA3D/evaluate.py`** — our
-checkpoint and the author's released weights have to go through the same code, the same crop
-convention and the same ground truth for the comparison to mean anything.
-
 | Model | AFLW2000-3D ↓ | AFLW (21 pts) ↓ |
 |---|---|---|
 | **Ours** | **3.622** | **5.125** |
