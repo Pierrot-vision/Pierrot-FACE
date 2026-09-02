@@ -58,18 +58,9 @@ face**.
 - 2026-09-02 — 🚀 **FA3D inference code released** — image/video inference · AFLW2000-3D and
   AFLW evaluation · novel-view 3D rendering · shape accuracy. It **reproduces the training
   repository's numbers to three decimal places**
-- 2026-09-02 — 🔬 **All eight inference-side axes rejected** — the remaining gap is not in
-  post-processing, it is inside the weights 👉 [Phase 10](LAB/FA3D/Exp/Phase_10_추론축_소진.md)
 - 2026-09-01 — 🎯 **We beat the released weights** — AFLW2000-3D **3.622** vs 3.683
   (**−0.061**), obtained by combining augmentation · the synergy cycle · occlusion ·
   cross-pose identity consistency 👉 [Phase 5](LAB/FA3D/Exp/Phase_5_증강과_svs.md)
-- 2026-09-01 — ⚠ **The AFLW gap is occlusion, not pose** — the prescriptions failed and only
-  a dose response remained 👉 [Phase 8](LAB/FA3D/Exp/Phase_8_AFLW_가림.md)
-- 2026-08-31 — ⚠⚠ **NME barely measures shape** — swapping in ground-truth shape improves it
-  by only 1.3%, so we measure shape accuracy separately
-  👉 [Phase 6](LAB/FA3D/Exp/Phase_6_지표가_형상을_안_잰다.md)
-- 2026-08-31 — 🔍 **The remaining gap is generalization, not optimization** — on the training
-  domain we win 👉 [Phase 4](LAB/FA3D/Exp/Phase_4_일반화_격차_진단.md)
 - 2026-08-27 — 🧊 **FA3D (the 3DDFA_V2 training half) reimplemented** — fWPDC, meta-joint
   optimization and landmark-regression regularization, none of which exist in the author's
   repository, written from the paper; the released weights' 3.683 reproduced
@@ -87,15 +78,6 @@ is **the code that runs that result**.
 
 > ⚠ The LAB documents are written in Korean — they are the original research notes,
 > copied here unchanged rather than translated, so the record stays exactly as it was made.
-
-From one 2D photo the network regresses **62 numbers**, which the BFM 3DMM basis unfolds
-into a 3D face of **38,365 vertices · 76,073 triangles** plus 68 landmarks.
-
-```
-p[0:12]   T = f[R; t3d]   similarity transform (a matrix, not Euler angles — no gimbal lock)
-p[12:52]  alpha_shp (40)  BFM shape PCA coefficients — "who is this"
-p[52:62]  alpha_exp (10)  expression PCA coefficients — "what face are they making"
-```
 
 ### What it actually predicts (video demo)
 
