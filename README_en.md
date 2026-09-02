@@ -2,7 +2,7 @@
   <img src="docs/peirrot-face-banner.jpg" width="100%" alt="PIERROT FACE banner"/>
 </p>
 
-<h1 align="center">🎭 PIERROT FACE — FA3D</h1>
+<h1 align="center">🎭 PIERROT FACE</h1>
 
 <p align="center">
   <b>PyTorch-based Face algorithms</b>
