@@ -5,7 +5,7 @@
 <h1 align="center">🎭 PIERROT FACE — FA3D</h1>
 
 <p align="center">
-  <b>3D 밀집 얼굴 정렬(3DDFA_V2 재구현) 추론 배포본</b>
+  <b>PyTorch 기반 FACE 관련 알고리즘</b>
 </p>
 
 <p align="center">
