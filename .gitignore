@@ -1,0 +1,33 @@
+# 대용량 — 전부 다시 얻을 수 있다
+# checkpoints/ : 3DDFA_V2 오피셜 배포 가중치 (원 저장소에서 재취득)
+# runs/        : 학습 저장소(Pierrot_FR_Lab)의 산출물 — 여기서는 읽기만 한다
+# outputs/     : 추론 시각화 (eval/FA3D/infer.py 로 언제든 재생성)
+# data/        : 샘플 이미지 · 평가 목록 (로컬 절대경로가 박힌다)
+# ⚠ 뒤에 슬래시를 붙이지 말 것 — runs 를 학습 저장소로 심볼릭 링크하면
+#   '디렉토리'가 아니라 '파일'이라 /runs/ 패턴을 빠져나가고,
+#   링크가 담은 **서버 절대경로가 그대로 커밋된다.**
+/checkpoints
+/runs
+/outputs
+/data
+
+# 파이썬
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# 산출물
+*.pth
+*.npy
+*.npz
+*.log
+
+# 환경
+.venv/
+.env
+.DS_Store
+# 서버 고유 경로 (configs/paths.py 가 읽는다) — 서버마다 값이 달라 공유하지 않는다
+paths.local.env
+
+# docs/ 의 그림(배너 · 결과 시각화 · 데모)은 README 와 LAB 문서가 참조하므로 추적한다.

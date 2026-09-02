@@ -1,0 +1,10 @@
+torch>=2.2
+torchvision          # MobileNetV2 백본 정의 (mobilenet_v2 계열 체크포인트용)
+opencv-python
+numpy
+matplotlib           # 예측 격자 · 3D 재렌더 그림 (scripts/FA3D/*.py)
+# 얼굴 검출 — 임의의 사진·영상 데모에만 필요하다. 평가셋은 사전 크롭이라 안 쓴다.
+# 없으면 OpenCV Haar cascade 로 내려간다 (정면만 잡는다).
+facenet-pytorch
+# GIF 저장 (eval/FA3D/infer.py --gif). mp4 는 시스템 ffmpeg 을 쓴다.
+imageio
