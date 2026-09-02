@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1460 1064" width="1460" height="1064" font-family="NanumSquareRound, 'Noto Sans CJK KR', 'Malgun Gothic', sans-serif">
+<defs>
+  <marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#455a64"/></marker>
+  <marker id="ag" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#2e7d32"/></marker>
+  <marker id="ao" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#ef6c00"/></marker>
+  <marker id="ar" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#c62828"/></marker>
+  <style>
+    .t{font-size:13px;fill:#1b2733} .s{font-size:11px;fill:#546e7a} .h{font-size:14.5px;font-weight:bold;fill:#0d1b2a}
+    .m{font-size:11.5px;font-family:ui-monospace,Menlo,Consolas,monospace;fill:#263238}
+    .lbl{font-size:11px;fill:#455a64} .sec{font-size:12px;font-weight:bold;letter-spacing:.5px}
+    .box{fill:#fff;stroke:#b0bec5;stroke-width:1.2;rx:7}
+  </style>
+</defs>
+<rect width="1460" height="1064" fill="#f7f9fa"/>
+<text x="30" y="34" class="h" font-size="19">3DDFA_V2 — 전체 알고리즘 흐름</text>
+<text x="30" y="55" class="s">회색 = 논문 본체 · 초록 = 학습 전용(추론에서 버림) · 주황 = 우리 확장(SynergyNet 순환) · 빨강 = 데이터 증강</text>
+
+<!-- ── ① 데이터 ── -->
+<rect x="28" y="76" width="1404" height="118" fill="#fff5f5" stroke="#ef9a9a" stroke-width="1.2" rx="8"/>
+<text x="44" y="98" class="sec" fill="#c62828">① 데이터 — 300W-LP</text>
+<rect x="46" y="110" width="176" height="66" class="box"/>
+<text x="56" y="130" class="t">300W-LP 크롭</text>
+<text x="56" y="147" class="m">120×120 uint8 BGR</text>
+<text x="56" y="163" class="s">얼굴 3,837 × 179배 = 687,854</text>
+<path d="M226,143 L266,143" stroke="#c62828" stroke-width="1.6" marker-end="url(#ar)"/>
+<rect x="270" y="104" width="452" height="80" fill="#fff" stroke="#ef9a9a" stroke-width="1.2" rx="7" stroke-dasharray="4 3"/>
+<text x="282" y="122" class="t" fill="#c62828">svs — short-video-synthesis (논문 2.4절, n=8 프레임)</text>
+<text x="282" y="141" class="m">x_j  = (T ∘ F)(x_{j−1})</text><text x="470" y="141" class="s">기하 — 누적(연속성이 신호)</text>
+<text x="282" y="158" class="m">x'_j = (M ∘ P)(x_j)</text><text x="470" y="158" class="s">열화 — 프레임마다 독립</text>
+<text x="282" y="176" class="s">F out-of-plane ±5° · T in-plane · P 노이즈 · M 모션블러  ⚠ GT 62-d 도 같이 변환</text>
+<path d="M726,143 L766,143" stroke="#c62828" stroke-width="1.6" marker-end="url(#ar)"/>
+<rect x="770" y="110" width="300" height="66" class="box"/>
+<text x="782" y="130" class="t">증강 (SynergyNet · 논문 밖)</text>
+<text x="782" y="147" class="m">ColorJitter · 랜덤 가림 7종</text>
+<text x="782" y="164" class="s">테두리 0 은 학습·평가 공통 전처리</text>
+<path d="M1074,143 L1114,143" stroke="#c62828" stroke-width="1.6" marker-end="url(#ar)"/>
+<rect x="1118" y="110" width="296" height="66" class="box"/>
+<text x="1130" y="130" class="t">정규화 → 배치</text>
+<text x="1130" y="147" class="m">(x − 127.5) / 128</text>
+<text x="1130" y="164" class="s">B=128 (svs 면 B×8 장/step)</text>
+
+<!-- ── ② 네트워크 ── -->
+<rect x="28" y="208" width="700" height="212" fill="#f4f7f9" stroke="#90a4ae" stroke-width="1.2" rx="8"/>
+<text x="44" y="230" class="sec" fill="#37474f">② 네트워크</text>
+<rect x="46" y="244" width="200" height="86" class="box"/>
+<text x="56" y="264" class="t">MobileNet-V1 백본</text>
+<text x="56" y="282" class="m">120×120×3 → 4×4×1024</text>
+<text x="56" y="299" class="m">AdaptiveAvgPool → 1024-d</text>
+<text x="56" y="318" class="s">3.27M · 183.5M MACs · CPU 5.7ms</text>
+<path d="M250,287 L296,287" stroke="#455a64" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="300" y="244" width="180" height="46" class="box" stroke="#455a64" stroke-width="1.6"/>
+<text x="312" y="263" class="t" font-weight="bold">fc_param</text><text x="392" y="263" class="m">1024→62</text>
+<text x="312" y="280" class="s">★ 추론 경로</text>
+<rect x="300" y="300" width="180" height="46" fill="#f1f8f2" stroke="#66bb6a" stroke-width="1.4" rx="7"/>
+<text x="312" y="319" class="t" font-weight="bold" fill="#2e7d32">fc_lm</text><text x="392" y="319" class="m">1024→136</text>
+<text x="312" y="336" class="s" fill="#2e7d32">lrr — 학습 전용</text>
+<text x="46" y="356" class="s">⚠ 배포 체크포인트엔 fc_lm 이 있는데 공개 모델 정의엔 없다 — 저자가 이 분기를 빼고 배포했다</text>
+<rect x="46" y="366" width="434" height="42" fill="#fffdf5" stroke="#ffb74d" rx="6"/>
+<text x="58" y="382" class="t">62-d = <tspan font-family="ui-monospace" fill="#0d1b2a">T(12)</tspan> 상사변환 + <tspan font-family="ui-monospace">α_shp(40)</tspan> 신원 + <tspan font-family="ui-monospace">α_exp(10)</tspan> 표정</text>
+<text x="58" y="399" class="s">Euler 각 대신 T = f[R;t] 를 직접 회귀 → 프로필에서 gimbal lock 회피 · z-score 정규화</text>
+<path d="M486,267 L520,267 L520,300" stroke="#455a64" stroke-width="1.6" fill="none" marker-end="url(#a)"/>
+
+<!-- ── ③ BFM 디코더 ── -->
+<rect x="742" y="208" width="690" height="212" fill="#f4f7f9" stroke="#90a4ae" stroke-width="1.2" rx="8"/>
+<text x="758" y="230" class="sec" fill="#37474f">③ BFM 디코더 — 미분 가능 (bfm_noneck_v3)</text>
+<rect x="760" y="244" width="300" height="76" class="box"/>
+<text x="772" y="264" class="t">3DMM 재구성</text>
+<text x="772" y="283" class="m">S = S̄ + Aα        A: 115095×50</text>
+<text x="772" y="300" class="m">V = T · [S ; 1]    정사영</text>
+<text x="772" y="316" class="s">38,365 정점 · 76,073 삼각형</text>
+<path d="M1064,282 L1100,282" stroke="#455a64" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="1104" y="244" width="150" height="36" class="box"/><text x="1116" y="267" class="t">68 랜드마크</text>
+<rect x="1104" y="286" width="150" height="34" class="box"/><text x="1116" y="308" class="t">38,365 정점</text>
+<rect x="760" y="330" width="494" height="76" fill="#fffdf5" stroke="#ffb74d" rx="6"/>
+<text x="772" y="349" class="t">⚠ 설계상 함정 둘</text>
+<text x="772" y="367" class="s">· t_z(인덱스 11)는 정사영에서 관측 불가 → 손실 전 GT 로 덮어쓴다</text>
+<text x="772" y="384" class="s">· shape 기저는 단위벡터·계수 거대 / exp 는 그 반대 → 계수는 6자리 차이나 기여도는 동급</text>
+<text x="772" y="400" class="s">· 정점은 xyz 교차 배열 — view(N,3).T 여야 한다 (view(3,N) 은 조용히 틀린 얼굴)</text>
+
+<!-- ── ④ 손실 ── -->
+<rect x="28" y="434" width="1404" height="196" fill="#f4f7f9" stroke="#90a4ae" stroke-width="1.2" rx="8"/>
+<text x="44" y="456" class="sec" fill="#37474f">④ 손실</text>
+<rect x="46" y="470" width="330" height="142" class="box"/>
+<text x="58" y="490" class="t" font-weight="bold">fWPDC — Algorithm 2</text>
+<text x="58" y="509" class="m">S = S̄ + Aα                (1회 재구성)</text>
+<text x="58" y="526" class="m">w_T(:,i) = |ΔT(:,i)|·‖S(i,:)‖</text>
+<text x="58" y="543" class="m">w_T(:,4) = |ΔT(:,4)|·√N</text>
+<text x="58" y="560" class="m">w_α(i)   = f·|Δα(i)|·‖A(:,i)‖</text>
+<text x="58" y="577" class="m">L = ‖w·(p − pg)‖²   (Z 로 정규화)</text>
+<text x="58" y="596" class="s">원본 WPDC 는 62회 재구성 → 102배 가속, 값은 동일</text>
+<rect x="386" y="470" width="292" height="142" class="box"/>
+<text x="398" y="490" class="t" font-weight="bold">VDC — 식 (4)</text>
+<text x="398" y="509" class="m">L = ‖V3d(p) − V3d(pg)‖²</text>
+<text x="398" y="530" class="s">정점 거리 = 최종 지표에 가장 가깝다</text>
+<text x="398" y="548" class="s">그러나 zig-zag 로 스크래치 수렴이 어렵다</text>
+<text x="398" y="566" class="s">⚠ clip 없으면 2 step 만에 inf</text>
+<text x="398" y="584" class="s">   (grad 2.6e4 → 6.3e10 → nan)</text>
+<text x="398" y="602" class="s">논문에 없는 필수 항목</text>
+<rect x="688" y="470" width="270" height="142" fill="#f1f8f2" stroke="#66bb6a" stroke-width="1.4" rx="7"/>
+<text x="700" y="490" class="t" font-weight="bold" fill="#2e7d32">lrr — 2.3절 (학습 전용)</text>
+<text x="700" y="509" class="m">L = mean(‖l − l_gt‖²)</text>
+<text x="700" y="530" class="s">fc_lm 이 68점을 직접 회귀</text>
+<text x="700" y="548" class="s">GT 는 62-d 에서 유도 (별도 라벨 없음)</text>
+<text x="700" y="566" class="s">⚠ GT 를 [0,1] 로 정규화해야 한다</text>
+<text x="700" y="584" class="s">   픽셀 좌표면 헤드가 죽는다</text>
+<text x="700" y="602" class="s">추론에서 버림 → 연산 증가 0</text>
+<rect x="968" y="470" width="464" height="142" fill="#fff8f0" stroke="#ffb74d" stroke-width="1.4" rx="7"/>
+<text x="980" y="490" class="t" font-weight="bold" fill="#ef6c00">우리 확장 — SynergyNet 순환 (학습 전용)</text>
+<text x="980" y="510" class="m">68 랜드마크 → MLP_for → 좌표 잔차 → 정제</text>
+<text x="980" y="527" class="m">          → MLP_rev → 50-d 역회귀</text>
+<text x="980" y="548" class="s">Wing(초기) · Wing(정제) · RMSE(역회귀) · RMSE(자기일관성)</text>
+<text x="980" y="566" class="s">추론 경로 불변 (MLP 1.77M 은 predict() 를 안 탄다)</text>
+<text x="980" y="584" class="s">⚠ 원본 문제 2건 수정 — 역회귀 슬라이싱 어긋남 · 출력 ReLU</text>
+<text x="980" y="602" class="s">항 결합은 크기 기준(combine 'share') — 개수 기준이면 실효 LR 이 틀어진다</text>
+
+<!-- ── ⑤ meta-joint ── -->
+<rect x="28" y="644" width="900" height="222" fill="#f4f7f9" stroke="#90a4ae" stroke-width="1.2" rx="8"/>
+<text x="44" y="666" class="sec" fill="#37474f">⑤ meta-joint optimization — Algorithm 1 (k=100)</text>
+<rect x="46" y="686" width="110" height="40" class="box"/><text x="76" y="711" class="t">θ_i</text>
+<path d="M160,700 L206,690" stroke="#455a64" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M160,712 L206,752" stroke="#455a64" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="210" y="668" width="290" height="46" class="box"/>
+<text x="222" y="687" class="t">θᶠ ← fWPDC + lrr 로 k 스텝</text>
+<text x="222" y="705" class="s">빠르게 수렴 — 초반 유리</text>
+<rect x="210" y="730" width="290" height="46" class="box"/>
+<text x="222" y="749" class="t">θᵛ ← VDC + lrr 로 k 스텝</text>
+<text x="222" y="767" class="s">최종 지표에 가깝다 — 후반 유리</text>
+<path d="M504,691 L548,715" stroke="#455a64" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M504,753 L548,729" stroke="#455a64" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="552" y="694" width="200" height="56" fill="#eef4fb" stroke="#5c8ec4" stroke-width="1.5" rx="7"/>
+<text x="564" y="714" class="t" font-weight="bold">심판 — meta-test 배치</text>
+<text x="564" y="732" class="m">argmin L_vdc(·, X_mte)</text>
+<text x="564" y="747" class="s">겹치지 않는 배치</text>
+<path d="M756,722 L800,722" stroke="#455a64" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="804" y="700" width="110" height="44" class="box"/><text x="828" y="727" class="t">θ_{i+1}</text>
+<rect x="46" y="790" width="868" height="62" fill="#fffdf5" stroke="#ffb74d" rx="6"/>
+<text x="58" y="809" class="s">⚠ 심판이 **항상 VDC** 여야 한다 — fWPDC 로 재면 fWPDC 분기가 자기 손실이라 늘 이겨 퇴화한다</text>
+<text x="58" y="827" class="s">⚠ 승자→패자 동기화 때 옵티마이저 모멘텀까지 옮긴다. 가중치만 복사하면 다음 k 스텝이 엉뚱하게 출발한다</text>
+<text x="58" y="845" class="s">Lookahead(보간)·MAML(2차 미분)과 다르다 — 보간도 역전파도 없이 **고르기만** 한다. 연산 2배</text>
+
+<!-- ── ⑥ 추론 ── -->
+<rect x="944" y="644" width="488" height="222" fill="#eef4fb" stroke="#5c8ec4" stroke-width="1.4" rx="8"/>
+<text x="960" y="666" class="sec" fill="#1a4f8a">⑥ 추론 경로 — 무엇이 빠지는가</text>
+<rect x="962" y="682" width="452" height="40" class="box"/>
+<text x="974" y="707" class="m">입력 → 백본 → fc_param → 62-d → BFM → 정점</text>
+<text x="962" y="742" class="s">빠지는 것 (전부 학습 전용):</text>
+<text x="974" y="762" class="s" fill="#2e7d32">· fc_lm (lrr 헤드) 0.14M</text>
+<text x="974" y="780" class="s" fill="#ef6c00">· MLP_for / MLP_rev (순환) 1.77M</text>
+<text x="974" y="798" class="s">· meta-joint 두 번째 분기 · svs · 증강</text>
+<rect x="962" y="810" width="452" height="42" fill="#fff" stroke="#5c8ec4" rx="6"/>
+<text x="974" y="828" class="t">추론 3.27M · 183.5M MACs · CPU 5.70ms (논문 6.2)</text>
+<text x="974" y="845" class="s">학습 시엔 최대 5.05M — 추론 비용은 그대로다</text>
+
+<!-- ── 성능 ── -->
+<rect x="28" y="880" width="1404" height="160" fill="#fff" stroke="#b0bec5" stroke-width="1.2" rx="8"/>
+<text x="44" y="902" class="sec" fill="#37474f">기여도 (AFLW2000-3D NME %, 논문 Table 3)</text>
+<text x="46" y="926" class="m">VDC 5.23  →  fWPDC 4.04  →  VDC from fWPDC 3.88  →  vanilla-joint 3.80  →  meta-joint 3.73  →  + lrr 3.59  →  + svs 3.51</text>
+<text x="46" y="954" class="s">손실 설계가 5.23 → 3.59 로 1.64 를 움직인다. 같은 논문에서 백본을 5.6배 키워도(ResNet-22) 0.02 다 — 이 태스크는 용량에 빨리 포화한다.</text>
+<text x="46" y="984" class="s">우리 재현: meta_paper(M+R) 3.793 · 배포 가중치 3.683 · 남은 격차는 일반화 문제로 확인됨(학습 도메인에선 우리가 −0.097 이긴다)</text>
+<text x="46" y="1014" class="s">전체 구현·검증 기록: LAB/FA3D/FA3D.md · 알고리즘 상세: LAB/FA3D/3DDFA_V2.md · 실험 국면: LAB/FA3D/Exp/</text>
+</svg>
