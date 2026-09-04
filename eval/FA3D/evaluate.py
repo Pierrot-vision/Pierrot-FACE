@@ -45,6 +45,8 @@ def main() -> None:
                     help="AFLW2000-3D 의 68점 GT — 원본 / 재주석본")
     ap.add_argument("--aflw", action="store_true", help="AFLW(21,080장)도 평가")
     ap.add_argument("--batch-size", type=int, default=0, help="0 = configs 기본값")
+    ap.add_argument("--tta", action="store_true",
+                    help="좌우반전 TTA 행을 **추가로** 낸다 (기본 지표는 안 덮는다). 추론 2배")
     ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     ap.add_argument("--save", action="store_true",
                     help="outputs/fa3d/<런>/eval_results.json 을 남긴다")
@@ -76,9 +78,17 @@ def main() -> None:
             key = "AFLW2000-3D" + ("(re)" if o == "reannotated" else "")
             res[key], _ = bench.evaluate(model, spec, bfm, param_norm, cfg,
                                          "aflw2000", o, args.device)
+            if args.tta:
+                res[key + "+TTA"], _ = bench.evaluate(
+                    model, spec, bfm, param_norm, cfg, "aflw2000", o,
+                    args.device, tta=True)
         if args.aflw and have["aflw"]:
             res["AFLW"], _ = bench.evaluate(model, spec, bfm, param_norm, cfg,
                                             "aflw", device=args.device)
+            if args.tta:
+                res["AFLW+TTA"], _ = bench.evaluate(
+                    model, spec, bfm, param_norm, cfg, "aflw",
+                    device=args.device, tta=True)
         rows.append((spec.name, res))
         if args.save:
             # ⚠ 학습 저장소(runs/)에 쓰지 않는다 — 여기는 그걸 **읽기만** 하는
@@ -93,7 +103,11 @@ def main() -> None:
     for name, res in rows:
         print(name)
         for set_name, m in res.items():
-            print("  " + format_row(set_name, m))
+            line = "  " + format_row(set_name, m)
+            base = res.get(set_name[:-4]) if set_name.endswith("+TTA") else None
+            if base:
+                line += f"   {m['NME'] - base['NME']:+.3f}"
+            print(line)
     print("=" * 88)
 
     # 여러 모델이면 한 줄 요약을 덧붙인다 — 표로 옮겨 적을 값
