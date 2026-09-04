@@ -98,6 +98,34 @@ is **the code that runs that result**.
 
 > For the full experiment log, see [LAB/FA3D/FA3D.md](LAB/FA3D/FA3D.md).
 
+### Per-backbone results
+
+The three accuracy rows are runs of **the same recipe (`meta_paper_aug_synergy`, b128) with
+only the backbone swapped**. Cost comes from `python scripts/FA3D/bench_backbone.py` —
+RTX 6000 Ada, batch 1, inference path only (neither the lrr head nor the synergy cycle
+exists in this repository's models).
+
+| Backbone | Params | MACs | CPU 1 thread | GPU b1 | AFLW2000-3D ↓ | AFLW ↓ |
+|---|---:|---:|---:|---:|---:|---:|
+| `mobilenet_v1` (paper default · from scratch) | 3.27M | 177M | 5.61 ms | **1.55 ms** | **3.657** | **5.085** |
+| `pierrotxv2_n` (obj365 detection pretraining) | 1.30M | 79M | 3.86 ms | 2.32 ms | 3.733 | 5.222 |
+| `yolo26_n` (obj365 detection pretraining) | 1.40M | 61M | 3.87 ms | 3.18 ms | 3.784 | 5.247 |
+| `mobilenet_v2` (SynergyNet) | 2.30M | 93M | 5.17 ms | 3.21 ms | — | — |
+| `mobilenet_v1_x05` | **0.85M** | **46M** | **2.76 ms** | 1.56 ms | — | — |
+
+> **Shrinking the backbone 2.5× costs only 0.08 NME** — the detection-pretrained backbones
+> from the sibling lab (Pierrot_3D_Lab) come close to the from-scratch MobileNet-V1 at 40% of
+> the parameters and 45% of the MACs. **On AFLW the gap is wider** (+0.14–0.16), though — it
+> opens up first on real photographs and occlusion.
+
+> ⚠ **Parameter count is not a proxy for latency.** `mobilenet_v1_x05` has a quarter of the
+> parameters yet the same GPU b1 as `mobilenet_v1`, and `yolo26_n` has a third of the MACs yet
+> is twice as slow on GPU — depthwise and inverted-residual blocks are bound by memory
+> bandwidth, not arithmetic. The paper reports 6.2 ms on CPU for MobileNet: the same place.
+
+> The bottom two rows have no checkpoint trained with this recipe, hence the empty accuracy
+> cells. For the `mobilenet_v1_x05` architecture, the author's released mb05 gives 3.798 / 4.738.
+
 ### Predictions — AFLW2000-3D
 
 ![50 AFLW2000-3D predictions](docs/FA3D/aflw2000_grid_spread.jpg)

@@ -90,6 +90,32 @@
 
 > 상세 실험 내용은 [LAB/FA3D/FA3D.md](LAB/FA3D/FA3D.md) 참조.
 
+### 백본별 성능
+
+정확도 세 줄은 **같은 레시피(`meta_paper_aug_synergy` · b128)로 백본만 바꾼** 런입니다.
+비용은 `python scripts/FA3D/bench_backbone.py` — RTX 6000 Ada / batch 1, 추론 경로만
+(lrr 헤드도 synergy 순환도 이 저장소의 모델에는 아예 없습니다).
+
+| 백본 | Params | MACs | CPU 1스레드 | GPU b1 | AFLW2000-3D ↓ | AFLW ↓ |
+|---|---:|---:|---:|---:|---:|---:|
+| `mobilenet_v1` (논문 기본 · 스크래치) | 3.27M | 177M | 5.61 ms | **1.55 ms** | **3.657** | **5.085** |
+| `pierrotxv2_n` (obj365 검출 사전학습) | 1.30M | 79M | 3.86 ms | 2.32 ms | 3.733 | 5.222 |
+| `yolo26_n` (obj365 검출 사전학습) | 1.40M | 61M | 3.87 ms | 3.18 ms | 3.784 | 5.247 |
+| `mobilenet_v2` (SynergyNet) | 2.30M | 93M | 5.17 ms | 3.21 ms | — | — |
+| `mobilenet_v1_x05` | **0.85M** | **46M** | **2.76 ms** | 1.56 ms | — | — |
+
+> **백본을 2.5배 줄여도 NME 는 0.08 밖에 안 벌어집니다** — 옆 랩(Pierrot_3D_Lab)의 검출
+> 사전학습 백본이 파라미터 40%·MACs 45% 로 스크래치 MobileNet-V1 을 거의 따라잡습니다.
+> 다만 **AFLW 에서는 격차가 더 큽니다**(+0.14~0.16) — 실사진·가림에서 먼저 벌어집니다.
+
+> ⚠ **파라미터 수는 지연시간의 대리 지표가 못 됩니다.** `mobilenet_v1_x05` 는 파라미터가
+> 1/4 인데 GPU b1 은 `mobilenet_v1` 과 같고, `yolo26_n` 은 MACs 가 1/3 인데 GPU 는 두 배
+> 느립니다 — depthwise·inverted-residual 이 연산량이 아니라 메모리 대역폭에 묶입니다.
+> 논문 보고치(CPU)는 MobileNet 6.2ms 로 같은 자리입니다.
+
+> 아래 두 줄은 이 레시피로 학습한 체크포인트가 없어 정확도 칸이 비어 있습니다.
+> `mobilenet_v1_x05` 구조의 참고값은 저자 배포 mb05 의 3.798 / 4.738 입니다.
+
 ### 예측 결과 — AFLW2000-3D
 
 ![AFLW2000-3D 예측 50장](docs/FA3D/aflw2000_grid_spread.jpg)

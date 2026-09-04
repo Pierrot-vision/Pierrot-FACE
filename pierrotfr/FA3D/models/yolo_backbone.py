@@ -28,11 +28,20 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-# 백본 **정의**를 옆 랩에서 가져온다 (가중치가 아니다 — 그건 우리 체크포인트에 있다).
-# 서버마다 경로가 다르므로 환경변수로 뺀다. 이 백본으로 학습한 체크포인트를 쓸
-# 때만 필요하고, mobilenet 계열만 돌린다면 이 경로가 없어도 된다.
-DEFAULT_LAB_ROOT = os.environ.get("PIERROTFR_3D_LAB_ROOT",
-                                  "/ai_data_new_ssd/DEV/3d/Pierrot_3D_Lab")
+def _default_lab_root() -> str:
+    """백본 **정의**를 가져올 옆 랩(Pierrot_3D_Lab)의 경로.
+
+    가중치가 아니다 — 그건 우리 체크포인트 안에 다 들어 있다. 서버마다 다르므로
+    다른 경로들과 **같은 규칙**(환경변수 > paths.local.env > 기본값)으로 푼다.
+    이 백본으로 학습한 체크포인트를 쓸 때만 필요하고, mobilenet 계열만 돌린다면
+    없어도 된다.
+    """
+    try:
+        from configs.paths import root
+        return root("PIERROTFR_3D_LAB_ROOT", "/ai_data_new_ssd/DEV/3d/Pierrot_3D_Lab")
+    except ImportError:      # 라이브러리만 떼어 쓰는 경우 — 환경변수로 폴백
+        return os.environ.get("PIERROTFR_3D_LAB_ROOT",
+                              "/ai_data_new_ssd/DEV/3d/Pierrot_3D_Lab")
 
 
 def _import_pose_models(lab_root: str):
@@ -69,10 +78,10 @@ class YoloBackboneRegressor(nn.Module):
     def __init__(self, arch: str = "pierrotxv2-n-accuracy", scale: str = "n",
                  num_params: int = 62, num_landmarks: int = 68,
                  use_lrr: bool = False, input_size: int = 128,
-                 lab_root: str = DEFAULT_LAB_ROOT, det_weights: str | None = None,
+                 lab_root: str = "", det_weights: str | None = None,
                  dropout: float = 0.0):
         super().__init__()
-        ARCHS, resolve, Backbone = _import_pose_models(lab_root)
+        ARCHS, resolve, Backbone = _import_pose_models(lab_root or _default_lab_root())
         if arch not in ARCHS:
             raise SystemExit(f"[FA3D] arch={arch!r} 없음 — 등록된 값: {sorted(ARCHS)}")
 
