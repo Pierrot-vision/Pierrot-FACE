@@ -55,6 +55,8 @@ face**.
 
 ## 📰 News
 
+- 2026-09-04 — 🔄 **flip-TTA adopted** — no retraining, AFLW2000-3D **3.622 → 3.508** and
+  AFLW **5.125 → 5.035**. It can only be averaged in landmark space, so the dense mesh is left out
 - 2026-09-02 — 🚀 **FA3D inference code released** — image/video inference · AFLW2000-3D and
   AFLW evaluation · novel-view 3D rendering · shape accuracy. It **reproduces the training
   repository's numbers to three decimal places**
@@ -88,11 +90,28 @@ is **the code that runs that result**.
 | Model | AFLW2000-3D ↓ | AFLW (21 pts) ↓ |
 |---|---|---|
 | **Ours** | **3.622** | **5.125** |
+| **Ours + flip-TTA** | **3.508** | **5.035** |
 | — | — | — |
 | 🎯 3DDFA_V2 released mb1 | *3.683* | *4.600* |
+| 3DDFA_V2 released mb1 + flip-TTA | *3.593* | *4.533* |
 | 3DDFA_V2 released mb05 | *3.798* | *4.738* |
 | Paper, M+R | *3.590* | *4.500* |
 | Paper, M+R+S | *3.510* | *4.430* |
+
+> **flip-TTA** — run the horizontally flipped input as well and average **in landmark
+> space**. No retraining, one `--tta` flag, and it improves every pose bin (most at high yaw,
+> 60–90°, by −0.16). The price is 2× inference. ⚠ The first 12 of the 62 parameters are a
+> rotation matrix, so **averaging in parameter space is not possible** — which is why TTA
+> cannot be applied to the dense mesh and lives only on the landmark-only path.
+
+> ⚠ **TTA lifts the released weights just as much** (3.683 → 3.593). So `Ours + flip-TTA`
+> 3.508 must **not** be placed next to the paper's M+R (3.590) or M+R+S (3.510) — those are
+> non-TTA numbers. The like-for-like comparison is TTA against TTA (**3.508 vs 3.593**), and
+> the margin, −0.085, is about the same as without TTA (−0.061).
+
+> ⚠ **The baseline numbers in this table are always the non-TTA ones.** TTA rows are added
+> alongside, never on top — overwriting them would break comparison with the training
+> repository's earlier runs.
 
 > ⚠ **The weights the authors released do not reproduce the paper's numbers.** Measured with the same evaluation code, mb1 comes out at 3.683 / 4.600 — **consistently 0.09–0.10 worse** than the paper's M+R (3.590 / 4.500) on both benchmarks. So the reproduction target of this project is **the released weights**, not the paper's table.
 
@@ -174,6 +193,8 @@ python eval/FA3D/infer.py --ckpt … --source clip.mp4 --gif --fps 12
 # ── Evaluation ────────────────────────────────────────────────────
 # Measure the released weights with the same code — the only valid comparison
 python eval/FA3D/evaluate.py --ckpt runs/fa3d/<run>/best.pth --deployed mb1 --aflw
+# --tta adds horizontal-flip TTA rows *alongside* the base ones (never on top · 2x inference)
+python eval/FA3D/evaluate.py --ckpt runs/fa3d/<run>/best.pth --deployed mb1 --aflw --tta
 
 # ── Analysis ──────────────────────────────────────────────────────
 python scripts/FA3D/pred_grid.py      --ckpt … --mode spread  # prediction grid (2D)

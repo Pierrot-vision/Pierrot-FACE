@@ -170,7 +170,7 @@ def predict_params(model, loader, device="cuda") -> np.ndarray:
 
 def predict_filelist(model, root: str, filelist: str, device="cuda",
                      border: int = 0, batch_size: int = 256, num_workers: int = 8,
-                     limit: int = 0) -> np.ndarray:
+                     limit: int = 0, flip: bool = False) -> np.ndarray:
     """사전 크롭된 목록 -> [N, 62].
 
     ⚠ `border` 는 그 모델이 **학습 때 쓴 값**이어야 한다 (`spec.border`).
@@ -178,7 +178,7 @@ def predict_filelist(model, root: str, filelist: str, device="cuda",
       배포 가중치가 실제로 0 이라 그럴 수 없다 — 대신 `spec.border` 를 넘기라는
       규약을 모든 호출부에서 지킨다.
     """
-    ds = CropTestDataset(root, filelist, border=border)
+    ds = CropTestDataset(root, filelist, border=border, flip=flip)
     if limit:
         ds.lines = ds.lines[:limit]
     dl = DataLoader(ds, batch_size=batch_size, shuffle=False,

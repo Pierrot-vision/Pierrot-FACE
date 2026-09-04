@@ -67,13 +67,16 @@ class CropTestDataset(data.Dataset):
     """
 
     def __init__(self, root: str, filelist: str, name: str = "test",
-                 border: int = 0):
+                 border: int = 0, flip: bool = False):
         for fp in (root, filelist):
             if not osp.exists(fp):
                 raise SystemExit(f"[FA3D] 평가 데이터가 없습니다: {fp}")
         self.root, self.name = root, name
         # ⚠ 그 모델이 **학습 때 쓴 값**이어야 한다. 다르면 못 본 분포가 들어온다.
         self.border = int(border)
+        # 좌우반전 TTA 용 — 이미지만 뒤집고 GT 는 안 건드린다
+        # (호출자가 metrics.flip_back 으로 되돌린다)
+        self.flip = bool(flip)
         self.lines = open(filelist, encoding="utf-8").read().strip().split("\n")
 
     def __len__(self) -> int:
@@ -83,4 +86,6 @@ class CropTestDataset(data.Dataset):
         img = cv2.imread(osp.join(self.root, self.lines[i]), cv2.IMREAD_COLOR)
         if img is None:
             raise RuntimeError(f"[FA3D] 이미지를 읽지 못했습니다: {self.lines[i]}")
+        if self.flip:
+            img = cv2.flip(img, 1)
         return to_tensor(zero_border(img, self.border))
