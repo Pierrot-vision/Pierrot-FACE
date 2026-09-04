@@ -112,6 +112,9 @@ exists in this repository's models).
 | `yolo26_n` (obj365 detection pretraining) | 1.40M | 61M | 3.87 ms | 3.18 ms | 3.784 | 5.247 |
 | `mobilenet_v2` (SynergyNet) | 2.30M | 93M | 5.17 ms | 3.21 ms | — | — |
 | `mobilenet_v1_x05` | **0.85M** | **46M** | **2.76 ms** | 1.56 ms | — | — |
+| — | — | — | — | — | — | — |
+| 🎯 3DDFA_V2 released mb1 (arch = `mobilenet_v1`) | 3.27M | 177M | 5.61 ms | 1.55 ms | *3.683* | *4.600* |
+| 3DDFA_V2 released mb05 (arch = `mobilenet_v1_x05`) | 0.85M | 46M | 2.76 ms | 1.56 ms | *3.798* | *4.738* |
 
 > **Shrinking the backbone 2.5× costs only 0.08 NME** — the detection-pretrained backbones
 > from the sibling lab (Pierrot_3D_Lab) come close to the from-scratch MobileNet-V1 at 40% of
@@ -123,8 +126,10 @@ exists in this repository's models).
 > is twice as slow on GPU — depthwise and inverted-residual blocks are bound by memory
 > bandwidth, not arithmetic. The paper reports 6.2 ms on CPU for MobileNet: the same place.
 
-> The bottom two rows have no checkpoint trained with this recipe, hence the empty accuracy
-> cells. For the `mobilenet_v1_x05` architecture, the author's released mb05 gives 3.798 / 4.738.
+> `mobilenet_v2` and `mobilenet_v1_x05` have no checkpoint trained with this recipe, hence the
+> empty accuracy cells — for the `mobilenet_v1_x05` architecture the baseline is the released
+> mb05 row below. The cost figures on the two released rows are **our own measurements of the
+> same architecture** (weights do not change latency).
 
 ### Predictions — AFLW2000-3D
 
