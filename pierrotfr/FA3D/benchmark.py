@@ -18,7 +18,7 @@ from __future__ import annotations
 import numpy as np
 
 from .infer import ModelSpec, predict_filelist, to_landmarks
-from .metrics import nme_aflw, nme_aflw2000, summarize
+from .metrics import flip_tta, nme_aflw, nme_aflw2000, summarize
 
 # 평가셋별 파일 규약 — 이름이 셋 다 조금씩 다르다(오피셜 배포본을 그대로 쓴다).
 SETS = {
@@ -61,19 +61,41 @@ def nme(cfg, which: str, lmk: list, gt: dict) -> np.ndarray:
     return nme_aflw(lmk, gt["roi"], gt["pts68"], gt["pts21"], cfg.image_size)
 
 
-def predict(model, spec: ModelSpec, cfg, which: str, device="cuda") -> np.ndarray:
-    """평가셋 전체 -> [N, 62] (정규화 공간)."""
+def predict(model, spec: ModelSpec, cfg, which: str, device="cuda",
+            flip: bool = False) -> np.ndarray:
+    """평가셋 전체 -> [N, 62] (정규화 공간). flip 이면 좌우반전 입력으로 돈다."""
     root, lst = paths(cfg, which)
     return predict_filelist(model, root, lst, device, border=spec.border,
-                            batch_size=cfg.batch_size, num_workers=cfg.num_workers)
+                            batch_size=cfg.batch_size, num_workers=cfg.num_workers,
+                            flip=flip)
+
+
+def landmarks(model, spec: ModelSpec, bfm, param_norm, cfg, which: str,
+              device="cuda", tta: bool = False) -> list:
+    """평가셋 전체 -> 크롭 좌표계 68 랜드마크 [N][2,68].
+
+    `tta=True` 면 좌우반전 입력까지 돌려 **랜드마크 공간에서** 평균한다 —
+    파라미터 공간에서는 평균할 수 없다 (metrics.flip_tta 참조). 추론이 2배다.
+    """
+    lm = to_landmarks(bfm, param_norm, predict(model, spec, cfg, which, device),
+                      device, cfg.image_size)
+    if not tta:
+        return lm
+    lmf = to_landmarks(bfm, param_norm,
+                       predict(model, spec, cfg, which, device, flip=True),
+                       device, cfg.image_size)
+    return list(flip_tta(np.stack(lm), np.stack(lmf), cfg.image_size))
 
 
 def evaluate(model, spec: ModelSpec, bfm, param_norm, cfg,
              which: str = "aflw2000", gt_option: str = "ori",
-             device="cuda") -> tuple[dict, np.ndarray]:
-    """(요약 지표, 샘플별 NME) — 요약은 논문 규약(yaw 3구간 평균의 평균)."""
-    params = predict(model, spec, cfg, which, device)
-    lmk = to_landmarks(bfm, param_norm, params, device, cfg.image_size)
+             device="cuda", tta: bool = False) -> tuple[dict, np.ndarray]:
+    """(요약 지표, 샘플별 NME) — 요약은 논문 규약(yaw 3구간 평균의 평균).
+
+    ⚠ `tta=True` 는 **기본 지표를 덮지 않는다.** 표의 기준은 언제나 TTA 없는 값이다 —
+      안 그러면 학습 저장소의 이전 런들과 비교가 깨진다. 호출자가 두 줄로 나란히 찍는다.
+    """
+    lmk = landmarks(model, spec, bfm, param_norm, cfg, which, device, tta)
     gt = ground_truth(cfg, which, gt_option)
     per = nme(cfg, which, lmk, gt)
     return summarize(per, gt["yaw"]), per

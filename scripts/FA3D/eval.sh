@@ -17,10 +17,14 @@ CKPTS=(runs/fa3d/meta_paper_aug_synergy_meta_mobilenet_v1/best.pth)
 DEPLOYED="mb1"      # 함께 잴 배포 가중치 ("" = 안 잼, "mb1 mb05" 도 가능)
 AFLW=1              # 1 = AFLW(21,080장)도 평가 — 실사진 일반화를 보는 축이다
 GT=ori              # ori | reannotated | both
+# 좌우반전 TTA 행을 추가로 낼지. ⚠ 기본 지표를 덮지 않는다 — 표의 기준은 언제나
+# TTA 없는 값이다. 대가는 추론 2배.
+TTA=1
 # ------------------------------------------------------------------ #
 
 ARGS=(--ckpt "${CKPTS[@]}" --gt "$GT")
 [ -n "$DEPLOYED" ] && ARGS+=(--deployed $DEPLOYED)
 [ "$AFLW" = "1" ] && ARGS+=(--aflw)
+[ "$TTA" = "1" ] && ARGS+=(--tta)
 
 python eval/FA3D/evaluate.py "${ARGS[@]}"
