@@ -56,6 +56,8 @@ face**.
 
 ## 📰 News
 
+- 2026-09-17 — 🚀 **FA2D inference code released** — image/video inference · evaluation on all three benchmarks
+  (WFLW · LaPa · difficulty). It **reproduces the README table to three decimal places** · FA2D vs FA3D 👉 [LAB/FA2D_vs_FA3D.md](LAB/FA2D_vs_FA3D.md)
 - 2026-09-16 — 🏆 **FA2D teacher and student beat the references** — WFLW teacher **3.916** vs Peppa
   Teacher 3.959 · student **4.227** vs Peppa Student 4.353
 - 2026-09-16 — 🔍 **FA2D measured against HRFFA on the same ruler for the first time** — on LaPa test,

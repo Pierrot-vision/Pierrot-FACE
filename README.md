@@ -54,6 +54,8 @@
 
 ## 📰 News
 
+- 2026-09-17 — 🚀 **FA2D 추론 코드 공개** — 사진·영상 추론 · 세 벤치마크(WFLW · LaPa · 난이도) 평가.
+  README 표의 수치를 **소수점 세 자리까지 재현**했습니다 · FA2D 와 FA3D 비교 👉 [LAB/FA2D_vs_FA3D.md](LAB/FA2D_vs_FA3D.md)
 - 2026-09-16 — 🏆 **FA2D 교사·학생이 참조를 넘었습니다** — WFLW 교사 **3.916** vs Peppa Teacher 3.959 ·
   학생 **4.227** vs Peppa Student 4.353
 - 2026-09-16 — 🔍 **FA2D, HRFFA 와 처음으로 같은 자로 비교** — 세 연구 모두 학습하지 않은 LaPa test 에서
