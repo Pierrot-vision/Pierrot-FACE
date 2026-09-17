@@ -1,8 +1,11 @@
-"""얼굴 검출 — 크롭을 잡기 위한 것뿐이다.
+"""얼굴 검출 — 크롭을 잡기 위한 것뿐이다. **FA2D · FA3D 공용.**
 
-평가(AFLW2000-3D / AFLW)는 **사전 크롭된 120x120** 을 쓰므로 검출기를 타지 않는다.
-검출기가 필요한 곳은 임의의 사진·영상에 돌리는 데모뿐이고, 그래서 여기서 검출기를
-갈아 끼울 수 있게 둔다. 지표는 검출기 선택에 영향을 받지 않는다.
+평가(FA3D 의 AFLW2000-3D / AFLW, FA2D 의 WFLW / LaPa)는 GT 로 크롭을 잡으므로
+검출기를 타지 않는다. 검출기가 필요한 곳은 임의의 사진·영상에 돌리는 데모뿐이고,
+그래서 여기서 검출기를 갈아 끼울 수 있게 둔다. 지표는 검출기 선택에 영향을 받지 않는다.
+
+태스크 밖(`pierrotfr/data/`)에 두는 이유 — 두 태스크가 같은 검출기를 써야 데모끼리
+비교가 되고, 한쪽이 다른 쪽 코드를 import 하면 카테고리 분리가 깨진다.
 
 우선순위 (앞에서부터 되는 것을 쓴다):
 
@@ -113,10 +116,10 @@ class FaceDetector:
     def __init__(self, backend: str = "", verbose: bool = True):
         if backend:
             if backend not in _BACKENDS:
-                raise SystemExit(f"[FA3D] backend={backend!r} — 가능: {sorted(_BACKENDS)}")
+                raise SystemExit(f"[detect] backend={backend!r} — 가능: {sorted(_BACKENDS)}")
             fn, why = _BACKENDS[backend]()
             if fn is None:
-                raise SystemExit(f"[FA3D] 검출기 {backend} 를 쓸 수 없습니다: {why}")
+                raise SystemExit(f"[detect] 검출기 {backend} 를 쓸 수 없습니다: {why}")
             self.run, self.name = fn, why
         else:
             tried = []
@@ -127,14 +130,14 @@ class FaceDetector:
                     break
                 tried.append(f"{key}: {why}")
             else:
-                raise SystemExit("[FA3D] 쓸 수 있는 얼굴 검출기가 없습니다:\n"
+                raise SystemExit("[detect] 쓸 수 있는 얼굴 검출기가 없습니다:\n"
                                  + "\n".join(f"    {t}" for t in tried)
                                  + "\n  pip install facenet-pytorch 를 권합니다.")
             if verbose and tried:
-                print(f"[FA3D] 검출기 {self.name} "
+                print(f"[detect] 검출기 {self.name} "
                       f"(건너뜀 — {' / '.join(tried)})")
             elif verbose:
-                print(f"[FA3D] 검출기 {self.name}")
+                print(f"[detect] 검출기 {self.name}")
 
     def __call__(self, img: np.ndarray) -> list:
         return self.run(img)

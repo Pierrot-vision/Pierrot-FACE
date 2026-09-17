@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 940" width="1500" height="940" font-family="NanumSquareRound, 'Noto Sans CJK KR', 'Malgun Gothic', sans-serif" role="img" aria-label="HRFFA 교사 학습 전체 흐름: 통합 데이터셋에서 배치를 뽑아 호모그래피 기하 증강으로 GT 를 엄밀히 갱신하고, DINOv3 ViT-L/16 백본과 점 쿼리 트랜스포머 디코더를 좌표와 가시성 두 손실로 지도학습한 뒤, WSD 스케줄과 4개 검증셋 평균 NME 로 best 를 고른다.">
+<defs>
+  <marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#455a64"/></marker>
+  <marker id="ao" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#ef6c00"/></marker>
+  <marker id="ag" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#2e7d32"/></marker>
+  <marker id="ab" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#5c8ec4"/></marker>
+  <marker id="ax" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#90a4ae"/></marker>
+  <style>
+    .h{font-size:19px;font-weight:bold;fill:#0d1b2a}
+    .sub{font-size:12.5px;fill:#546e7a}
+    .bt{font-size:13.5px;font-weight:bold;fill:#0d1b2a}
+    .t{font-size:12px;fill:#1b2733}
+    .s{font-size:11px;fill:#546e7a}
+    .m{font-size:11px;font-family:ui-monospace,Menlo,Consolas,monospace;fill:#263238}
+    .lbl{font-size:10.5px;fill:#455a64}
+    .warn{font-size:11px;fill:#c62828}
+    .dead{font-size:11px;fill:#90a4ae}
+    .sec{font-size:11px;font-weight:bold;letter-spacing:1.2px;fill:#78909c}
+    .box{fill:#fff;stroke:#b0bec5;stroke-width:1.2}
+    .acc{fill:#fffdf5;stroke:#ef6c00;stroke-width:1.8}
+    .kd{fill:#f1f8f2;stroke:#2e7d32;stroke-width:1.6}
+    .frz{fill:#eef3f9;stroke:#5c8ec4;stroke-width:1.6}
+    .grey{fill:#f4f7f9;stroke:#cfd8dc;stroke-width:1.1;stroke-dasharray:4 3}
+  </style>
+</defs>
+<rect width="1500" height="940" fill="#f7f9fa"/>
+<text x="36" y="42" class="h" text-anchor="start">HRFFA 교사 학습 — GT 지도학습 (증류 아님)</text>
+<text x="36" y="64" class="sub" text-anchor="start">src/hrffa/train/train_teacher.py · preset clean_v3 해석값. 교사 위에 또 다른 교사는 없다 — DINOv3 백본만 사전학습을 물려받고 정렬 부분은 전부 처음부터 배운다.</text>
+<text x="36" y="96" class="sec" text-anchor="start">① 데이터</text>
+<text x="392" y="96" class="sec" text-anchor="start">② 기하 증강</text>
+<text x="766" y="96" class="sec" text-anchor="start">③ 모델</text>
+<text x="1176" y="96" class="sec" text-anchor="start">④ 손실 · 최적화</text>
+<rect x="36" y="110" width="320" height="172" rx="8" class="box"/>
+<text x="52" y="132" class="bt" text-anchor="start">통합 데이터셋 (jsonl)</text>
+<text x="52" y="152" class="m" text-anchor="start">300wlp   |yaw| ≤ 10°만        11,587</text>
+<text x="52" y="167" class="m" text-anchor="start">wflw                            7,500</text>
+<text x="52" y="182" class="m" text-anchor="start">selftrain_v2                    4,864</text>
+<text x="52" y="197" class="m" text-anchor="start">selftrain_lookup                2,846</text>
+<text x="52" y="212" class="m" text-anchor="start">300w                            3,148</text>
+<text x="52" y="227" class="m" text-anchor="start">cofw                            1,345</text>
+<line x1="52" y1="238" x2="282" y2="238" stroke="#e0e6ea"/>
+<text x="52" y="257" class="s" text-anchor="start">N = 31,290 · 가중치 = 레코드 수 비례</text>
+<line x1="196" y1="282" x2="196" y2="310" stroke="#455a64" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="36" y="312" width="320" height="74" rx="8" class="box"/>
+<text x="52" y="334" class="bt" text-anchor="start">홀드아웃 (≈2%)</text>
+<text x="52" y="354" class="m" text-anchor="start">CRC32(record_id) % 50 == 0 → val</text>
+<text x="52" y="369" class="s" text-anchor="start">합성은 parent_record 기준 = 인물 누수 차단</text>
+<line x1="196" y1="386" x2="196" y2="414" stroke="#455a64" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="36" y="416" width="320" height="88" rx="8" class="box"/>
+<text x="52" y="438" class="bt" text-anchor="start">SchemeBatchSampler</text>
+<text x="52" y="458" class="t" text-anchor="start">소스 가중 추첨 → 배치는 scheme 동종</text>
+<text x="52" y="473" class="s" text-anchor="start">(68/98/29 를 한 배치에 섞지 않는다)</text>
+<text x="52" y="488" class="m" text-anchor="start">default_rng(seed + epoch) · set_epoch()</text>
+<rect x="392" y="110" width="342" height="394" rx="8" class="acc"/>
+<text x="408" y="132" class="bt" text-anchor="start">기하 증강 — 이 저장소의 핵심</text>
+<text x="408" y="150" class="s" text-anchor="start">모든 변환을 3×3 사영변환 하나로 합성 → warp 1회</text>
+<rect x="406" y="162" width="314" height="76" rx="6" class="box"/>
+<text x="420" y="182" class="bt" text-anchor="start">GeometricPolicy.sample()</text>
+<text x="420" y="200" class="m" text-anchor="start">roll ~ U(0°, 360°)   ← 360° 등변성</text>
+<text x="420" y="214" class="m" text-anchor="start">cam_pitch ±25° · cam_yaw ±15°</text>
+<text x="420" y="228" class="m" text-anchor="start">scale 0.9~1.1 · hflip 0.5</text>
+<line x1="563" y1="238" x2="563" y2="254" stroke="#ef6c00" stroke-width="1.5" marker-end="url(#ao)"/>
+<rect x="406" y="256" width="314" height="84" rx="6" class="box"/>
+<text x="420" y="276" class="bt" text-anchor="start">T = flip · H · crop_affine</text>
+<text x="420" y="294" class="m" text-anchor="start">H = K · R_cam · K⁻¹   (f = 1.2 × 320)</text>
+<text x="420" y="308" class="s" text-anchor="start">병진 없는 순수 카메라 회전은 3D 형상과</text>
+<text x="420" y="322" class="s" text-anchor="start">무관하게 호모그래피로 엄밀히 표현된다</text>
+<line x1="563" y1="340" x2="563" y2="356" stroke="#ef6c00" stroke-width="1.5" marker-end="url(#ao)"/>
+<rect x="406" y="358" width="314" height="130" rx="6" class="box"/>
+<text x="420" y="378" class="bt" text-anchor="start">GT 를 동시에 엄밀 갱신 (근사 아님)</text>
+<text x="420" y="396" class="m" text-anchor="start">image ← warpPerspective(T) → 320×320</text>
+<text x="420" y="410" class="m" text-anchor="start">pts   ← T · pts  (사영 나눗셈)</text>
+<text x="420" y="424" class="m" text-anchor="start">R     ← M (R_cam · Rz(θ) · R) M</text>
+<text x="420" y="438" class="m" text-anchor="start">vis   ← crop 밖으로 나가면 0</text>
+<text x="420" y="466" class="s" text-anchor="start">대각도 데이터는 데이터셋이 아니라</text>
+<text x="420" y="480" class="s" text-anchor="start">여기서 만들어진다</text>
+<rect x="392" y="516" width="342" height="76" rx="8" class="box"/>
+<text x="408" y="538" class="bt" text-anchor="start">photometric · 열화</text>
+<text x="408" y="558" class="s" text-anchor="start">밝기/대비/감마 0.8 · 그레이 0.2 · 노이즈 0.3</text>
+<text x="408" y="573" class="s" text-anchor="start">블러 0.3 · JPEG 0.3 · mblur 0.25 · erase 0.5</text>
+<text x="408" y="588" class="warn" text-anchor="start">※ random_erase 는 가시성 GT 를 갱신하지 않는다</text>
+<line x1="356" y1="300" x2="388" y2="300" stroke="#455a64" stroke-width="1.5" marker-end="url(#a)"/>
+<line x1="734" y1="300" x2="762" y2="300" stroke="#455a64" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="766" y="110" width="390" height="482" rx="8" class="box"/>
+<text x="782" y="132" class="bt" text-anchor="start">TeacherModel  (학생과 동일 클래스)</text>
+<rect x="780" y="144" width="362" height="74" rx="6" class="box"/>
+<text x="794" y="164" class="bt" text-anchor="start">DINOv3 ViT-L/16 @320  ·  308.2M</text>
+<text x="794" y="182" class="s" text-anchor="start">LVD-1689M 자기지도 사전학습으로 초기화</text>
+<text x="794" y="196" class="s" text-anchor="start">freeze_backbone_epochs = 0 → 처음부터 함께 학습</text>
+<line x1="961" y1="218" x2="961" y2="234" stroke="#455a64" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="780" y="236" width="362" height="46" rx="6" class="box"/>
+<text x="794" y="258" class="bt" text-anchor="start">input_proj + 2D sin-cos pos</text>
+<text x="794" y="274" class="m" text-anchor="start">memory (B, 400, 256)</text>
+<line x1="961" y1="282" x2="961" y2="298" stroke="#455a64" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="780" y="300" width="362" height="50" rx="6" class="box"/>
+<text x="794" y="320" class="bt" text-anchor="start">queries[scheme]  ← 학습형 파라미터</text>
+<text x="794" y="338" class="m" text-anchor="start">ibug68 (68,256) · wflw98 (98,256) · cofw29 (29,256)</text>
+<line x1="961" y1="350" x2="961" y2="366" stroke="#455a64" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="780" y="368" width="362" height="54" rx="6" class="box"/>
+<text x="794" y="388" class="bt" text-anchor="start">TransformerDecoder ×4</text>
+<text x="794" y="406" class="s" text-anchor="start">heads 8 · ffn 1024 · norm_first · 쿼리 ← memory cross-attn</text>
+<line x1="961" y1="422" x2="961" y2="438" stroke="#455a64" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="780" y="440" width="175" height="60" rx="6" class="box"/>
+<text x="792" y="460" class="bt" text-anchor="start">coord_head</text>
+<text x="792" y="478" class="m" text-anchor="start">(B, N, 2) 선형</text>
+<text x="792" y="492" class="s" text-anchor="start">sigmoid 없음</text>
+<rect x="967" y="440" width="175" height="60" rx="6" class="box"/>
+<text x="979" y="460" class="bt" text-anchor="start">vis_head</text>
+<text x="979" y="478" class="m" text-anchor="start">(B, N, 3)</text>
+<text x="979" y="492" class="s" text-anchor="start">밖 / 가림 / 보임</text>
+<rect x="780" y="514" width="362" height="62" rx="6" class="grey"/>
+<text x="794" y="534" class="dead" text-anchor="start">pose_head → rot6d + roll biternion</text>
+<text x="794" y="552" class="dead" text-anchor="start">w_rot = w_roll = w_yaw_weak = 0.0 → 학습되지 않음</text>
+<text x="794" y="566" class="dead" text-anchor="start">export 계약에서도 제외됨 (무의미한 상수 출력)</text>
+<text x="766" y="612" class="s" text-anchor="start">좌표 정규화 기준은 inter-ocular 가 아니라 crop 변 길이(head-NME). 크롭 밖 점도 좌표를 가져야 해서 sigmoid 를 쓰지 않는다.</text>
+<line x1="1156" y1="300" x2="1172" y2="300" stroke="#455a64" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="1176" y="110" width="288" height="132" rx="8" class="box"/>
+<text x="1192" y="132" class="bt" text-anchor="start">손실 (2항뿐)</text>
+<text x="1192" y="152" class="m" text-anchor="start">coord  smooth-L1 β=0.01     ×10.0</text>
+<text x="1192" y="168" class="s" text-anchor="start">       화면 밖(vis=0)은 0.5배</text>
+<text x="1192" y="184" class="m" text-anchor="start">vis    3-class CE, −1 제외    ×1.0</text>
+<line x1="1192" y1="196" x2="1422" y2="196" stroke="#e0e6ea"/>
+<text x="1192" y="216" class="dead" text-anchor="start">rot · roll · yaw_weak         ×0.0</text>
+<rect x="1176" y="258" width="288" height="150" rx="8" class="box"/>
+<text x="1192" y="280" class="bt" text-anchor="start">최적화</text>
+<text x="1192" y="300" class="m" text-anchor="start">AdamW  백본 2e-5 / 헤드 2e-4  (10×)</text>
+<text x="1192" y="315" class="m" text-anchor="start">weight_decay 0.05 · clip 1.0 · bf16</text>
+<text x="1192" y="330" class="m" text-anchor="start">batch 96 × grad_accum 2 = 192</text>
+<text x="1192" y="345" class="m" text-anchor="start">WSD  warmup 200 → 일정 160ep</text>
+<text x="1192" y="360" class="m" text-anchor="start">     → cosine 40ep → 0</text>
+<text x="1192" y="375" class="s" text-anchor="start">EMA 0.0 (비활성) — 대신 LR 을 0까지</text>
+<rect x="1176" y="424" width="288" height="168" rx="8" class="box"/>
+<text x="1192" y="446" class="bt" text-anchor="start">평가 · best 선택</text>
+<text x="1192" y="466" class="m" text-anchor="start">400 step × 200 epoch</text>
+<text x="1192" y="482" class="t" text-anchor="start">val 4셋 head-NME 평균 = val_mean_nme</text>
+<line x1="1192" y1="494" x2="1422" y2="494" stroke="#e0e6ea"/>
+<text x="1192" y="514" class="t" text-anchor="start">300wlp_val (241건)  ← 유일한 청정 계기</text>
+<text x="1192" y="530" class="s" text-anchor="start">300w_vc · wflw_test · cofw_test</text>
+<text x="1192" y="546" class="s" text-anchor="start">   → train_all_splits=true 로 학습에 포함</text>
+<text x="1192" y="574" class="warn" text-anchor="start">⚠ best 판정의 3/4 이 적합도</text>
+<rect x="36" y="636" width="1428" height="96" rx="8" class="box"/>
+<text x="52" y="658" class="bt" text-anchor="start">가중치 계보 — 한 번에 학습한 것이 아니다 (init_from 체인. --resume 과 달리 가중치만 물려받고 새 학습으로 시작한다)</text>
+<text x="110" y="692" class="bt" text-anchor="middle">teacher_vitl_96gb</text>
+<text x="110" y="710" class="s" text-anchor="middle">스크래치 (유일)</text>
+<text x="268" y="692" class="m" text-anchor="middle">v3 → v4 → v5</text>
+<line x1="168" y1="688" x2="210" y2="688" stroke="#90a4ae" stroke-width="1.2" marker-end="url(#ax)"/>
+<text x="400" y="692" class="m" text-anchor="middle">v51 → v6</text>
+<line x1="326" y1="688" x2="342" y2="688" stroke="#90a4ae" stroke-width="1.2" marker-end="url(#ax)"/>
+<text x="540" y="692" class="m" text-anchor="middle">abl_v7_pad005</text>
+<text x="540" y="710" class="s" text-anchor="middle">crop_pad 0.05</text>
+<line x1="458" y1="688" x2="482" y2="688" stroke="#90a4ae" stroke-width="1.2" marker-end="url(#ax)"/>
+<text x="690" y="692" class="m" text-anchor="middle">abl_v8_datafix</text>
+<text x="690" y="710" class="s" text-anchor="middle">데이터 수정</text>
+<line x1="598" y1="688" x2="632" y2="688" stroke="#90a4ae" stroke-width="1.2" marker-end="url(#ax)"/>
+<text x="840" y="692" class="m" text-anchor="middle">…_r2 → …_r3</text>
+<line x1="748" y1="688" x2="782" y2="688" stroke="#90a4ae" stroke-width="1.2" marker-end="url(#ax)"/>
+<text x="1000" y="692" class="m" text-anchor="middle">clean_v1</text>
+<text x="1000" y="710" class="s" text-anchor="middle">가장 깨끗한 데이터</text>
+<line x1="898" y1="688" x2="942" y2="688" stroke="#90a4ae" stroke-width="1.2" marker-end="url(#ax)"/>
+<text x="1160" y="692" class="m" text-anchor="middle">clean_v2</text>
+<text x="1160" y="710" class="s" text-anchor="middle">테스트 split 투입</text>
+<line x1="1058" y1="688" x2="1102" y2="688" stroke="#90a4ae" stroke-width="1.2" marker-end="url(#ax)"/>
+<text x="1340" y="692" class="m" text-anchor="middle">clean_v3</text>
+<text x="1340" y="710" class="warn" text-anchor="middle">★ 학생이 쓰는 교사</text>
+<line x1="1218" y1="688" x2="1282" y2="688" stroke="#90a4ae" stroke-width="1.2" marker-end="url(#ax)"/>
+<text x="36" y="766" class="sec" text-anchor="start">읽는 법</text>
+<text x="36" y="788" class="t" text-anchor="start">· 교사의 감독 신호는 데이터셋의 실제 랜드마크 라벨이다. 다른 모델의 출력을 베끼지 않는다 — 다만 head bbox 는 DEIMv2-Wholebody49 의 pseudo-label 이고,</text>
+<text x="36" y="806" class="t" text-anchor="start">  selftrain_v2 / selftrain_lookup 풀은 이전 세대 교사가 라벨링한 데이터다.</text>
+<text x="36" y="824" class="t" text-anchor="start">· 대각도를 얻으려고 쓴 300W-LP 에서 |yaw| ≤ 10° 만 남긴다 — 투영 라벨 어긋남이 0° 부터 선형으로 커져 10° 를 넘으면 바이어스가 주도하기 때문이다.</text>
+<text x="36" y="842" class="t" text-anchor="start">  그래서 pitch ±85°, roll 360°, yaw ±90° 는 전부 ② 의 호모그래피 증강이 만들어낸다. 교사 학습법의 핵심이 결국 거기로 수렴한다.</text>
+<text x="36" y="860" class="t" text-anchor="start">· 파라미터 그룹은 백본과 헤드를 10배 차이로 나누되, 동결 중인 파라미터도 옵티마이저에 등록해 둔다. requires_grad 로 걸러내면 해제 후에도 영원히 갱신되지 않는다.</text>
+</svg>
