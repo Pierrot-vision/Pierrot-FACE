@@ -77,11 +77,13 @@ face**.
 
 ### What it actually predicts
 
-![FA2D predictions](docs/FA2D/sota_examples_grid.jpg)
-
 > ⚠ 9 of the 10 rows are **WFLW test** images — **HRFFA trained on these images, so its cells there are not a fair comparison** (orange cells). The only row none of the three trained on is the single **LaPa test** row.
 
+![FA2D predictions](docs/FA2D/sota_examples_grid.jpg)
+
 ### Evaluation
+
+> ⚠ **HRFFA put the evaluation sets (WFLW test · 300W · COFW test) into its training set. HRFFA's WFLW and difficulty numbers are therefore not a legitimate evaluation.** The only column where HRFFA can be compared on equal terms is ② LaPa.
 
 All three benchmarks in one table. Every value is measured; references are measured under their own evaluation protocols.
 
@@ -98,8 +100,6 @@ All three benchmarks in one table. Every value is measured; references are measu
 
 *Italic* = measured on images that model was trained on — not comparable.
 Distill **A** = frozen teacher · **B** = teacher fine-tuned jointly on GT.
-
-> ⚠ **HRFFA put the evaluation sets (WFLW test · 300W · COFW test) into its training set. HRFFA's WFLW and difficulty numbers are therefore not a legitimate evaluation.** The only column where HRFFA can be compared on equal terms is ② LaPa.
 
 ## 🧊 3D Dense Face Alignment (FA3D)
 
