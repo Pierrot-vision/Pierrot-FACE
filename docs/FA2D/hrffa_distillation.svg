@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" font-family="NanumSquareRound, 'Noto Sans CJK KR', 'Malgun Gothic', sans-serif" role="img" aria-label="HRFFA 학생 증류 전체 흐름: 하나의 증강 crop 을 320 해상도로 렌더링해 동결된 교사에 그대로 넣고, 같은 crop 을 256 으로 줄여 정규화를 변환한 뒤 학생에 넣는다. 학생은 GT 손실 두 항과 좌표·가시성·토큰 KD 세 항을 함께 받아 학습되고, EMA 가중치가 ONNX 로 내보내진다.">
+<defs>
+  <marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#455a64"/></marker>
+  <marker id="ao" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#ef6c00"/></marker>
+  <marker id="ag" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#2e7d32"/></marker>
+  <marker id="ab" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#5c8ec4"/></marker>
+  <marker id="ax" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#90a4ae"/></marker>
+  <style>
+    .h{font-size:19px;font-weight:bold;fill:#0d1b2a}
+    .sub{font-size:12.5px;fill:#546e7a}
+    .bt{font-size:13.5px;font-weight:bold;fill:#0d1b2a}
+    .t{font-size:12px;fill:#1b2733}
+    .s{font-size:11px;fill:#546e7a}
+    .m{font-size:11px;font-family:ui-monospace,Menlo,Consolas,monospace;fill:#263238}
+    .lbl{font-size:10.5px;fill:#455a64}
+    .warn{font-size:11px;fill:#c62828}
+    .dead{font-size:11px;fill:#90a4ae}
+    .sec{font-size:11px;font-weight:bold;letter-spacing:1.2px;fill:#78909c}
+    .box{fill:#fff;stroke:#b0bec5;stroke-width:1.2}
+    .acc{fill:#fffdf5;stroke:#ef6c00;stroke-width:1.8}
+    .kd{fill:#f1f8f2;stroke:#2e7d32;stroke-width:1.6}
+    .frz{fill:#eef3f9;stroke:#5c8ec4;stroke-width:1.6}
+    .grey{fill:#f4f7f9;stroke:#cfd8dc;stroke-width:1.1;stroke-dasharray:4 3}
+  </style>
+</defs>
+<rect width="1500" height="900" fill="#f7f9fa"/>
+<text x="36" y="42" class="h" text-anchor="start">HRFFA 학생 증류 — 온라인 KD</text>
+<text x="36" y="64" class="sub" text-anchor="start">src/hrffa/train/distill_student.py · preset student_s256_96gb / student_hg0_wsd 해석값. 같은 crop 하나가 두 해상도로 갈라진다 — 교사는 320 그대로, 학생은 256(또는 96)으로 축소해 받는다.</text>
+<text x="36" y="96" class="sec" text-anchor="start">① 입력 (교사 학습과 동일)</text>
+<text x="400" y="96" class="sec" text-anchor="start">② 두 갈래</text>
+<text x="920" y="96" class="sec" text-anchor="start">③ 손실 = GT + KD</text>
+<text x="1240" y="96" class="sec" text-anchor="start">④ 산출</text>
+<rect x="36" y="110" width="320" height="132" rx="8" class="box"/>
+<text x="52" y="132" class="bt" text-anchor="start">데이터 · 기하 증강</text>
+<text x="52" y="152" class="t" text-anchor="start">교사 학습과 완전히 같은 파이프라인</text>
+<text x="52" y="168" class="s" text-anchor="start">(통합 jsonl → 홀드아웃 → SchemeBatchSampler</text>
+<text x="52" y="184" class="s" text-anchor="start">  → 호모그래피 증강 → photometric)</text>
+<line x1="52" y1="196" x2="282" y2="196" stroke="#e0e6ea"/>
+<text x="52" y="216" class="t" text-anchor="start">차이는 렌더링 해상도 하나뿐:</text>
+<text x="52" y="232" class="m" text-anchor="start">teacher_size = 320</text>
+<line x1="196" y1="242" x2="196" y2="268" stroke="#455a64" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="36" y="270" width="320" height="66" rx="8" class="acc"/>
+<text x="52" y="292" class="bt" text-anchor="start">증강 crop @320</text>
+<text x="52" y="312" class="s" text-anchor="start">imagenet 정규화 · GT points / vis 동봉</text>
+<text x="52" y="327" class="s" text-anchor="start">정규화 좌표는 해상도 비독립 → GT 공유 가능</text>
+<line x1="356" y1="303" x2="392" y2="190" stroke="#5c8ec4" stroke-width="2" marker-end="url(#ab)"/>
+<line x1="356" y1="303" x2="392" y2="420" stroke="#455a64" stroke-width="2" marker-end="url(#a)"/>
+<text x="374" y="176" class="lbl" text-anchor="middle">그대로</text>
+<text x="372" y="440" class="lbl" text-anchor="middle">축소</text>
+<rect x="400" y="110" width="496" height="152" rx="8" class="frz"/>
+<text x="416" y="132" class="bt" text-anchor="start">교사  clean_v3  —  동결</text>
+<text x="416" y="152" class="m" text-anchor="start">teacher.eval() · requires_grad = False · torch.no_grad()</text>
+<text x="416" y="168" class="m" text-anchor="start">DINOv3 ViT-L/16 @320 · 308.2M · bf16</text>
+<text x="416" y="184" class="m" text-anchor="start">가중치 로드: ck['ema'] or ck['model']</text>
+<line x1="416" y1="196" x2="646" y2="196" stroke="#e0e6ea"/>
+<text x="416" y="216" class="m" text-anchor="start">t_out = { points, vis_logits, dec_tokens }</text>
+<text x="416" y="250" class="s" text-anchor="start">✕ 역전파 없음 — 교사는 스텝마다 목표를 만들어 주는 채점기일 뿐</text>
+<rect x="400" y="300" width="496" height="96" rx="8" class="box"/>
+<text x="416" y="322" class="bt" text-anchor="start">해상도 · 정규화 변환 (학습 스텝 안에서)</text>
+<text x="416" y="342" class="m" text-anchor="start">F.interpolate(320 → 256, bilinear, antialias=True)</text>
+<text x="416" y="358" class="m" text-anchor="start">z_new = z_im · s_im/s_new + (m_im − m_new)/s_new</text>
+<text x="416" y="374" class="s" text-anchor="start">imagenet → center05 = (x − 0.5)/0.5  ← 엄밀 아핀 변환</text>
+<line x1="648" y1="396" x2="648" y2="418" stroke="#455a64" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="400" y="420" width="496" height="186" rx="8" class="box"/>
+<text x="416" y="442" class="bt" text-anchor="start">학생  —  TeacherModel 과 동일 클래스, 백본만 교체</text>
+<text x="416" y="462" class="m" text-anchor="start">vitt        ViT-T/16  @256   9.0M   d_model 256 → adapter = Identity</text>
+<text x="416" y="478" class="m" text-anchor="start">hgnetv2_b0  CNN       @256   1.6M   d_model 128 → adapter = Linear</text>
+<text x="416" y="494" class="m" text-anchor="start">hgnetv2_b0  CNN       @96    1.6M   feat_stride 8 (32×32 격자)</text>
+<line x1="416" y1="506" x2="646" y2="506" stroke="#e0e6ea"/>
+<text x="416" y="526" class="s" text-anchor="start">쿼리 · 디코더 · coord/vis 헤드 구조는 교사와 같다</text>
+<text x="416" y="542" class="s" text-anchor="start">학생 백본도 처음부터 함께 학습 (freeze_backbone_epochs = 0)</text>
+<text x="416" y="558" class="s" text-anchor="start">vitt 는 정규화를 patch embed conv 에 접어 넣는다</text>
+<text x="416" y="574" class="s" text-anchor="start">   → ONNX 안에 정규화 연산이 없다</text>
+<text x="416" y="590" class="m" text-anchor="start">s_out = { points, vis_logits, dec_tokens }</text>
+<line x1="896" y1="186" x2="916" y2="250" stroke="#5c8ec4" stroke-width="2" marker-end="url(#ab)"/>
+<line x1="896" y1="500" x2="916" y2="420" stroke="#455a64" stroke-width="2" marker-end="url(#a)"/>
+<rect x="920" y="110" width="300" height="104" rx="8" class="box"/>
+<text x="936" y="132" class="bt" text-anchor="start">GT 손실 — 교사와 동일</text>
+<text x="936" y="152" class="m" text-anchor="start">coord  smooth-L1 β=0.01    ×10.0</text>
+<text x="936" y="168" class="m" text-anchor="start">vis    3-class CE          ×1.0</text>
+<text x="936" y="184" class="s" text-anchor="start">GT 를 버리지 않는다. KD 는 더해질 뿐</text>
+<rect x="920" y="232" width="300" height="176" rx="8" class="kd"/>
+<text x="936" y="254" class="bt" text-anchor="start">KD 손실 3항</text>
+<text x="936" y="274" class="m" text-anchor="start">kd_coord  0.5</text>
+<text x="936" y="290" class="s" text-anchor="start">   smooth-L1(s.points, t.points)</text>
+<text x="936" y="306" class="m" text-anchor="start">kd_vis    0.5     T = 2.0</text>
+<text x="936" y="322" class="s" text-anchor="start">   KL(log_softmax(s/T) ‖ softmax(t/T)) × T²</text>
+<text x="936" y="338" class="m" text-anchor="start">kd_tok    0.2</text>
+<text x="936" y="354" class="s" text-anchor="start">   smooth-L1(adapter(s.dec_tokens),</text>
+<text x="936" y="370" class="s" text-anchor="start">             t.dec_tokens)</text>
+<line x1="1070" y1="408" x2="1070" y2="428" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#ag)"/>
+<rect x="920" y="430" width="300" height="142" rx="8" class="box"/>
+<text x="936" y="452" class="bt" text-anchor="start">최적화 (학생만)</text>
+<text x="936" y="472" class="m" text-anchor="start">AdamW  백본 1e-4 / 헤드 2e-4</text>
+<text x="936" y="488" class="s" text-anchor="start">   ← 교사(2e-5)보다 백본 LR 이 5배 크다</text>
+<text x="936" y="504" class="m" text-anchor="start">batch 96 × grad_accum 1</text>
+<text x="936" y="520" class="m" text-anchor="start">WSD · warmup 500 · 400 step/epoch</text>
+<text x="936" y="536" class="m" text-anchor="start">EMA 0.999  ← 교사 학습과 달리 활성</text>
+<text x="936" y="552" class="m" text-anchor="start">250 epoch(vitt) / 400 epoch(hg0)</text>
+<path d="M 1070 572 L 1070 630 L 648 630 L 648 610" fill="none" stroke="#2e7d32" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#ag)"/>
+<text x="700" y="624" class="lbl" text-anchor="start">역전파는 학생 + adapter 에만 흐른다 (교사는 no_grad)</text>
+<line x1="1220" y1="300" x2="1236" y2="300" stroke="#455a64" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="1240" y="110" width="224" height="128" rx="8" class="box"/>
+<text x="1256" y="132" class="bt" text-anchor="start">best 선택</text>
+<text x="1256" y="152" class="t" text-anchor="start">val 4셋 head-NME 평균</text>
+<text x="1256" y="168" class="t" text-anchor="start">EMA 가중치를 저장</text>
+<line x1="1256" y1="180" x2="1486" y2="180" stroke="#e0e6ea"/>
+<text x="1256" y="200" class="s" text-anchor="start">val 은 학생 해상도 ·</text>
+<text x="1256" y="216" class="s" text-anchor="start">학생 정규화로 직접 렌더링</text>
+<line x1="1352" y1="238" x2="1352" y2="258" stroke="#455a64" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="1240" y="260" width="224" height="196" rx="8" class="box"/>
+<text x="1256" y="282" class="bt" text-anchor="start">ONNX export</text>
+<text x="1256" y="302" class="m" text-anchor="start">decoder → ExportDecoder</text>
+<text x="1256" y="318" class="s" text-anchor="start">   (B,H,L,D) 레이아웃으로 교체</text>
+<text x="1256" y="334" class="m" text-anchor="start">torch.onnx.export opset 17</text>
+<text x="1256" y="350" class="m" text-anchor="start">onnxslim → onnxsim</text>
+<text x="1256" y="366" class="m" text-anchor="start">nbatch: batch-1 → N</text>
+<text x="1256" y="382" class="m" text-anchor="start">onnx_web_compat (WebGPU)</text>
+<line x1="1256" y1="394" x2="1486" y2="394" stroke="#e0e6ea"/>
+<text x="1256" y="414" class="s" text-anchor="start">ORT 로 수치 일치 검증</text>
+<rect x="1240" y="472" width="224" height="100" rx="8" class="box"/>
+<text x="1256" y="494" class="bt" text-anchor="start">CPU 지연 (i9-10900K)</text>
+<text x="1256" y="514" class="m" text-anchor="start">vitt-256   12.4 ms</text>
+<text x="1256" y="529" class="m" text-anchor="start">hg0-256     5.2 ms</text>
+<text x="1256" y="544" class="m" text-anchor="start">vitt-096    4.6 ms</text>
+<text x="1256" y="559" class="m" text-anchor="start">hg0-096     1.5 ms</text>
+<rect x="36" y="660" width="1428" height="96" rx="8" class="box"/>
+<text x="52" y="682" class="bt" text-anchor="start">증류 결과 — 학생은 교사에 못 미치지만 파라미터를 34~190배 줄인다</text>
+<text x="90" y="706" class="s" text-anchor="middle">모델</text>
+<text x="300" y="706" class="s" text-anchor="middle">입력</text>
+<text x="430" y="706" class="s" text-anchor="middle">Params</text>
+<text x="580" y="706" class="s" text-anchor="middle">GFLOPs</text>
+<text x="730" y="706" class="s" text-anchor="middle">CPU ms</text>
+<text x="880" y="706" class="s" text-anchor="middle">WFLW Full</text>
+<text x="1030" y="706" class="s" text-anchor="middle">WFLW Pose</text>
+<text x="1190" y="706" class="s" text-anchor="middle">300W Full</text>
+<text x="1350" y="706" class="s" text-anchor="middle">COFW</text>
+<text x="90" y="726" class="m" text-anchor="middle">vitl-320 (교사)</text>
+<text x="300" y="726" class="m" text-anchor="middle">320</text>
+<text x="430" y="726" class="m" text-anchor="middle">308.2M</text>
+<text x="580" y="726" class="m" text-anchor="middle">262.63</text>
+<text x="730" y="726" class="m" text-anchor="middle">520</text>
+<text x="880" y="726" class="m" text-anchor="middle">1.51</text>
+<text x="1030" y="726" class="m" text-anchor="middle">2.54</text>
+<text x="1190" y="726" class="m" text-anchor="middle">1.03</text>
+<text x="1350" y="726" class="m" text-anchor="middle">1.21</text>
+<text x="90" y="742" class="m" text-anchor="middle">vitt-256</text>
+<text x="300" y="742" class="m" text-anchor="middle">256</text>
+<text x="430" y="742" class="m" text-anchor="middle">9.0M</text>
+<text x="580" y="742" class="m" text-anchor="middle">4.09</text>
+<text x="730" y="742" class="m" text-anchor="middle">12.4</text>
+<text x="880" y="742" class="m" text-anchor="middle">3.36</text>
+<text x="1030" y="742" class="m" text-anchor="middle">5.64</text>
+<text x="1190" y="742" class="m" text-anchor="middle">2.66</text>
+<text x="1350" y="742" class="m" text-anchor="middle">2.76</text>
+<text x="90" y="758" class="m" text-anchor="middle">hg0-096</text>
+<text x="300" y="758" class="m" text-anchor="middle">96</text>
+<text x="430" y="758" class="m" text-anchor="middle">1.6M</text>
+<text x="580" y="758" class="m" text-anchor="middle">0.26</text>
+<text x="730" y="758" class="m" text-anchor="middle">1.5</text>
+<text x="880" y="758" class="m" text-anchor="middle">7.46</text>
+<text x="1030" y="758" class="m" text-anchor="middle">14.71</text>
+<text x="1190" y="758" class="m" text-anchor="middle">4.77</text>
+<text x="1350" y="758" class="m" text-anchor="middle">4.99</text>
+<text x="1180" y="682" class="warn" text-anchor="end">⚠ 벤치마크 점수가 아니라 학습 분포 적합도 (WFLW/300W/COFW 전 split 이 학습에 포함)</text>
+<text x="36" y="790" class="sec" text-anchor="start">읽는 법</text>
+<text x="36" y="812" class="t" text-anchor="start">· 오프라인 KD 가 아니라 온라인이다 — 교사 출력을 미리 뽑아 저장하지 않고 매 스텝 함께 forward 한다. 증강이 매번 달라지므로 캐시할 수 없기 때문이다.</text>
+<text x="36" y="830" class="t" text-anchor="start">· 학생은 GT 와 교사 출력을 둘 다 본다. 교사가 틀린 곳에서는 GT 가 잡아 주고, GT 가 없는 정보(가시성 분포·중간 표현)는 교사가 채운다.</text>
+<text x="36" y="848" class="t" text-anchor="start">· 학생의 백본 LR 이 교사보다 5배 크다(1e-4 vs 2e-5). 교사의 DINOv3 는 망가뜨리면 안 되는 대규모 사전학습이지만, 학생 백본은 훨씬 작고 이 태스크에 맞추는 것이 목적이기 때문이다.</text>
+</svg>

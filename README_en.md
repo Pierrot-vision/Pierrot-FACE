@@ -11,6 +11,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/python-3.9-blue.svg" alt="python"/>
   <img src="https://img.shields.io/badge/PyTorch-2.2-ee4c2c.svg" alt="pytorch"/>
+  <img src="https://img.shields.io/badge/FA2D-HRFFA%2B-success.svg" alt="fa2d"/>
   <img src="https://img.shields.io/badge/FA3D-3DDFA__V2-success.svg" alt="fa3d"/>
   <img src="https://img.shields.io/badge/inference--only-✓-brightgreen.svg" alt="inference-only"/>
   <img src="https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-orange.svg" alt="license"/>
@@ -30,7 +31,7 @@ is to **separate the work into large categories** — anti-spoofing / 3D alignme
 recognition — rather than lumping them into a single pipeline, so that the algorithm at each
 stage can be reproduced, swapped and compared independently.
 
-This repository ships **only the inference path of FA3D (3D Dense Face Alignment)**.
+This repository ships **only the inference paths of FA2D (2D Face Alignment) and FA3D (3D Dense Face Alignment)**.
 Losses, optimization, augmentation and the training datasets have been stripped out of the
 training repository; what remains is **exactly what is needed to turn one checkpoint into a
 face**.
@@ -76,11 +77,16 @@ face**.
 
 Our goal is to **find landmarks well even under extreme poses**. The results below show that we have reached that goal to a good extent.
 
+- 📘 **Task basics** (landmark conventions · datasets · NME normalization) — [LAB/FA2D/FA2D.md](LAB/FA2D/FA2D.md)
+- 📗 **Implementation and experiment log** (full comparison with HRFFA · Peppa · three benchmarks) — [LAB/FA2D/HRFFA_Plus.md](LAB/FA2D/HRFFA_Plus.md)
+- 📙 **Phase-by-phase record** — [LAB/FA2D/Exp/](LAB/FA2D/Exp/) (Phase 1–16)
+- 🔀 **How FA2D and FA3D differ** — [LAB/FA2D_vs_FA3D.md](LAB/FA2D_vs_FA3D.md)
+
 ### What it actually predicts
 
 > ⚠ 9 of the 10 rows are **WFLW test** images — **HRFFA trained on these images, so its cells there are not a fair comparison** (orange cells). The only row none of the three trained on is the single **LaPa test** row.
 
-![FA2D predictions](docs/FA2D/sota_examples_grid.jpg)
+![FA2D predictions](docs/FA2D/sota_examples/sota_examples_grid.jpg)
 
 ### Evaluation
 
@@ -96,8 +102,8 @@ All three benchmarks in one table. Every value is measured; references are measu
 | D-ViT (paper) | ViT | 96.4M | 256 · face | — | coords | — | WFLW train | ❌ | ❌ | **3.75** | — | model not released | — | — | — | — | — | — |
 | Peppa Teacher | HRNet-W18 | 11.53M | 256 · face | 131px | heatmap+offset | — | WFLW train 7,500 | ❌ | ❌ | 3.959 | — | 2.164 | 0.65% | 4.440 | 124.851 | 39.097 | 4.941 | 7.271 |
 | Peppa Student | MobileNetV3 | 3.25M | 256 · face | 131px | heatmap+offset | B | WFLW train 7,500 | ❌ | ❌ | 4.353 | — | 2.214 | 0.70% | 4.777 | 122.079 | 38.872 | 5.308 | 7.112 |
-| **Our teacher `full_v12`** | DINOv3 ViT-L/16 | 311M | 448 · face | 245px | coords+coarse | — | 33,357 | ❌ | train+val | **3.916** | **1.48%** | **1.693** | 0.20% | **3.799** | **3.997** | **4.070** | **3.948** | **4.032** |
-| **Our student `stu_final_v2`** | ViT-T/16 | 10.54M | 448 · face | 245px | hm4+coords | A (`full_v12` frozen) | same as teacher | ❌ | train+val | **4.227** | 3.00% | **1.766** | **0.15%** | 4.033 | 4.119 | 4.358 | 4.316 | 4.470 |
+| **Our teacher `full_v12`** | DINOv3 ViT-L/16 | 310.1M | 448 · face | 245px | coords+coarse | — | 33,357 | ❌ | train+val | **3.916** | **1.48%** | **1.693** | 0.20% | **3.799** | **3.997** | **4.070** | **3.948** | **4.032** |
+| **Our student `stu_final_v2`** | ViT-T/16 | 10.53M | 448 · face | 245px | hm4+coords | A (`full_v12` frozen) | same as teacher | ❌ | train+val | **4.227** | 3.00% | **1.766** | **0.15%** | 4.033 | 4.119 | 4.358 | 4.316 | 4.470 |
 
 *Italic* = measured on images that model was trained on — not comparable.
 Distill **A** = frozen teacher · **B** = teacher fine-tuned jointly on GT.
@@ -110,7 +116,8 @@ is **the code that runs that result**.
 
 - 📘 **Algorithm** (equations · derivations · parameter semantics · evaluation protocol) — [LAB/FA3D/3DDFA_V2.md](LAB/FA3D/3DDFA_V2.md)
 - 📗 **Implementation and experiment log** (bugs · measurements · analysis) — [LAB/FA3D/FA3D.md](LAB/FA3D/FA3D.md)
-- 📙 **Phase-by-phase record** — [LAB/FA3D/Exp/](LAB/FA3D/Exp/) (Phase 1–10)
+- 📙 **Phase-by-phase record** — [LAB/FA3D/Exp/](LAB/FA3D/Exp/) (Phase 1–12)
+- 🔀 **How FA2D and FA3D differ** — [LAB/FA2D_vs_FA3D.md](LAB/FA2D_vs_FA3D.md)
 
 > ⚠ The LAB documents are written in Korean — they are the original research notes,
 > copied here unchanged rather than translated, so the record stays exactly as it was made.
@@ -218,7 +225,14 @@ cp paths.local.env.example paths.local.env
 entry points directly and everything is a CLI flag.
 
 ```bash
-# ── Inference ─────────────────────────────────────────────────────
+# ── FA2D ──────────────────────────────────────────────────────────
+python eval/FA2D/infer.py    --ckpt runs/fa2d/<run>/best.pth --source data/samples --grid 3
+python eval/FA2D/infer.py    --ckpt … --source clip.mp4 --max-faces 4 --drop-empty
+python eval/FA2D/evaluate.py --ckpt runs/fa2d/<run>/best.pth             # ① WFLW · ② LaPa · ③ difficulty
+python eval/FA2D/evaluate.py --ckpt <teacher> <student> --only wflw lapa # quick check
+bash scripts/FA2D/eval.sh · bash scripts/FA2D/infer.sh
+
+# ── FA3D · Inference ──────────────────────────────────────────────
 # Accepts an image, a directory, a list.txt, or a video. Always prints speed.
 python eval/FA3D/infer.py --ckpt runs/fa3d/<run>/best.pth --source data/samples --grid 3
 python eval/FA3D/infer.py --ckpt … --source clip.mp4 --mesh --corner3d 0.24 --drop-empty
@@ -259,19 +273,29 @@ Pierrot_FR_Infer/
 │   ├── paths.py            # 🗺️ dataset / weight / output roots (paths.local.env · env vars)
 │   └── eval_fa3d.py        #    eval-set and BFM paths — only what the checkpoint cannot know
 ├── paths.local.env         # machine-specific paths — not committed (copy the .example)
+├── pierrotfr/data/detect.py # face detection (FaceBoxes → MTCNN → Haar) — shared by FA2D · FA3D
+├── pierrotfr/FA2D/         # 📦 inference path only
+│   ├── infer.py            #   checkpoint loading · flip-TTA · FA2D class (detect → 2-pass crop) ★entry point
+│   ├── benchmark.py        #   ① WFLW · ② LaPa common-38 · ③ HRFFA difficulty protocol
+│   ├── data.py · geometric.py #  raw readers · crop convention · projective crops (roll · pitch · yaw)
+│   ├── metrics.py · render.py #  io-NME · FR10 · AUC10 / landmark drawing
+│   └── models/             #   point-query decoder + DINOv3 ViT-L · ViT-T · light CNNs
 ├── pierrotfr/FA3D/         # 📦 inference path only
 │   ├── infer.py            #   checkpoint loading · batch inference · FA3D class ★entry point
 │   ├── bfm.py              #   3DMM decoder — 62-d → 38,365 vertices / 68 landmarks
 │   ├── crop.py             #   face crop convention (ported from 3DDFA_V2) — half the accuracy
 │   ├── data.py             #   preprocessing ((x−127.5)/128 · border) + eval dataset
-│   ├── detect.py           #   face detection (FaceBoxes → MTCNN → Haar fallback) · demo only
 │   ├── render.py           #   point-splat renderer — novel view · mesh overlay · 68 points
 │   ├── metrics.py          #   AFLW2000-3D / AFLW NME (yaw-bin convention)
 │   ├── benchmark.py        #   eval-set pipeline (predict → landmarks → NME)
 │   └── models/             #   backbones — neither the lrr head nor the synergy cycle is built
+├── eval/FA2D/
+│   ├── infer.py            # 🔍 photos/video → 98 landmarks (+H.264/GIF, timing)
+│   └── evaluate.py         #    the three axes of the README table (several ckpts · flip-TTA)
 ├── eval/FA3D/
 │   ├── infer.py            # 🔍 photos/video → 68 points / 3D mesh (+H.264/GIF, timing)
 │   └── evaluate.py         #    AFLW2000-3D / AFLW NME (several ckpts + released weights)
+├── scripts/FA2D/           # 🧪 eval.sh · infer.sh bundles
 ├── scripts/FA3D/           # 🧪 figures · analysis · speed (bundled by eval.sh · infer.sh)
 ├── LAB/                    # 📚 read-only copy of the training repo's experiment record
 ├── docs/                   # banner · result visualizations · demos
@@ -284,6 +308,9 @@ Pierrot_FR_Infer/
 
 | Removed | Why |
 |---|---|
+| FA2D `train_fa2d*.py` · `engine.py` · `losses.py` | training loop · distillation · losses |
+| FA2D `trajectory.py` · `depthwarp.py` · augmentation · samplers | synthetic clips · extreme-pitch synthesis · training augmentation |
+| FA2D `configs/args_fa2d.py` (1,257 lines) | hyperparameters — **the checkpoint carries them** |
 | `train_fa3d.py` · `engine.py` | meta-joint optimization (Algorithm 1) — the training loop |
 | `losses.py` | VDC · fWPDC · lrr · parameter-space loss |
 | `svs.py` | short-video-synthesis — a training augmentation |

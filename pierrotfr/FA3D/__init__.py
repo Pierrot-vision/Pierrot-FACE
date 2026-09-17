@@ -3,7 +3,6 @@
     bfm.py       3DMM 디코더 — 62-d 를 38,365 정점 / 68 랜드마크로 편다
     crop.py      얼굴 크롭 규약 (3DDFA_V2 이식) — 추론 정확도의 절반이 여기서 갈린다
     data.py      전처리 ((x−127.5)/128 · 테두리 0) + 사전 크롭 평가 데이터셋
-    detect.py    얼굴 검출 (FaceBoxes → MTCNN → Haar 폴백) — 데모 전용
     infer.py     체크포인트 로드 · 배치 추론 · FA3D 클래스 (이미지 한 장 → 얼굴)
     render.py    점 스플랫 렌더러 — 새 시점 재렌더 · 메쉬 오버레이 · 68점 그리기
     metrics.py   AFLW2000-3D / AFLW NME (yaw 구간 규약)

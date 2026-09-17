@@ -11,6 +11,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/python-3.9-blue.svg" alt="python"/>
   <img src="https://img.shields.io/badge/PyTorch-2.2-ee4c2c.svg" alt="pytorch"/>
+  <img src="https://img.shields.io/badge/FA2D-HRFFA%2B-success.svg" alt="fa2d"/>
   <img src="https://img.shields.io/badge/FA3D-3DDFA__V2-success.svg" alt="fa3d"/>
   <img src="https://img.shields.io/badge/inference--only-✓-brightgreen.svg" alt="inference-only"/>
   <img src="https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-orange.svg" alt="license"/>
@@ -30,7 +31,7 @@
 **큰 카테고리로 분리**해, 각 단계의 알고리즘을 독립적으로 재현·교체·비교할 수 있게
 만드는 것이 목표입니다.
 
-이 저장소는 그중 **FA3D(3D Dense Face Alignment)의 추론 경로만** 떼어 낸 배포본입니다.
+이 저장소는 그중 **FA2D(2D 얼굴 정렬)와 FA3D(3D 밀집 얼굴 정렬)의 추론 경로만** 떼어 낸 배포본입니다.
 학습 저장소에서 손실·최적화·증강·학습 데이터셋을 걷어내고, **체크포인트 하나로 얼굴을
 내는 데 필요한 것만** 남겼습니다.
 
@@ -72,11 +73,16 @@
 
 우리의 목표는 **극단적인 자세에서도 랜드마크를 잘 찾는 것**입니다. 아래는 그 목표를 어느 정도 달성했음을 보여 주는 결과입니다.
 
+- 📘 **태스크 공통** (랜드마크 규약 · 데이터셋 · NME 정규화 기준) — [LAB/FA2D/FA2D.md](LAB/FA2D/FA2D.md)
+- 📗 **구현 · 실험 기록** (HRFFA · Peppa 전면 대조 · 세 벤치마크) — [LAB/FA2D/HRFFA_Plus.md](LAB/FA2D/HRFFA_Plus.md)
+- 📙 **실험 단계별 기록** — [LAB/FA2D/Exp/](LAB/FA2D/Exp/) (Phase 1~16)
+- 🔀 **FA2D 와 FA3D 는 무엇이 다른가** — [LAB/FA2D_vs_FA3D.md](LAB/FA2D_vs_FA3D.md)
+
 ### 우리 실제 예측 결과
 
 > ⚠ 10행 중 9행이 **WFLW test** 이미지입니다 — **HRFFA 는 이 이미지들을 학습했으므로 해당 칸은 정당한 비교가 아닙니다** (주황 칸). 세 연구 모두 학습하지 않은 행은 **LaPa test** 1행뿐입니다.
 
-![FA2D 예측 결과](docs/FA2D/sota_examples_grid.jpg)
+![FA2D 예측 결과](docs/FA2D/sota_examples/sota_examples_grid.jpg)
 
 ### 평가 결과
 
@@ -92,8 +98,8 @@
 | D-ViT (논문) | ViT | 96.4M | 256 · 얼굴 | — | 좌표 | — | WFLW train | ❌ | ❌ | **3.75** | — | 모델 미공개 | — | — | — | — | — | — |
 | Peppa Teacher | HRNet-W18 | 11.53M | 256 · 얼굴 | 131px | 히트맵+오프셋 | — | WFLW train 7,500 | ❌ | ❌ | 3.959 | — | 2.164 | 0.65% | 4.440 | 124.851 | 39.097 | 4.941 | 7.271 |
 | Peppa Student | MobileNetV3 | 3.25M | 256 · 얼굴 | 131px | 히트맵+오프셋 | B | WFLW train 7,500 | ❌ | ❌ | 4.353 | — | 2.214 | 0.70% | 4.777 | 122.079 | 38.872 | 5.308 | 7.112 |
-| **우리 교사 `full_v12`** | DINOv3 ViT-L/16 | 311M | 448 · 얼굴 | 245px | 좌표+coarse | — | 33,357 | ❌ | train+val | **3.916** | **1.48%** | **1.693** | 0.20% | **3.799** | **3.997** | **4.070** | **3.948** | **4.032** |
-| **우리 학생 `stu_final_v2`** | ViT-T/16 | 10.54M | 448 · 얼굴 | 245px | hm4+좌표 | A (`full_v12` 고정) | 교사와 동일 | ❌ | train+val | **4.227** | 3.00% | **1.766** | **0.15%** | 4.033 | 4.119 | 4.358 | 4.316 | 4.470 |
+| **우리 교사 `full_v12`** | DINOv3 ViT-L/16 | 310.1M | 448 · 얼굴 | 245px | 좌표+coarse | — | 33,357 | ❌ | train+val | **3.916** | **1.48%** | **1.693** | 0.20% | **3.799** | **3.997** | **4.070** | **3.948** | **4.032** |
+| **우리 학생 `stu_final_v2`** | ViT-T/16 | 10.53M | 448 · 얼굴 | 245px | hm4+좌표 | A (`full_v12` 고정) | 교사와 동일 | ❌ | train+val | **4.227** | 3.00% | **1.766** | **0.15%** | 4.033 | 4.119 | 4.358 | 4.316 | 4.470 |
 
 *기울임* = 그 모델이 학습한 이미지에서 잰 값 — 비교 불가.
 증류 **A** = 교사 고정 · **B** = 교사를 GT 로 함께 미세조정.
@@ -105,7 +111,8 @@
 
 - 📘 **알고리즘** (수식 · 유도 · 파라미터 의미 · 평가 규약) — [LAB/FA3D/3DDFA_V2.md](LAB/FA3D/3DDFA_V2.md)
 - 📗 **구현 · 실험 기록** (버그 · 측정 · 분석) — [LAB/FA3D/FA3D.md](LAB/FA3D/FA3D.md)
-- 📙 **실험 단계별 기록** — [LAB/FA3D/Exp/](LAB/FA3D/Exp/) (Phase 1~10)
+- 📙 **실험 단계별 기록** — [LAB/FA3D/Exp/](LAB/FA3D/Exp/) (Phase 1~12)
+- 🔀 **FA2D 와 FA3D 는 무엇이 다른가** — [LAB/FA2D_vs_FA3D.md](LAB/FA2D_vs_FA3D.md)
 
 ### 우리 실제 예측 결과 (영상 데모)
 
@@ -204,7 +211,14 @@ cp paths.local.env.example paths.local.env
 `---- 여기만 바꾼다 ----` 블록에 있습니다. 파이썬 엔트리를 직접 부르면 전부 CLI 인자입니다.
 
 ```bash
-# ── 추론 ──────────────────────────────────────────────────────────
+# ── FA2D ──────────────────────────────────────────────────────────
+python eval/FA2D/infer.py    --ckpt runs/fa2d/<런>/best.pth --source data/samples --grid 3
+python eval/FA2D/infer.py    --ckpt … --source clip.mp4 --max-faces 4 --drop-empty
+python eval/FA2D/evaluate.py --ckpt runs/fa2d/<런>/best.pth              # ① WFLW · ② LaPa · ③ 난이도
+python eval/FA2D/evaluate.py --ckpt <교사> <학생> --only wflw lapa        # 빠른 확인
+bash scripts/FA2D/eval.sh · bash scripts/FA2D/infer.sh
+
+# ── FA3D · 추론 ───────────────────────────────────────────────────
 # 이미지 · 디렉토리 · 목록.txt · 영상을 모두 받는다. 속도를 항상 함께 출력한다
 python eval/FA3D/infer.py --ckpt runs/fa3d/<런>/best.pth --source data/samples --grid 3
 python eval/FA3D/infer.py --ckpt … --source clip.mp4 --mesh --corner3d 0.24 --drop-empty
@@ -245,19 +259,29 @@ Pierrot_FR_Infer/
 │   ├── paths.py            # 🗺️ 데이터/가중치/산출물 루트 (paths.local.env · 환경변수)
 │   └── eval_fa3d.py        #    평가셋·BFM 경로 — 체크포인트가 모르는 것만
 ├── paths.local.env         # 서버 고유 경로 — 커밋 제외 (.example 을 복사해 쓴다)
+├── pierrotfr/data/detect.py # 얼굴 검출 (FaceBoxes → MTCNN → Haar) — FA2D · FA3D 공용
+├── pierrotfr/FA2D/         # 📦 추론 경로만
+│   ├── infer.py            #   체크포인트 로드 · flip-TTA · FA2D 클래스(검출 → 2 패스 크롭) ★진입점
+│   ├── benchmark.py        #   ① WFLW · ② LaPa 공통 38점 · ③ HRFFA 난이도 프로토콜
+│   ├── data.py · geometric.py #  원본 리더 · 크롭 규약 · 사영변환 크롭(roll · pitch · yaw)
+│   ├── metrics.py · render.py #  io-NME · FR10 · AUC10 / 랜드마크 그리기
+│   └── models/             #   점 쿼리 디코더 + DINOv3 ViT-L · ViT-T · 경량 CNN
 ├── pierrotfr/FA3D/         # 📦 추론 경로만
 │   ├── infer.py            #   체크포인트 로드 · 배치 추론 · FA3D 클래스 ★진입점
 │   ├── bfm.py              #   3DMM 디코더 — 62-d → 38,365 정점 / 68 랜드마크
 │   ├── crop.py             #   얼굴 크롭 규약 (3DDFA_V2 이식) — 정확도의 절반
 │   ├── data.py             #   전처리 ((x−127.5)/128 · 테두리 0) + 평가 데이터셋
-│   ├── detect.py           #   얼굴 검출 (FaceBoxes → MTCNN → Haar 폴백) · 데모 전용
 │   ├── render.py           #   점 스플랫 렌더러 — 새 시점 · 메쉬 오버레이 · 68점
 │   ├── metrics.py          #   AFLW2000-3D / AFLW NME (yaw 구간 규약)
 │   ├── benchmark.py        #   평가셋 파이프라인 (예측 → 랜드마크 → NME)
 │   └── models/             #   백본 — lrr 헤드도 synergy 순환도 만들지 않는다
+├── eval/FA2D/
+│   ├── infer.py            # 🔍 사진·영상 → 98 랜드마크 (+H.264/GIF, 속도 계측)
+│   └── evaluate.py         #    README 평가 표의 세 축 (여러 ckpt · flip-TTA)
 ├── eval/FA3D/
 │   ├── infer.py            # 🔍 사진·영상 → 68점 / 3D 메쉬 (+H.264/GIF, 속도 계측)
 │   └── evaluate.py         #    AFLW2000-3D / AFLW NME (여러 ckpt + 배포 가중치)
+├── scripts/FA2D/           # 🧪 eval.sh · infer.sh 묶음 실행
 ├── scripts/FA3D/           # 🧪 그림·분석·속도 (eval.sh · infer.sh 로 묶음 실행)
 ├── LAB/                    # 📚 학습 저장소의 실험 기록 사본 (읽기 전용)
 ├── docs/                   # 배너 · 결과 시각화 · 데모
@@ -270,6 +294,9 @@ Pierrot_FR_Infer/
 
 | 빠진 것 | 왜 |
 |---|---|
+| FA2D `train_fa2d*.py` · `engine.py` · `losses.py` | 학습 루프 · 증류 · 손실 |
+| FA2D `trajectory.py` · `depthwarp.py` · 증강 · 샘플러 | 합성 클립 · 극단 pitch 합성 · 학습 증강 |
+| FA2D `configs/args_fa2d.py` (1,257줄) | 하이퍼파라미터 — **체크포인트가 들고 있다** |
 | `train_fa3d.py` · `engine.py` | meta-joint 최적화(Algorithm 1) — 학습 루프 |
 | `losses.py` | VDC · fWPDC · lrr · 파라미터 손실 |
 | `svs.py` | short-video-synthesis — 학습 증강 |

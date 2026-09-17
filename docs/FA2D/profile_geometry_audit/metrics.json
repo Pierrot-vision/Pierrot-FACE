@@ -1,0 +1,1940 @@
+[
+  {
+    "sample": 1,
+    "image": "38--Tennis/38_Tennis_Tennis_38_879.jpg",
+    "io_crop_px": 35.41348579865016,
+    "io_over_face_width": 0.2030033280393956,
+    "roundtrip_max_px": 5.684341886080802e-14,
+    "ours_nme": 10.029475786335079,
+    "hrffa_nme": 19.308891051195236,
+    "peppa_nme": 10.705098436121071,
+    "peppa_corrected_gt_nme": 10.060751199949342,
+    "peppa_gt_rounding_max_px": 2.733220564122379,
+    "ours68": {
+      "jaw": {
+        "point": 9.394291825838625,
+        "curve": 7.558640473772478,
+        "symmetric_curve": 7.639000772571227,
+        "tangent_abs": 4.134574837594367,
+        "normal_abs": 7.747625388222197,
+        "tangent_energy_fraction": 0.24223654294061295,
+        "tangent_valid_count": 17
+      },
+      "brow_r": {
+        "point": 40.64658797493915,
+        "curve": 32.473349946834404,
+        "symmetric_curve": 29.07857056553087,
+        "tangent_abs": 26.70476222845879,
+        "normal_abs": 29.903716399836245,
+        "tangent_energy_fraction": 0.4125388601265816,
+        "tangent_valid_count": 5
+      },
+      "brow_l": {
+        "point": 9.247036800979826,
+        "curve": 7.557201604212166,
+        "symmetric_curve": 5.773721959000857,
+        "tangent_abs": 7.220638658635689,
+        "normal_abs": 4.715865524974031,
+        "tangent_energy_fraction": 0.705109704127243,
+        "tangent_valid_count": 5
+      },
+      "bridge": {
+        "point": 6.638839494946602,
+        "curve": 3.9816666675209778,
+        "symmetric_curve": 3.3573903949103325,
+        "tangent_abs": 5.694632506222195,
+        "normal_abs": 2.664068177434662,
+        "tangent_energy_fraction": 0.7559005983774338,
+        "tangent_valid_count": 4
+      },
+      "nose": {
+        "point": 9.619337522113595,
+        "curve": 8.986763266520926,
+        "symmetric_curve": 6.985545645750591,
+        "tangent_abs": 4.865175883842049,
+        "normal_abs": 5.122168295788051,
+        "tangent_energy_fraction": 0.5109029954219945,
+        "tangent_valid_count": 3
+      },
+      "eye_r": {
+        "point": 12.585251889560883,
+        "curve": 3.5868831263853616,
+        "symmetric_curve": 6.1565420581262496,
+        "tangent_abs": 10.120476948881347,
+        "normal_abs": 5.594154386927861,
+        "tangent_energy_fraction": 0.713250985144258,
+        "tangent_valid_count": 6
+      },
+      "eye_l": {
+        "point": 3.10062359359941,
+        "curve": 2.324659341183759,
+        "symmetric_curve": 1.9791230307538705,
+        "tangent_abs": 1.5913389689412594,
+        "normal_abs": 2.540809294273453,
+        "tangent_energy_fraction": 0.303831872828833,
+        "tangent_valid_count": 6
+      },
+      "outer_lip": {
+        "point": 4.785584328707237,
+        "curve": 2.4794128175024266,
+        "symmetric_curve": 2.8676602694321573,
+        "tangent_abs": 3.33371887143439,
+        "normal_abs": 2.9301138382329364,
+        "tangent_energy_fraction": 0.5577795130687009,
+        "tangent_valid_count": 12
+      },
+      "inner_lip": {
+        "point": 5.82986976476634,
+        "curve": 3.5790261274740733,
+        "symmetric_curve": 3.7107170050744265,
+        "tangent_abs": 2.247936682608011,
+        "normal_abs": 5.108608850375938,
+        "tangent_energy_fraction": 0.21865051185687265,
+        "tangent_valid_count": 8
+      }
+    },
+    "hrffa68": {
+      "jaw": {
+        "point": 26.752360326573267,
+        "curve": 10.676394651259761,
+        "symmetric_curve": 11.755647324766223,
+        "tangent_abs": 21.224639915761472,
+        "normal_abs": 10.319850433039969,
+        "tangent_energy_fraction": 0.8064446029223599,
+        "tangent_valid_count": 17
+      },
+      "brow_r": {
+        "point": 30.812229192144553,
+        "curve": 23.888952344376126,
+        "symmetric_curve": 18.996223225821307,
+        "tangent_abs": 22.766633238309975,
+        "normal_abs": 19.65320120844078,
+        "tangent_energy_fraction": 0.5624868542082622,
+        "tangent_valid_count": 5
+      },
+      "brow_l": {
+        "point": 15.955850267086547,
+        "curve": 12.049451460035923,
+        "symmetric_curve": 10.493408338429825,
+        "tangent_abs": 7.914683566163017,
+        "normal_abs": 13.515175330400513,
+        "tangent_energy_fraction": 0.2838283817424882,
+        "tangent_valid_count": 5
+      },
+      "bridge": {
+        "point": 14.613152515144986,
+        "curve": 3.3682162910772835,
+        "symmetric_curve": 6.304985733072301,
+        "tangent_abs": 14.213054150711885,
+        "normal_abs": 3.277561294103601,
+        "tangent_energy_fraction": 0.940658393969477,
+        "tangent_valid_count": 4
+      },
+      "nose": {
+        "point": 11.616879080152069,
+        "curve": 11.12632475177503,
+        "symmetric_curve": 8.744102133780846,
+        "tangent_abs": 2.071059904870011,
+        "normal_abs": 7.867945648465352,
+        "tangent_energy_fraction": 0.07828519865773165,
+        "tangent_valid_count": 3
+      },
+      "eye_r": {
+        "point": 21.13789438526441,
+        "curve": 6.571597609374086,
+        "symmetric_curve": 9.288358884097828,
+        "tangent_abs": 17.61245099984839,
+        "normal_abs": 8.821483002696343,
+        "tangent_energy_fraction": 0.7398746279175796,
+        "tangent_valid_count": 6
+      },
+      "eye_l": {
+        "point": 18.20122586109747,
+        "curve": 14.479073770908036,
+        "symmetric_curve": 9.900235361524135,
+        "tangent_abs": 12.469479238944054,
+        "normal_abs": 11.908312003666415,
+        "tangent_energy_fraction": 0.5231804897895636,
+        "tangent_valid_count": 6
+      },
+      "outer_lip": {
+        "point": 15.273721382989919,
+        "curve": 10.027899477363441,
+        "symmetric_curve": 8.468584213325258,
+        "tangent_abs": 9.50793644830113,
+        "normal_abs": 9.731083825612993,
+        "tangent_energy_fraction": 0.46835054981352636,
+        "tangent_valid_count": 12
+      },
+      "inner_lip": {
+        "point": 11.064710637248053,
+        "curve": 8.264386102007649,
+        "symmetric_curve": 7.822915723512108,
+        "tangent_abs": 4.660000402613164,
+        "normal_abs": 9.040845900942633,
+        "tangent_energy_fraction": 0.2487101680419348,
+        "tangent_valid_count": 8
+      }
+    },
+    "ours98": {
+      "jaw": {
+        "point": 9.6792486091771,
+        "curve": 7.7351013984040335,
+        "symmetric_curve": 7.832402577260214,
+        "tangent_abs": 4.590445925484228,
+        "normal_abs": 7.838438652613886,
+        "tangent_energy_fraction": 0.2527015607295228,
+        "tangent_valid_count": 33
+      },
+      "brow_r": {
+        "point": 37.15624781186789,
+        "curve": 22.625601204687538,
+        "symmetric_curve": 17.211092994288315,
+        "tangent_abs": 26.655711645197783,
+        "normal_abs": 23.670376463869662,
+        "tangent_energy_fraction": 0.4969346646359523,
+        "tangent_valid_count": 9
+      },
+      "brow_l": {
+        "point": 10.791519417225674,
+        "curve": 7.640554699385051,
+        "symmetric_curve": 5.450241461452533,
+        "tangent_abs": 8.476115032137194,
+        "normal_abs": 6.151968454715885,
+        "tangent_energy_fraction": 0.6262676095250187,
+        "tangent_valid_count": 9
+      },
+      "bridge": {
+        "point": 6.638839494946602,
+        "curve": 3.9816666675209778,
+        "symmetric_curve": 3.3573903949103325,
+        "tangent_abs": 5.694632506222195,
+        "normal_abs": 2.664068177434662,
+        "tangent_energy_fraction": 0.7559005983774338,
+        "tangent_valid_count": 4
+      },
+      "nose": {
+        "point": 9.619337522113595,
+        "curve": 8.986763266520926,
+        "symmetric_curve": 6.985545645750591,
+        "tangent_abs": 4.865175883842049,
+        "normal_abs": 5.122168295788051,
+        "tangent_energy_fraction": 0.5109029954219945,
+        "tangent_valid_count": 3
+      },
+      "eye_r": {
+        "point": 14.295203427645708,
+        "curve": 4.6396737455327335,
+        "symmetric_curve": 7.1523238690643405,
+        "tangent_abs": 9.809145084640061,
+        "normal_abs": 8.310780596163973,
+        "tangent_energy_fraction": 0.5720186057709199,
+        "tangent_valid_count": 8
+      },
+      "eye_l": {
+        "point": 3.08691004060171,
+        "curve": 1.8267082502816538,
+        "symmetric_curve": 1.7790287545345107,
+        "tangent_abs": 2.066331786777866,
+        "normal_abs": 2.1785246838668044,
+        "tangent_energy_fraction": 0.42999910564336563,
+        "tangent_valid_count": 8
+      },
+      "outer_lip": {
+        "point": 4.785584328707237,
+        "curve": 2.4794128175024266,
+        "symmetric_curve": 2.8676602694321573,
+        "tangent_abs": 3.33371887143439,
+        "normal_abs": 2.9301138382329364,
+        "tangent_energy_fraction": 0.5577795130687009,
+        "tangent_valid_count": 12
+      },
+      "inner_lip": {
+        "point": 5.82986976476634,
+        "curve": 3.5790261274740733,
+        "symmetric_curve": 3.7107170050744265,
+        "tangent_abs": 2.247936682608011,
+        "normal_abs": 5.108608850375938,
+        "tangent_energy_fraction": 0.21865051185687265,
+        "tangent_valid_count": 8
+      }
+    },
+    "ours_mean_residual_px": [
+      -1.2383641259271014,
+      0.06952547400034492
+    ],
+    "ours98_nme": 10.962513407112565,
+    "ours98_translation_removed_nme": 11.079626328843263,
+    "worst_ours98": [
+      {
+        "index": 34,
+        "error_px": 18.473757661967568
+      },
+      {
+        "index": 33,
+        "error_px": 16.950513443506388
+      },
+      {
+        "index": 35,
+        "error_px": 16.32027595689858
+      },
+      {
+        "index": 41,
+        "error_px": 15.642015585798344
+      },
+      {
+        "index": 40,
+        "error_px": 12.705913438413829
+      },
+      {
+        "index": 36,
+        "error_px": 12.314615868870145
+      },
+      {
+        "index": 39,
+        "error_px": 10.206615553051941
+      },
+      {
+        "index": 62,
+        "error_px": 8.032859045910175
+      },
+      {
+        "index": 37,
+        "error_px": 7.912705369461914
+      },
+      {
+        "index": 38,
+        "error_px": 7.898490001535147
+      }
+    ],
+    "duplicate_gt_groups": [
+      [
+        57,
+        58,
+        59
+      ]
+    ]
+  },
+  {
+    "sample": 2,
+    "image": "36--Football/36_Football_americanfootball_ball_36_846.jpg",
+    "io_crop_px": 45.39755054021389,
+    "io_over_face_width": 0.237616776183645,
+    "roundtrip_max_px": 1.1368683772161603e-13,
+    "ours_nme": 9.25603039912238,
+    "hrffa_nme": 14.820535505575613,
+    "peppa_nme": 14.733771718459817,
+    "peppa_corrected_gt_nme": 14.528416292955598,
+    "peppa_gt_rounding_max_px": 1.1685613654172586,
+    "ours68": {
+      "jaw": {
+        "point": 17.663074055703454,
+        "curve": 9.96636754606541,
+        "symmetric_curve": 10.369177105698741,
+        "tangent_abs": 10.830947892494818,
+        "normal_abs": 11.143135763975227,
+        "tangent_energy_fraction": 0.3941695988773621,
+        "tangent_valid_count": 17
+      },
+      "brow_r": {
+        "point": 9.070244326615816,
+        "curve": 2.822518409958708,
+        "symmetric_curve": 4.3367747491248965,
+        "tangent_abs": 8.562372583699709,
+        "normal_abs": 2.147386849682205,
+        "tangent_energy_fraction": 0.9462224009116524,
+        "tangent_valid_count": 5
+      },
+      "brow_l": {
+        "point": 3.2056494872685732,
+        "curve": 1.9931801342099806,
+        "symmetric_curve": 1.8415989044705878,
+        "tangent_abs": 2.3984400436262234,
+        "normal_abs": 1.770981919599278,
+        "tangent_energy_fraction": 0.5848443840359066,
+        "tangent_valid_count": 5
+      },
+      "bridge": {
+        "point": 5.418348751578496,
+        "curve": 5.0913453147944,
+        "symmetric_curve": 4.970682108924915,
+        "tangent_abs": 1.5774709503091593,
+        "normal_abs": 4.925701536859309,
+        "tangent_energy_fraction": 0.12074497072780681,
+        "tangent_valid_count": 4
+      },
+      "nose": {
+        "point": 5.520392214724217,
+        "curve": 5.258451229734704,
+        "symmetric_curve": 4.596257010411874,
+        "tangent_abs": 3.825893540479656,
+        "normal_abs": 2.751417887178451,
+        "tangent_energy_fraction": 0.6710912416882215,
+        "tangent_valid_count": 5
+      },
+      "eye_r": {
+        "point": 5.073584493043689,
+        "curve": 2.805226929808174,
+        "symmetric_curve": 3.4645282924356673,
+        "tangent_abs": 2.4166162318952273,
+        "normal_abs": 4.122647165266592,
+        "tangent_energy_fraction": 0.25798750874921517,
+        "tangent_valid_count": 6
+      },
+      "eye_l": {
+        "point": 7.683930363638793,
+        "curve": 4.766012229264148,
+        "symmetric_curve": 4.515463807745698,
+        "tangent_abs": 4.982981546636715,
+        "normal_abs": 5.43485351335743,
+        "tangent_energy_fraction": 0.49052800244746886,
+        "tangent_valid_count": 6
+      },
+      "outer_lip": {
+        "point": 7.460971226217787,
+        "curve": 2.428017718454325,
+        "symmetric_curve": 3.103806581827194,
+        "tangent_abs": 5.905191781928021,
+        "normal_abs": 3.2287399717435035,
+        "tangent_energy_fraction": 0.6831657921219987,
+        "tangent_valid_count": 12
+      },
+      "inner_lip": {
+        "point": 6.550779898662225,
+        "curve": 2.997254796204923,
+        "symmetric_curve": 3.6001506930246405,
+        "tangent_abs": 4.848895179864081,
+        "normal_abs": 3.625292699136991,
+        "tangent_energy_fraction": 0.6525836738948408,
+        "tangent_valid_count": 8
+      }
+    },
+    "hrffa68": {
+      "jaw": {
+        "point": 22.588958595066337,
+        "curve": 10.191653018260386,
+        "symmetric_curve": 11.181088825226421,
+        "tangent_abs": 18.60263366220719,
+        "normal_abs": 9.90277552517213,
+        "tangent_energy_fraction": 0.7814233573153704,
+        "tangent_valid_count": 17
+      },
+      "brow_r": {
+        "point": 13.196104687669221,
+        "curve": 10.427316986374308,
+        "symmetric_curve": 8.943609400559858,
+        "tangent_abs": 5.855551596751074,
+        "normal_abs": 10.772397770739953,
+        "tangent_energy_fraction": 0.21679028027366584,
+        "tangent_valid_count": 5
+      },
+      "brow_l": {
+        "point": 16.36897629964211,
+        "curve": 12.30360882854792,
+        "symmetric_curve": 9.712139476560324,
+        "tangent_abs": 13.013040192356232,
+        "normal_abs": 7.638189725849062,
+        "tangent_energy_fraction": 0.7429579639874262,
+        "tangent_valid_count": 5
+      },
+      "bridge": {
+        "point": 11.878866086318304,
+        "curve": 5.077896067764795,
+        "symmetric_curve": 7.316811077268789,
+        "tangent_abs": 10.55295747110808,
+        "normal_abs": 5.298097177455534,
+        "tangent_energy_fraction": 0.7923793617279772,
+        "tangent_valid_count": 4
+      },
+      "nose": {
+        "point": 9.942770918252108,
+        "curve": 7.032330029749017,
+        "symmetric_curve": 4.843660658689595,
+        "tangent_abs": 9.634130827527835,
+        "normal_abs": 2.247385475027333,
+        "tangent_energy_fraction": 0.9486763486188894,
+        "tangent_valid_count": 5
+      },
+      "eye_r": {
+        "point": 12.013732677083159,
+        "curve": 8.87676244072502,
+        "symmetric_curve": 6.9438199760522945,
+        "tangent_abs": 9.342159762577271,
+        "normal_abs": 6.572942495972267,
+        "tangent_energy_fraction": 0.6587840783508419,
+        "tangent_valid_count": 6
+      },
+      "eye_l": {
+        "point": 17.174456605131592,
+        "curve": 11.996673727959442,
+        "symmetric_curve": 10.07123117065292,
+        "tangent_abs": 11.192212522040396,
+        "normal_abs": 10.674043765868342,
+        "tangent_energy_fraction": 0.5386708470876814,
+        "tangent_valid_count": 6
+      },
+      "outer_lip": {
+        "point": 11.929445953251065,
+        "curve": 5.795830204761718,
+        "symmetric_curve": 4.827369934917533,
+        "tangent_abs": 9.35777756575403,
+        "normal_abs": 5.984334804483745,
+        "tangent_energy_fraction": 0.6571896612450875,
+        "tangent_valid_count": 12
+      },
+      "inner_lip": {
+        "point": 7.555863407202784,
+        "curve": 3.2353180805859654,
+        "symmetric_curve": 3.064893334857964,
+        "tangent_abs": 6.4803413145875215,
+        "normal_abs": 2.79453996619437,
+        "tangent_energy_fraction": 0.8102303634181239,
+        "tangent_valid_count": 8
+      }
+    },
+    "ours98": {
+      "jaw": {
+        "point": 17.191481407675944,
+        "curve": 9.732836094897458,
+        "symmetric_curve": 9.704845799765845,
+        "tangent_abs": 10.896956236734965,
+        "normal_abs": 10.289471884892922,
+        "tangent_energy_fraction": 0.4258128729121963,
+        "tangent_valid_count": 33
+      },
+      "brow_r": {
+        "point": 8.223768252923184,
+        "curve": 1.5454316048372414,
+        "symmetric_curve": 2.3195499730627476,
+        "tangent_abs": 7.978023607324267,
+        "normal_abs": 1.5215590610043892,
+        "tangent_energy_fraction": 0.9700524416234336,
+        "tangent_valid_count": 9
+      },
+      "brow_l": {
+        "point": 3.960858941714667,
+        "curve": 2.0103389076033285,
+        "symmetric_curve": 1.7589942173644533,
+        "tangent_abs": 2.855247197470857,
+        "normal_abs": 2.3688647109890493,
+        "tangent_energy_fraction": 0.5282276804072761,
+        "tangent_valid_count": 9
+      },
+      "bridge": {
+        "point": 5.418348751578496,
+        "curve": 5.0913453147944,
+        "symmetric_curve": 4.970682108924915,
+        "tangent_abs": 1.5774709503091593,
+        "normal_abs": 4.925701536859309,
+        "tangent_energy_fraction": 0.12074497072780681,
+        "tangent_valid_count": 4
+      },
+      "nose": {
+        "point": 5.520392214724217,
+        "curve": 5.258451229734704,
+        "symmetric_curve": 4.596257010411874,
+        "tangent_abs": 3.825893540479656,
+        "normal_abs": 2.751417887178451,
+        "tangent_energy_fraction": 0.6710912416882215,
+        "tangent_valid_count": 5
+      },
+      "eye_r": {
+        "point": 4.961380219761086,
+        "curve": 3.0471918828783027,
+        "symmetric_curve": 3.4168869944611546,
+        "tangent_abs": 1.804881094166453,
+        "normal_abs": 4.49996960578458,
+        "tangent_energy_fraction": 0.15631059187561328,
+        "tangent_valid_count": 8
+      },
+      "eye_l": {
+        "point": 7.917934837938631,
+        "curve": 5.167318328914471,
+        "symmetric_curve": 4.773437939406901,
+        "tangent_abs": 5.191581231765634,
+        "normal_abs": 5.306019913202389,
+        "tangent_energy_fraction": 0.5590048099397157,
+        "tangent_valid_count": 8
+      },
+      "outer_lip": {
+        "point": 7.460971226217787,
+        "curve": 2.428017718454325,
+        "symmetric_curve": 3.103806581827194,
+        "tangent_abs": 5.905191781928021,
+        "normal_abs": 3.2287399717435035,
+        "tangent_energy_fraction": 0.6831657921219987,
+        "tangent_valid_count": 12
+      },
+      "inner_lip": {
+        "point": 6.550779898662225,
+        "curve": 2.997254796204923,
+        "symmetric_curve": 3.6001506930246405,
+        "tangent_abs": 4.848895179864081,
+        "normal_abs": 3.625292699136991,
+        "tangent_energy_fraction": 0.6525836738948408,
+        "tangent_valid_count": 8
+      }
+    },
+    "ours_mean_residual_px": [
+      -0.775924800803161,
+      -1.9494772416166797
+    ],
+    "ours98_nme": 10.024555057917436,
+    "ours98_translation_removed_nme": 9.791141818927706,
+    "worst_ours98": [
+      {
+        "index": 32,
+        "error_px": 22.11773243936105
+      },
+      {
+        "index": 31,
+        "error_px": 18.993492380281907
+      },
+      {
+        "index": 30,
+        "error_px": 17.774025240617526
+      },
+      {
+        "index": 29,
+        "error_px": 15.63898840978914
+      },
+      {
+        "index": 28,
+        "error_px": 12.14447141495816
+      },
+      {
+        "index": 7,
+        "error_px": 11.045411814431231
+      },
+      {
+        "index": 8,
+        "error_px": 10.027775792084233
+      },
+      {
+        "index": 12,
+        "error_px": 9.487470162450984
+      },
+      {
+        "index": 27,
+        "error_px": 9.036027174756118
+      },
+      {
+        "index": 6,
+        "error_px": 9.019764120648304
+      }
+    ],
+    "duplicate_gt_groups": []
+  },
+  {
+    "sample": 3,
+    "image": "18--Concerts/18_Concerts_Concerts_18_895.jpg",
+    "io_crop_px": 45.753001491188094,
+    "io_over_face_width": 0.24781640678601477,
+    "roundtrip_max_px": 1.1368683772161603e-13,
+    "ours_nme": 8.931611908445205,
+    "hrffa_nme": 16.175220351381366,
+    "peppa_nme": 11.833180958816653,
+    "peppa_corrected_gt_nme": 11.997973039477163,
+    "peppa_gt_rounding_max_px": 0.9023783739139234,
+    "ours68": {
+      "jaw": {
+        "point": 12.262134322665684,
+        "curve": 6.540772581752639,
+        "symmetric_curve": 7.188693361201437,
+        "tangent_abs": 8.671089473912968,
+        "normal_abs": 7.087315052801767,
+        "tangent_energy_fraction": 0.5707296146253401,
+        "tangent_valid_count": 17
+      },
+      "brow_r": {
+        "point": 7.823347300132712,
+        "curve": 4.372328868657005,
+        "symmetric_curve": 5.5665130830785365,
+        "tangent_abs": 6.127104865098151,
+        "normal_abs": 4.338523191858673,
+        "tangent_energy_fraction": 0.6696190677741329,
+        "tangent_valid_count": 5
+      },
+      "brow_l": {
+        "point": 9.74817867215409,
+        "curve": 9.74817867215409,
+        "symmetric_curve": 8.980619898435084,
+        "tangent_abs": null,
+        "normal_abs": null,
+        "tangent_energy_fraction": null,
+        "tangent_valid_count": 0
+      },
+      "bridge": {
+        "point": 5.600522585706719,
+        "curve": 2.9407010592213543,
+        "symmetric_curve": 3.195147045198501,
+        "tangent_abs": 5.116510773844241,
+        "normal_abs": 2.016902395703315,
+        "tangent_energy_fraction": 0.8482005157958893,
+        "tangent_valid_count": 4
+      },
+      "nose": {
+        "point": 8.498883470142944,
+        "curve": 7.71520095758408,
+        "symmetric_curve": 4.402559641281533,
+        "tangent_abs": 4.283191578793015,
+        "normal_abs": 2.213525389740509,
+        "tangent_energy_fraction": 0.7461010822518617,
+        "tangent_valid_count": 3
+      },
+      "eye_r": {
+        "point": 13.422801477585592,
+        "curve": 6.542423853533597,
+        "symmetric_curve": 5.444141152854164,
+        "tangent_abs": 11.244578569612472,
+        "normal_abs": 5.768432477832581,
+        "tangent_energy_fraction": 0.7374787525757709,
+        "tangent_valid_count": 6
+      },
+      "eye_l": {
+        "point": 3.871999007377306,
+        "curve": 2.3707646262727438,
+        "symmetric_curve": 2.511588826541359,
+        "tangent_abs": 2.8183731386865136,
+        "normal_abs": 2.4469763865271874,
+        "tangent_energy_fraction": 0.5423965568084208,
+        "tangent_valid_count": 6
+      },
+      "outer_lip": {
+        "point": 7.0994221500629795,
+        "curve": 3.2736404400115644,
+        "symmetric_curve": 4.310846647759478,
+        "tangent_abs": 3.989128096472822,
+        "normal_abs": 5.095939043310412,
+        "tangent_energy_fraction": 0.467815376531905,
+        "tangent_valid_count": 12
+      },
+      "inner_lip": {
+        "point": 7.147165002931066,
+        "curve": 7.114641140433951,
+        "symmetric_curve": 5.3119690477101775,
+        "tangent_abs": 3.1893273369638715,
+        "normal_abs": 6.952260617033472,
+        "tangent_energy_fraction": 0.2463055121161411,
+        "tangent_valid_count": 4
+      }
+    },
+    "hrffa68": {
+      "jaw": {
+        "point": 23.44874553064597,
+        "curve": 8.524346406502351,
+        "symmetric_curve": 9.885755402653542,
+        "tangent_abs": 19.17234624547703,
+        "normal_abs": 8.777440911469347,
+        "tangent_energy_fraction": 0.8410149891458326,
+        "tangent_valid_count": 17
+      },
+      "brow_r": {
+        "point": 13.047256550135044,
+        "curve": 11.592269526496846,
+        "symmetric_curve": 10.643377605587789,
+        "tangent_abs": 5.1232439085937855,
+        "normal_abs": 11.027749505963698,
+        "tangent_energy_fraction": 0.19211661930964924,
+        "tangent_valid_count": 5
+      },
+      "brow_l": {
+        "point": 16.458618174963306,
+        "curve": 16.458618174963306,
+        "symmetric_curve": 12.433267205290017,
+        "tangent_abs": null,
+        "normal_abs": null,
+        "tangent_energy_fraction": null,
+        "tangent_valid_count": 0
+      },
+      "bridge": {
+        "point": 14.91401785695271,
+        "curve": 8.916904924717208,
+        "symmetric_curve": 10.911900994414232,
+        "tangent_abs": 11.53943836138691,
+        "normal_abs": 9.098227428717292,
+        "tangent_energy_fraction": 0.6622823066177018,
+        "tangent_valid_count": 4
+      },
+      "nose": {
+        "point": 9.339636870627858,
+        "curve": 8.527399627074562,
+        "symmetric_curve": 6.2710631611765395,
+        "tangent_abs": 3.5151464210427723,
+        "normal_abs": 3.9161853674562543,
+        "tangent_energy_fraction": 0.4161123921408714,
+        "tangent_valid_count": 3
+      },
+      "eye_r": {
+        "point": 22.00476241304845,
+        "curve": 9.62682034830398,
+        "symmetric_curve": 10.112503952590595,
+        "tangent_abs": 18.51859903941663,
+        "normal_abs": 10.083247163959069,
+        "tangent_energy_fraction": 0.7092233831417688,
+        "tangent_valid_count": 6
+      },
+      "eye_l": {
+        "point": 16.986599627178986,
+        "curve": 14.238070957256092,
+        "symmetric_curve": 10.520118490704485,
+        "tangent_abs": 7.179167886320544,
+        "normal_abs": 12.896832443340609,
+        "tangent_energy_fraction": 0.3134425170248739,
+        "tangent_valid_count": 6
+      },
+      "outer_lip": {
+        "point": 12.455365742248846,
+        "curve": 5.92939737740064,
+        "symmetric_curve": 6.2692495356499345,
+        "tangent_abs": 8.931116355429754,
+        "normal_abs": 7.8217845063111024,
+        "tangent_energy_fraction": 0.5534069521889553,
+        "tangent_valid_count": 12
+      },
+      "inner_lip": {
+        "point": 7.9987649147698345,
+        "curve": 3.710079036999979,
+        "symmetric_curve": 2.4552796461605393,
+        "tangent_abs": 11.087913918887054,
+        "normal_abs": 3.517273708157652,
+        "tangent_energy_fraction": 0.9197763163737429,
+        "tangent_valid_count": 4
+      }
+    },
+    "ours98": {
+      "jaw": {
+        "point": 12.384641603382606,
+        "curve": 6.87002862332163,
+        "symmetric_curve": 7.264400692081748,
+        "tangent_abs": 8.6878226838684,
+        "normal_abs": 7.530185961528706,
+        "tangent_energy_fraction": 0.5470329183938735,
+        "tangent_valid_count": 33
+      },
+      "brow_r": {
+        "point": 7.392846878838257,
+        "curve": 4.417197631193964,
+        "symmetric_curve": 5.35939465749879,
+        "tangent_abs": 4.681134478491092,
+        "normal_abs": 4.823405167123433,
+        "tangent_energy_fraction": 0.4755772716619416,
+        "tangent_valid_count": 9
+      },
+      "brow_l": {
+        "point": 9.048009124972891,
+        "curve": 9.048009124972891,
+        "symmetric_curve": 6.260585435066185,
+        "tangent_abs": null,
+        "normal_abs": null,
+        "tangent_energy_fraction": null,
+        "tangent_valid_count": 0
+      },
+      "bridge": {
+        "point": 5.600522585706719,
+        "curve": 2.9407010592213543,
+        "symmetric_curve": 3.195147045198501,
+        "tangent_abs": 5.116510773844241,
+        "normal_abs": 2.016902395703315,
+        "tangent_energy_fraction": 0.8482005157958893,
+        "tangent_valid_count": 4
+      },
+      "nose": {
+        "point": 8.498883470142944,
+        "curve": 7.71520095758408,
+        "symmetric_curve": 4.402559641281533,
+        "tangent_abs": 4.283191578793015,
+        "normal_abs": 2.213525389740509,
+        "tangent_energy_fraction": 0.7461010822518617,
+        "tangent_valid_count": 3
+      },
+      "eye_r": {
+        "point": 14.546097385297196,
+        "curve": 5.769495697138007,
+        "symmetric_curve": 5.527895624212134,
+        "tangent_abs": 11.224865938348895,
+        "normal_abs": 7.032838602726351,
+        "tangent_energy_fraction": 0.709856139281904,
+        "tangent_valid_count": 8
+      },
+      "eye_l": {
+        "point": 4.599580664569383,
+        "curve": 2.802529134199089,
+        "symmetric_curve": 2.8880606815342773,
+        "tangent_abs": 3.3661256675736677,
+        "normal_abs": 2.892647264365799,
+        "tangent_energy_fraction": 0.5918410142877137,
+        "tangent_valid_count": 8
+      },
+      "outer_lip": {
+        "point": 7.0994221500629795,
+        "curve": 3.2736404400115644,
+        "symmetric_curve": 4.310846647759478,
+        "tangent_abs": 3.989128096472822,
+        "normal_abs": 5.095939043310412,
+        "tangent_energy_fraction": 0.467815376531905,
+        "tangent_valid_count": 12
+      },
+      "inner_lip": {
+        "point": 7.147165002931066,
+        "curve": 7.114641140433951,
+        "symmetric_curve": 5.3119690477101775,
+        "tangent_abs": 3.1893273369638715,
+        "normal_abs": 6.952260617033472,
+        "tangent_energy_fraction": 0.2463055121161411,
+        "tangent_valid_count": 4
+      }
+    },
+    "ours_mean_residual_px": [
+      0.19021454971902865,
+      0.05743674134446488
+    ],
+    "ours98_nme": 9.454431017211459,
+    "ours98_translation_removed_nme": 9.454295058905812,
+    "worst_ours98": [
+      {
+        "index": 62,
+        "error_px": 10.970973352336483
+      },
+      {
+        "index": 61,
+        "error_px": 10.524889065160929
+      },
+      {
+        "index": 15,
+        "error_px": 10.138916040024114
+      },
+      {
+        "index": 9,
+        "error_px": 9.94716437409146
+      },
+      {
+        "index": 8,
+        "error_px": 9.865365178269302
+      },
+      {
+        "index": 60,
+        "error_px": 9.470123893951698
+      },
+      {
+        "index": 10,
+        "error_px": 9.056403818376333
+      },
+      {
+        "index": 14,
+        "error_px": 8.99863960317003
+      },
+      {
+        "index": 7,
+        "error_px": 8.84078377954473
+      },
+      {
+        "index": 16,
+        "error_px": 8.041156442715069
+      }
+    ],
+    "duplicate_gt_groups": [
+      [
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      [
+        57,
+        58,
+        59
+      ],
+      [
+        89,
+        95
+      ],
+      [
+        90,
+        91,
+        92,
+        93,
+        94
+      ]
+    ]
+  },
+  {
+    "sample": 4,
+    "image": "31--Waiter_Waitress/31_Waiter_Waitress_Waiter_Waitress_31_651.jpg",
+    "io_crop_px": 56.61890518716033,
+    "io_over_face_width": 0.25690451556887683,
+    "roundtrip_max_px": 1.1368683772161603e-13,
+    "ours_nme": 8.317548204122765,
+    "hrffa_nme": 12.516100553250025,
+    "peppa_nme": 10.116751599578917,
+    "peppa_corrected_gt_nme": 10.015839321052754,
+    "peppa_gt_rounding_max_px": 0.6999268087228414,
+    "ours68": {
+      "jaw": {
+        "point": 14.727461124454333,
+        "curve": 7.148214971490466,
+        "symmetric_curve": 6.334360825208687,
+        "tangent_abs": 12.790860575582158,
+        "normal_abs": 5.647927430181806,
+        "tangent_energy_fraction": 0.8555319021036893,
+        "tangent_valid_count": 17
+      },
+      "brow_r": {
+        "point": 7.07012662470156,
+        "curve": 3.1834635251776406,
+        "symmetric_curve": 1.8700774798603284,
+        "tangent_abs": 6.891896790751721,
+        "normal_abs": 0.6158865662096267,
+        "tangent_energy_fraction": 0.9941366623092079,
+        "tangent_valid_count": 5
+      },
+      "brow_l": {
+        "point": 10.436408945324178,
+        "curve": 3.1529435117353364,
+        "symmetric_curve": 4.383098358840805,
+        "tangent_abs": 9.099874941721332,
+        "normal_abs": 4.176017688365688,
+        "tangent_energy_fraction": 0.6906220043110232,
+        "tangent_valid_count": 5
+      },
+      "bridge": {
+        "point": 7.135955495218738,
+        "curve": 2.6053120041857767,
+        "symmetric_curve": 2.3342033114201377,
+        "tangent_abs": 6.854975465007566,
+        "normal_abs": 1.621088893504699,
+        "tangent_energy_fraction": 0.9367393134380296,
+        "tangent_valid_count": 4
+      },
+      "nose": {
+        "point": 8.88327429428195,
+        "curve": 8.436307966406607,
+        "symmetric_curve": 7.5562424074668195,
+        "tangent_abs": 1.7949464648494433,
+        "normal_abs": 4.369995182338797,
+        "tangent_energy_fraction": 0.08973190814861265,
+        "tangent_valid_count": 3
+      },
+      "eye_r": {
+        "point": 3.5910615398216312,
+        "curve": 2.4855363195113855,
+        "symmetric_curve": 2.345665758555344,
+        "tangent_abs": 1.360301701454644,
+        "normal_abs": 2.8028637355093897,
+        "tangent_energy_fraction": 0.28749767897464173,
+        "tangent_valid_count": 6
+      },
+      "eye_l": {
+        "point": 8.506588624881424,
+        "curve": 4.5796944819108365,
+        "symmetric_curve": 5.109156844757602,
+        "tangent_abs": 4.809966967383715,
+        "normal_abs": 5.868276717935202,
+        "tangent_energy_fraction": 0.4217317496351416,
+        "tangent_valid_count": 6
+      },
+      "outer_lip": {
+        "point": 3.973106275326846,
+        "curve": 1.946017773727431,
+        "symmetric_curve": 2.1471762563200065,
+        "tangent_abs": 2.928112271042594,
+        "normal_abs": 2.0026649835054213,
+        "tangent_energy_fraction": 0.6330247552348912,
+        "tangent_valid_count": 12
+      },
+      "inner_lip": {
+        "point": 4.3087988962588275,
+        "curve": 3.1698328587029527,
+        "symmetric_curve": 2.634203043863267,
+        "tangent_abs": 3.33509015817946,
+        "normal_abs": 2.392892872631238,
+        "tangent_energy_fraction": 0.5825907249307817,
+        "tangent_valid_count": 7
+      }
+    },
+    "hrffa68": {
+      "jaw": {
+        "point": 15.70974052130715,
+        "curve": 6.605749228556429,
+        "symmetric_curve": 6.724794748054848,
+        "tangent_abs": 12.7901407658569,
+        "normal_abs": 5.977300191766006,
+        "tangent_energy_fraction": 0.8115972419693744,
+        "tangent_valid_count": 17
+      },
+      "brow_r": {
+        "point": 13.16224039419158,
+        "curve": 10.978885151492989,
+        "symmetric_curve": 9.816489623362319,
+        "tangent_abs": 6.218375335856159,
+        "normal_abs": 10.251616488441362,
+        "tangent_energy_fraction": 0.28734411073945265,
+        "tangent_valid_count": 5
+      },
+      "brow_l": {
+        "point": 12.879101933842268,
+        "curve": 11.017452922867989,
+        "symmetric_curve": 9.605741589978747,
+        "tangent_abs": 6.093638975647237,
+        "normal_abs": 9.204260950609696,
+        "tangent_energy_fraction": 0.32520078425443916,
+        "tangent_valid_count": 5
+      },
+      "bridge": {
+        "point": 15.771988455717722,
+        "curve": 12.858396312933355,
+        "symmetric_curve": 13.926111312332129,
+        "tangent_abs": 8.361406458705872,
+        "normal_abs": 12.778956418868065,
+        "tangent_energy_fraction": 0.380535656296751,
+        "tangent_valid_count": 4
+      },
+      "nose": {
+        "point": 7.999650217299845,
+        "curve": 7.314168980063925,
+        "symmetric_curve": 6.642077621528533,
+        "tangent_abs": 3.1456632247348897,
+        "normal_abs": 4.8942017551084795,
+        "tangent_energy_fraction": 0.2587182898916614,
+        "tangent_valid_count": 3
+      },
+      "eye_r": {
+        "point": 7.586244896944945,
+        "curve": 4.6819304364856515,
+        "symmetric_curve": 3.662494251215635,
+        "tangent_abs": 5.371774736170246,
+        "normal_abs": 3.8718654921179776,
+        "tangent_energy_fraction": 0.5402616881712594,
+        "tangent_valid_count": 6
+      },
+      "eye_l": {
+        "point": 17.72664681731885,
+        "curve": 13.772388973155882,
+        "symmetric_curve": 11.647164743205357,
+        "tangent_abs": 10.25234333943128,
+        "normal_abs": 13.531484432755686,
+        "tangent_energy_fraction": 0.40031257483166127,
+        "tangent_valid_count": 6
+      },
+      "outer_lip": {
+        "point": 10.768931485095791,
+        "curve": 5.618736763104241,
+        "symmetric_curve": 4.923386255752751,
+        "tangent_abs": 8.376433825067476,
+        "normal_abs": 5.627710652822643,
+        "tangent_energy_fraction": 0.6599877867491534,
+        "tangent_valid_count": 12
+      },
+      "inner_lip": {
+        "point": 8.703975512813576,
+        "curve": 2.9937177776078188,
+        "symmetric_curve": 1.8687268607883267,
+        "tangent_abs": 8.303004113712612,
+        "normal_abs": 3.00882912549679,
+        "tangent_energy_fraction": 0.8799870083848822,
+        "tangent_valid_count": 7
+      }
+    },
+    "ours98": {
+      "jaw": {
+        "point": 14.152800205644603,
+        "curve": 6.494919647161213,
+        "symmetric_curve": 5.872304814321152,
+        "tangent_abs": 12.09536804761831,
+        "normal_abs": 5.685694591554184,
+        "tangent_energy_fraction": 0.832999573847925,
+        "tangent_valid_count": 33
+      },
+      "brow_r": {
+        "point": 7.481455311230345,
+        "curve": 2.7565053491519462,
+        "symmetric_curve": 1.8900886450158534,
+        "tangent_abs": 6.496785032617682,
+        "normal_abs": 2.2804443395740766,
+        "tangent_energy_fraction": 0.8247702322427599,
+        "tangent_valid_count": 9
+      },
+      "brow_l": {
+        "point": 11.9887547334212,
+        "curve": 4.7278193311437935,
+        "symmetric_curve": 4.293909244842798,
+        "tangent_abs": 9.90224484971228,
+        "normal_abs": 4.854722450472799,
+        "tangent_energy_fraction": 0.7257797908569059,
+        "tangent_valid_count": 9
+      },
+      "bridge": {
+        "point": 7.135955495218738,
+        "curve": 2.6053120041857767,
+        "symmetric_curve": 2.3342033114201377,
+        "tangent_abs": 6.854975465007566,
+        "normal_abs": 1.621088893504699,
+        "tangent_energy_fraction": 0.9367393134380296,
+        "tangent_valid_count": 4
+      },
+      "nose": {
+        "point": 8.88327429428195,
+        "curve": 8.436307966406607,
+        "symmetric_curve": 7.5562424074668195,
+        "tangent_abs": 1.7949464648494433,
+        "normal_abs": 4.369995182338797,
+        "tangent_energy_fraction": 0.08973190814861265,
+        "tangent_valid_count": 3
+      },
+      "eye_r": {
+        "point": 4.052295816569745,
+        "curve": 2.7915001638126244,
+        "symmetric_curve": 2.744834804307315,
+        "tangent_abs": 2.4317682385751582,
+        "normal_abs": 2.7707353453990247,
+        "tangent_energy_fraction": 0.46070653324347105,
+        "tangent_valid_count": 8
+      },
+      "eye_l": {
+        "point": 8.59072115729026,
+        "curve": 3.906505408639665,
+        "symmetric_curve": 4.8117238432464084,
+        "tangent_abs": 5.864113685380517,
+        "normal_abs": 5.111629286041419,
+        "tangent_energy_fraction": 0.5150688805574406,
+        "tangent_valid_count": 8
+      },
+      "outer_lip": {
+        "point": 3.973106275326846,
+        "curve": 1.946017773727431,
+        "symmetric_curve": 2.1471762563200065,
+        "tangent_abs": 2.928112271042594,
+        "normal_abs": 2.0026649835054213,
+        "tangent_energy_fraction": 0.6330247552348912,
+        "tangent_valid_count": 12
+      },
+      "inner_lip": {
+        "point": 4.3087988962588275,
+        "curve": 3.1698328587029527,
+        "symmetric_curve": 2.634203043863267,
+        "tangent_abs": 3.33509015817946,
+        "normal_abs": 2.392892872631238,
+        "tangent_energy_fraction": 0.5825907249307817,
+        "tangent_valid_count": 7
+      }
+    },
+    "ours_mean_residual_px": [
+      1.0120070246276056,
+      -0.6208366322376055
+    ],
+    "ours98_nme": 9.372006754562753,
+    "ours98_translation_removed_nme": 9.380612287185892,
+    "worst_ours98": [
+      {
+        "index": 32,
+        "error_px": 20.69592057879597
+      },
+      {
+        "index": 31,
+        "error_px": 18.29273924823154
+      },
+      {
+        "index": 30,
+        "error_px": 16.85597231126643
+      },
+      {
+        "index": 24,
+        "error_px": 12.576262727522801
+      },
+      {
+        "index": 29,
+        "error_px": 12.285072499666754
+      },
+      {
+        "index": 26,
+        "error_px": 11.614399883790533
+      },
+      {
+        "index": 25,
+        "error_px": 11.610103876896305
+      },
+      {
+        "index": 46,
+        "error_px": 11.396101532307743
+      },
+      {
+        "index": 28,
+        "error_px": 11.064185590939195
+      },
+      {
+        "index": 27,
+        "error_px": 10.512289322052776
+      }
+    ],
+    "duplicate_gt_groups": [
+      [
+        57,
+        58,
+        59
+      ],
+      [
+        79,
+        80
+      ],
+      [
+        90,
+        91,
+        92
+      ]
+    ]
+  },
+  {
+    "sample": 5,
+    "image": "2--Demonstration/2_Demonstration_Protesters_2_863.jpg",
+    "io_crop_px": 59.75566771919073,
+    "io_over_face_width": 0.26639815870355404,
+    "roundtrip_max_px": 5.684341886080802e-14,
+    "ours_nme": 9.065352690382882,
+    "hrffa_nme": 12.083203852456812,
+    "peppa_nme": 11.468491040283821,
+    "peppa_corrected_gt_nme": 11.297187453175628,
+    "peppa_gt_rounding_max_px": 1.1088732345910335,
+    "ours68": {
+      "jaw": {
+        "point": 14.986888835444825,
+        "curve": 5.750966745357166,
+        "symmetric_curve": 6.318403833283294,
+        "tangent_abs": 13.290025548976775,
+        "normal_abs": 5.157396698868773,
+        "tangent_energy_fraction": 0.8830050031313159,
+        "tangent_valid_count": 17
+      },
+      "brow_r": {
+        "point": 13.897492592596683,
+        "curve": 8.932365082576153,
+        "symmetric_curve": 7.282311918101665,
+        "tangent_abs": 12.04614251646072,
+        "normal_abs": 4.785266234721221,
+        "tangent_energy_fraction": 0.8851367021834078,
+        "tangent_valid_count": 5
+      },
+      "brow_l": {
+        "point": 5.652479150576925,
+        "curve": 5.14916490566558,
+        "symmetric_curve": 4.867438603613657,
+        "tangent_abs": 1.9031285988683422,
+        "normal_abs": 5.267922375699665,
+        "tangent_energy_fraction": 0.09737730040786154,
+        "tangent_valid_count": 5
+      },
+      "bridge": {
+        "point": 4.616686130993306,
+        "curve": 3.6646914930165586,
+        "symmetric_curve": 3.8170675619056444,
+        "tangent_abs": 1.879550871110524,
+        "normal_abs": 3.8072549673093308,
+        "tangent_energy_fraction": 0.29980595949869293,
+        "tangent_valid_count": 4
+      },
+      "nose": {
+        "point": 4.966180204564051,
+        "curve": 4.131876352343027,
+        "symmetric_curve": 4.316675607299947,
+        "tangent_abs": 2.0176568610507135,
+        "normal_abs": 4.071099544986765,
+        "tangent_energy_fraction": 0.25529311123442383,
+        "tangent_valid_count": 5
+      },
+      "eye_r": {
+        "point": 5.572639861376913,
+        "curve": 2.404369658466864,
+        "symmetric_curve": 3.269790598568262,
+        "tangent_abs": 3.6537493881616534,
+        "normal_abs": 3.644423058448408,
+        "tangent_energy_fraction": 0.4482653955159665,
+        "tangent_valid_count": 6
+      },
+      "eye_l": {
+        "point": 3.9435272865473223,
+        "curve": 1.026756150741472,
+        "symmetric_curve": 1.6062137640144611,
+        "tangent_abs": 3.524892746138769,
+        "normal_abs": 1.3804588937047986,
+        "tangent_energy_fraction": 0.8502172891156355,
+        "tangent_valid_count": 6
+      },
+      "outer_lip": {
+        "point": 7.651805592462427,
+        "curve": 5.063027112135145,
+        "symmetric_curve": 4.261350001534696,
+        "tangent_abs": 5.617757314767649,
+        "normal_abs": 3.888833615711617,
+        "tangent_energy_fraction": 0.7395511224629697,
+        "tangent_valid_count": 12
+      },
+      "inner_lip": {
+        "point": 8.962587310464746,
+        "curve": 7.727600673752641,
+        "symmetric_curve": 6.0053250135313165,
+        "tangent_abs": 5.446644470056547,
+        "normal_abs": 7.522485765869913,
+        "tangent_energy_fraction": 0.33550590250499057,
+        "tangent_valid_count": 7
+      }
+    },
+    "hrffa68": {
+      "jaw": {
+        "point": 15.776374251346025,
+        "curve": 3.940596592455084,
+        "symmetric_curve": 4.456070899886695,
+        "tangent_abs": 14.34705978833091,
+        "normal_abs": 3.657216555500449,
+        "tangent_energy_fraction": 0.9238767609123694,
+        "tangent_valid_count": 17
+      },
+      "brow_r": {
+        "point": 14.580045747663705,
+        "curve": 12.289202986578946,
+        "symmetric_curve": 9.235812966569217,
+        "tangent_abs": 10.073918961577252,
+        "normal_abs": 9.623756070500427,
+        "tangent_energy_fraction": 0.4594612043058573,
+        "tangent_valid_count": 5
+      },
+      "brow_l": {
+        "point": 9.010728880572682,
+        "curve": 7.582706663565239,
+        "symmetric_curve": 6.268129603328491,
+        "tangent_abs": 5.513362985146349,
+        "normal_abs": 6.118231526227419,
+        "tangent_energy_fraction": 0.41768693982839905,
+        "tangent_valid_count": 5
+      },
+      "bridge": {
+        "point": 12.849509262924775,
+        "curve": 9.13548055972995,
+        "symmetric_curve": 10.606537028074815,
+        "tangent_abs": 8.112907227298127,
+        "normal_abs": 9.429490381443967,
+        "tangent_energy_fraction": 0.4795222868696884,
+        "tangent_valid_count": 4
+      },
+      "nose": {
+        "point": 8.293168288303875,
+        "curve": 4.49099114530621,
+        "symmetric_curve": 4.006389013317965,
+        "tangent_abs": 5.9309709619024185,
+        "normal_abs": 4.434211701350123,
+        "tangent_energy_fraction": 0.6066186978524475,
+        "tangent_valid_count": 5
+      },
+      "eye_r": {
+        "point": 9.617793359611253,
+        "curve": 4.424377829643652,
+        "symmetric_curve": 5.053539855594678,
+        "tangent_abs": 7.129185799550783,
+        "normal_abs": 5.153600626500349,
+        "tangent_energy_fraction": 0.702873550620425,
+        "tangent_valid_count": 6
+      },
+      "eye_l": {
+        "point": 11.677883850206165,
+        "curve": 9.583612498225879,
+        "symmetric_curve": 6.505104370884594,
+        "tangent_abs": 6.418281835362312,
+        "normal_abs": 8.651938373541137,
+        "tangent_energy_fraction": 0.3782919623741576,
+        "tangent_valid_count": 6
+      },
+      "outer_lip": {
+        "point": 12.491743692176339,
+        "curve": 8.0455771671361,
+        "symmetric_curve": 5.755313614357373,
+        "tangent_abs": 9.776987858275996,
+        "normal_abs": 6.118113146699903,
+        "tangent_energy_fraction": 0.6509155066921118,
+        "tangent_valid_count": 12
+      },
+      "inner_lip": {
+        "point": 8.120845061844973,
+        "curve": 5.387761305521317,
+        "symmetric_curve": 3.2170328723722053,
+        "tangent_abs": 6.924068062775522,
+        "normal_abs": 4.710629486809339,
+        "tangent_energy_fraction": 0.707819570918416,
+        "tangent_valid_count": 7
+      }
+    },
+    "ours98": {
+      "jaw": {
+        "point": 14.438222162387012,
+        "curve": 5.387624827375247,
+        "symmetric_curve": 5.583447291187219,
+        "tangent_abs": 12.683699254443006,
+        "normal_abs": 4.907647043543655,
+        "tangent_energy_fraction": 0.8702380501552045,
+        "tangent_valid_count": 33
+      },
+      "brow_r": {
+        "point": 12.872351754558572,
+        "curve": 8.813976197304138,
+        "symmetric_curve": 7.133833409353224,
+        "tangent_abs": 8.439003849972378,
+        "normal_abs": 8.81459433239664,
+        "tangent_energy_fraction": 0.5235892205162807,
+        "tangent_valid_count": 9
+      },
+      "brow_l": {
+        "point": 6.387185377442788,
+        "curve": 4.589073601633239,
+        "symmetric_curve": 4.161612648419178,
+        "tangent_abs": 3.051301698137208,
+        "normal_abs": 4.6994805116429585,
+        "tangent_energy_fraction": 0.4288263414812905,
+        "tangent_valid_count": 9
+      },
+      "bridge": {
+        "point": 4.616686130993306,
+        "curve": 3.6646914930165586,
+        "symmetric_curve": 3.8170675619056444,
+        "tangent_abs": 1.879550871110524,
+        "normal_abs": 3.8072549673093308,
+        "tangent_energy_fraction": 0.29980595949869293,
+        "tangent_valid_count": 4
+      },
+      "nose": {
+        "point": 4.966180204564051,
+        "curve": 4.131876352343027,
+        "symmetric_curve": 4.316675607299947,
+        "tangent_abs": 2.0176568610507135,
+        "normal_abs": 4.071099544986765,
+        "tangent_energy_fraction": 0.25529311123442383,
+        "tangent_valid_count": 5
+      },
+      "eye_r": {
+        "point": 6.605382222467729,
+        "curve": 2.630295599952223,
+        "symmetric_curve": 3.385803355536818,
+        "tangent_abs": 4.50516279798195,
+        "normal_abs": 3.806786476024552,
+        "tangent_energy_fraction": 0.5533962902895919,
+        "tangent_valid_count": 8
+      },
+      "eye_l": {
+        "point": 4.592158134449422,
+        "curve": 1.0279742988280076,
+        "symmetric_curve": 1.5029900918259818,
+        "tangent_abs": 4.251787944422185,
+        "normal_abs": 1.462782470493615,
+        "tangent_energy_fraction": 0.8968937046423825,
+        "tangent_valid_count": 8
+      },
+      "outer_lip": {
+        "point": 7.651805592462427,
+        "curve": 5.063027112135145,
+        "symmetric_curve": 4.261350001534696,
+        "tangent_abs": 5.617757314767649,
+        "normal_abs": 3.888833615711617,
+        "tangent_energy_fraction": 0.7395511224629697,
+        "tangent_valid_count": 12
+      },
+      "inner_lip": {
+        "point": 8.962587310464746,
+        "curve": 7.727600673752641,
+        "symmetric_curve": 6.0053250135313165,
+        "tangent_abs": 5.446644470056547,
+        "normal_abs": 7.522485765869913,
+        "tangent_energy_fraction": 0.33550590250499057,
+        "tangent_valid_count": 7
+      }
+    },
+    "ours_mean_residual_px": [
+      -0.12369881979289957,
+      2.0619743802302524
+    ],
+    "ours98_nme": 9.797230852095682,
+    "ours98_translation_removed_nme": 9.091147694924235,
+    "worst_ours98": [
+      {
+        "index": 0,
+        "error_px": 21.203161834844614
+      },
+      {
+        "index": 1,
+        "error_px": 19.154537955202276
+      },
+      {
+        "index": 2,
+        "error_px": 17.785780967975242
+      },
+      {
+        "index": 3,
+        "error_px": 16.75688744861706
+      },
+      {
+        "index": 4,
+        "error_px": 16.717835883466936
+      },
+      {
+        "index": 5,
+        "error_px": 16.17599517128434
+      },
+      {
+        "index": 33,
+        "error_px": 15.909061459938505
+      },
+      {
+        "index": 76,
+        "error_px": 14.478494185749113
+      },
+      {
+        "index": 32,
+        "error_px": 14.30604890834793
+      },
+      {
+        "index": 30,
+        "error_px": 14.250387892509908
+      }
+    ],
+    "duplicate_gt_groups": [
+      [
+        90,
+        91,
+        92
+      ]
+    ]
+  },
+  {
+    "sample": 6,
+    "image": "41--Swimming/41_Swimming_Swimmer_41_293.jpg",
+    "io_crop_px": 51.67111078842307,
+    "io_over_face_width": 0.27751435847378175,
+    "roundtrip_max_px": 1.1368683772161603e-13,
+    "ours_nme": 17.416565765207867,
+    "hrffa_nme": 14.783597058914399,
+    "peppa_nme": 106.01857195013021,
+    "peppa_corrected_gt_nme": 107.09787254171124,
+    "peppa_gt_rounding_max_px": 1.3775630677290243,
+    "ours68": {
+      "jaw": {
+        "point": 28.534259143963848,
+        "curve": 20.404727187746698,
+        "symmetric_curve": 18.44738478784566,
+        "tangent_abs": 18.72693703664199,
+        "normal_abs": 20.235663392436702,
+        "tangent_energy_fraction": 0.4116351332699335,
+        "tangent_valid_count": 17
+      },
+      "brow_r": {
+        "point": 28.24026590754128,
+        "curve": 12.138474033888896,
+        "symmetric_curve": 11.07443322000366,
+        "tangent_abs": 27.778823998222073,
+        "normal_abs": 4.0348785686750785,
+        "tangent_energy_fraction": 0.9675190886039656,
+        "tangent_valid_count": 5
+      },
+      "brow_l": {
+        "point": 10.953725663102384,
+        "curve": 10.953725663102384,
+        "symmetric_curve": 6.368963673774884,
+        "tangent_abs": null,
+        "normal_abs": null,
+        "tangent_energy_fraction": null,
+        "tangent_valid_count": 0
+      },
+      "bridge": {
+        "point": 7.611372175334393,
+        "curve": 6.289716925647686,
+        "symmetric_curve": 5.27250125363364,
+        "tangent_abs": 5.284077251101734,
+        "normal_abs": 4.932050078027007,
+        "tangent_energy_fraction": 0.5069554923365857,
+        "tangent_valid_count": 4
+      },
+      "nose": {
+        "point": 12.135708256957502,
+        "curve": 11.803386365866793,
+        "symmetric_curve": 9.239534507284088,
+        "tangent_abs": 8.842833719583219,
+        "normal_abs": 7.641626708268101,
+        "tangent_energy_fraction": 0.6535227032627735,
+        "tangent_valid_count": 5
+      },
+      "eye_r": {
+        "point": 14.50388860389522,
+        "curve": 6.28719921895101,
+        "symmetric_curve": 8.493552937863067,
+        "tangent_abs": 10.655800576153371,
+        "normal_abs": 8.74774538769783,
+        "tangent_energy_fraction": 0.5655369872451321,
+        "tangent_valid_count": 6
+      },
+      "eye_l": {
+        "point": 9.227147875778256,
+        "curve": 8.954222189638099,
+        "symmetric_curve": 4.852791604613728,
+        "tangent_abs": 4.646121832594952,
+        "normal_abs": 6.653751753207247,
+        "tangent_energy_fraction": 0.22125705139985444,
+        "tangent_valid_count": 4
+      },
+      "outer_lip": {
+        "point": 12.743910388535193,
+        "curve": 6.337680570135354,
+        "symmetric_curve": 5.3744074147505145,
+        "tangent_abs": 8.66287867826582,
+        "normal_abs": 8.178867707943095,
+        "tangent_energy_fraction": 0.455844312486096,
+        "tangent_valid_count": 12
+      },
+      "inner_lip": {
+        "point": 14.604616900867896,
+        "curve": 8.155000225953083,
+        "symmetric_curve": 6.4384349248535715,
+        "tangent_abs": 8.862376118791317,
+        "normal_abs": 10.037517052288564,
+        "tangent_energy_fraction": 0.37086246832429204,
+        "tangent_valid_count": 8
+      }
+    },
+    "hrffa68": {
+      "jaw": {
+        "point": 13.910826885084099,
+        "curve": 7.366999230643399,
+        "symmetric_curve": 7.174346542157424,
+        "tangent_abs": 11.171366653722883,
+        "normal_abs": 7.859544575366588,
+        "tangent_energy_fraction": 0.6721176009091864,
+        "tangent_valid_count": 17
+      },
+      "brow_r": {
+        "point": 27.526453599031274,
+        "curve": 19.7691428093846,
+        "symmetric_curve": 15.424789170999714,
+        "tangent_abs": 21.425245873363874,
+        "normal_abs": 15.59173375971322,
+        "tangent_energy_fraction": 0.6530304266805385,
+        "tangent_valid_count": 5
+      },
+      "brow_l": {
+        "point": 10.535861233049342,
+        "curve": 10.535861233049342,
+        "symmetric_curve": 5.356280502236756,
+        "tangent_abs": null,
+        "normal_abs": null,
+        "tangent_energy_fraction": null,
+        "tangent_valid_count": 0
+      },
+      "bridge": {
+        "point": 13.57988985282187,
+        "curve": 10.476033708608856,
+        "symmetric_curve": 11.154400623890908,
+        "tangent_abs": 8.125479265876159,
+        "normal_abs": 10.140527589400754,
+        "tangent_energy_fraction": 0.45139560877043217,
+        "tangent_valid_count": 4
+      },
+      "nose": {
+        "point": 6.428317874308946,
+        "curve": 6.140119076786435,
+        "symmetric_curve": 4.757564437893304,
+        "tangent_abs": 4.496445702268949,
+        "normal_abs": 3.6682739683121883,
+        "tangent_energy_fraction": 0.6101545130265978,
+        "tangent_valid_count": 5
+      },
+      "eye_r": {
+        "point": 16.672681062952787,
+        "curve": 5.313701369231493,
+        "symmetric_curve": 6.480502878163234,
+        "tangent_abs": 12.981504272069252,
+        "normal_abs": 7.231366430395939,
+        "tangent_energy_fraction": 0.7583864363785412,
+        "tangent_valid_count": 6
+      },
+      "eye_l": {
+        "point": 12.55835080969312,
+        "curve": 12.353566233260239,
+        "symmetric_curve": 6.417804723603618,
+        "tangent_abs": 6.874077459444798,
+        "normal_abs": 6.444210017108494,
+        "tangent_energy_fraction": 0.588945920702465,
+        "tangent_valid_count": 4
+      },
+      "outer_lip": {
+        "point": 15.98434858072529,
+        "curve": 6.438889149304136,
+        "symmetric_curve": 7.284165221268717,
+        "tangent_abs": 9.762615323964022,
+        "normal_abs": 10.80407158752891,
+        "tangent_energy_fraction": 0.5212677408481665,
+        "tangent_valid_count": 12
+      },
+      "inner_lip": {
+        "point": 15.603680726491904,
+        "curve": 6.078158767364325,
+        "symmetric_curve": 7.410827893410313,
+        "tangent_abs": 10.175898414104353,
+        "normal_abs": 8.53481808762353,
+        "tangent_energy_fraction": 0.5318878976337434,
+        "tangent_valid_count": 8
+      }
+    },
+    "ours98": {
+      "jaw": {
+        "point": 27.140254938494458,
+        "curve": 18.65471047230986,
+        "symmetric_curve": 16.864637848373736,
+        "tangent_abs": 18.19411238920284,
+        "normal_abs": 18.846399702688814,
+        "tangent_energy_fraction": 0.42932425368330657,
+        "tangent_valid_count": 33
+      },
+      "brow_r": {
+        "point": 26.718958419878565,
+        "curve": 7.6424183003372255,
+        "symmetric_curve": 8.175865830519863,
+        "tangent_abs": 22.206788993574413,
+        "normal_abs": 9.53531080125409,
+        "tangent_energy_fraction": 0.6913289743940593,
+        "tangent_valid_count": 9
+      },
+      "brow_l": {
+        "point": 11.513449738833065,
+        "curve": 11.513449738833065,
+        "symmetric_curve": 6.6488257116402245,
+        "tangent_abs": null,
+        "normal_abs": null,
+        "tangent_energy_fraction": null,
+        "tangent_valid_count": 0
+      },
+      "bridge": {
+        "point": 7.611372175334393,
+        "curve": 6.289716925647686,
+        "symmetric_curve": 5.27250125363364,
+        "tangent_abs": 5.284077251101734,
+        "normal_abs": 4.932050078027007,
+        "tangent_energy_fraction": 0.5069554923365857,
+        "tangent_valid_count": 4
+      },
+      "nose": {
+        "point": 12.135708256957502,
+        "curve": 11.803386365866793,
+        "symmetric_curve": 9.239534507284088,
+        "tangent_abs": 8.842833719583219,
+        "normal_abs": 7.641626708268101,
+        "tangent_energy_fraction": 0.6535227032627735,
+        "tangent_valid_count": 5
+      },
+      "eye_r": {
+        "point": 15.646079034119628,
+        "curve": 6.402713424161691,
+        "symmetric_curve": 8.601646257671993,
+        "tangent_abs": 11.464840659663237,
+        "normal_abs": 8.28260165423001,
+        "tangent_energy_fraction": 0.62864566056627,
+        "tangent_valid_count": 8
+      },
+      "eye_l": {
+        "point": 8.966514839409113,
+        "curve": 8.67915104119975,
+        "symmetric_curve": 4.71315877599559,
+        "tangent_abs": 5.508241067815274,
+        "normal_abs": 2.8569770443764044,
+        "tangent_energy_fraction": 0.732537734487059,
+        "tangent_valid_count": 4
+      },
+      "outer_lip": {
+        "point": 12.743910388535193,
+        "curve": 6.337680570135354,
+        "symmetric_curve": 5.3744074147505145,
+        "tangent_abs": 8.66287867826582,
+        "normal_abs": 8.178867707943095,
+        "tangent_energy_fraction": 0.455844312486096,
+        "tangent_valid_count": 12
+      },
+      "inner_lip": {
+        "point": 14.604616900867896,
+        "curve": 8.155000225953083,
+        "symmetric_curve": 6.4384349248535715,
+        "tangent_abs": 8.862376118791317,
+        "normal_abs": 10.037517052288564,
+        "tangent_energy_fraction": 0.37086246832429204,
+        "tangent_valid_count": 8
+      }
+    },
+    "ours_mean_residual_px": [
+      -0.08570034320737877,
+      -2.6955594128878544
+    ],
+    "ours98_nme": 18.515947609381296,
+    "ours98_translation_removed_nme": 18.732082318607272,
+    "worst_ours98": [
+      {
+        "index": 0,
+        "error_px": 45.370990857933485
+      },
+      {
+        "index": 1,
+        "error_px": 41.54954589094722
+      },
+      {
+        "index": 2,
+        "error_px": 39.07255543778986
+      },
+      {
+        "index": 3,
+        "error_px": 35.46772738305735
+      },
+      {
+        "index": 4,
+        "error_px": 31.4170510010748
+      },
+      {
+        "index": 5,
+        "error_px": 28.40451445250173
+      },
+      {
+        "index": 6,
+        "error_px": 24.44235239791053
+      },
+      {
+        "index": 33,
+        "error_px": 21.25215042769677
+      },
+      {
+        "index": 7,
+        "error_px": 21.13784202525479
+      },
+      {
+        "index": 83,
+        "error_px": 19.219963643516934
+      }
+    ],
+    "duplicate_gt_groups": [
+      [
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      [
+        68,
+        69,
+        70,
+        74,
+        75
+      ],
+      [
+        71,
+        73
+      ]
+    ]
+  }
+]

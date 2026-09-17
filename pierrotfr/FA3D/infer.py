@@ -242,7 +242,7 @@ class FA3D:
     def detect(self, img: np.ndarray, max_faces: int = 1) -> list:
         """BGR 이미지 -> roi_box 리스트 (큰 얼굴 순). 검출기는 늦게 만든다."""
         if self._det is None:
-            from .detect import FaceDetector
+            from ..data.detect import FaceDetector
             self._det = FaceDetector()
         boxes = self._det(img)
         boxes = sorted(boxes, key=lambda b: -(b[2] - b[0]) * (b[3] - b[1]))[:max_faces]

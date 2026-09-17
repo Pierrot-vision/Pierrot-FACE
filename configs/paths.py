@@ -1,6 +1,7 @@
 """서버 고유 경로의 단일 소스 — 데이터셋 / 가중치 / 산출물 루트.
 
     FA3D_DATA_ROOT   3DDFA 데이터 루트 (test.data/ test.configs/ bfm/ train.configs/)
+    FA2D_DATA_ROOT   2DDFA 데이터 루트 (raw/WFLW · raw/LaPa)
     WEIGHT_ROOT      오피셜 배포 가중치 루트 (대조용 — 3DDFA_V2 의 mb1/mb05)
     CKPT_ROOT        학습 산출물 루트 — 여기서 best.pth 를 읽는다 (학습 저장소의 runs/)
     OUTPUT_ROOT      추론 시각화 출력 루트 (저장소 안 outputs/)
@@ -71,14 +72,26 @@ FA3D_BFM_DIR = os.path.join(FA3D_DATA_ROOT, "bfm")               # BFM basis + �
 FA3D_TRAIN_DIR = os.path.join(FA3D_DATA_ROOT, "train_aug_120x120")   # 300W-LP 크롭
 FA3D_TRAIN_CFG = os.path.join(FA3D_DATA_ROOT, "train.configs")       # 62-d GT + 리스트
 
+# ---- FA2D 데이터 루트 ----
+# 평가만 한다면 WFLW(①·③) 와 LaPa(②) 두 개면 된다.
+FA2D_DATA_ROOT = root("PIERROTFR_FA2D_DATA_ROOT", os.path.join(_REPO, "data", "2DDFA"))
+FA2D_WFLW_DIR = os.path.join(FA2D_DATA_ROOT, "raw", "WFLW")      # 원본 이미지 + 98점 주석
+FA2D_LAPA_DIR = os.path.join(FA2D_DATA_ROOT, "raw", "LaPa")      # LaPa 106점
+FA2D_300W_DIR = os.path.join(FA2D_DATA_ROOT, "raw", "300W")      # 300W Challenge (평가 전용)
+# DINOv3 ViT-L/16 config — 교사 백본의 **구조 정의**만 읽는다(가중치는 체크포인트에 있다).
+# ⚠ DINOv3 는 재배포 금지 라이선스라 이 저장소에 넣지 않는다.
+FA2D_DINOV3_DIR = root("PIERROTFR_FA2D_DINOV3_DIR",
+                       os.path.join(FA2D_DATA_ROOT, "ckpts", "dinov3-vitl16"))
+
 # 3DDFA_V2 오피셜 저장소 — **선택**이다.
 #   · 배포 가중치(mb1/mb05) 대조: WEIGHT_ROOT 에 .pth 만 두면 이 경로 없이도 된다
 #   · FaceBoxes 검출기: 이 경로가 있으면 데모가 오피셜과 **같은 검출기**를 쓴다
-#     (없으면 pierrotfr/FA3D/detect.py 가 MTCNN → Haar 순으로 폴백한다)
+#     (없으면 pierrotfr/data/detect.py 가 MTCNN → Haar 순으로 폴백한다)
 V2_ROOT = root("PIERROTFR_3DDFA_V2_ROOT", "")
 
 # 추론 시각화 산출물 — 학습 산출물(runs/)과 나란한 트리를 쓴다.
 #     outputs/fa3d/<런 이름>/    demo.mp4 · grid.jpg · pred_3d.jpg …
+#     outputs/fa2d/<런 이름>/
 OUTPUT_ROOT = os.path.join(_REPO, "outputs")
 
 
@@ -87,8 +100,8 @@ def work_dir(task: str, tag: str) -> str:
     return os.path.join(CKPT_ROOT, task, tag)
 
 
-def output_dir(tag: str) -> str:
-    return os.path.join(OUTPUT_ROOT, "fa3d", tag)
+def output_dir(tag: str, task: str = "fa3d") -> str:
+    return os.path.join(OUTPUT_ROOT, task, tag)
 
 
 def describe() -> str:
@@ -96,6 +109,7 @@ def describe() -> str:
     return " | ".join(
         f"{k}={v} ({_SOURCES.get(k, '?')})"
         for k, v in (("PIERROTFR_FA3D_DATA_ROOT", FA3D_DATA_ROOT),
+                     ("PIERROTFR_FA2D_DATA_ROOT", FA2D_DATA_ROOT),
                      ("PIERROTFR_CKPT_ROOT", CKPT_ROOT),
                      ("PIERROTFR_WEIGHT_ROOT", WEIGHT_ROOT))
     )
@@ -103,7 +117,8 @@ def describe() -> str:
 
 def env_hint() -> str:
     """경로 오류 메시지 뒤에 붙일 안내문 (전부 해결돼 있으면 빈 문자열)."""
-    unset = [n for n in ("PIERROTFR_FA3D_DATA_ROOT", "PIERROTFR_CKPT_ROOT")
+    unset = [n for n in ("PIERROTFR_FA3D_DATA_ROOT", "PIERROTFR_FA2D_DATA_ROOT",
+                         "PIERROTFR_CKPT_ROOT")
              if _SOURCES.get(n) == "default"]
     if not unset:
         return ""
