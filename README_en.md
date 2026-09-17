@@ -68,6 +68,30 @@ face**.
   repository, written from the paper; the released weights' 3.683 reproduced
   👉 [Phase 1](LAB/FA3D/Exp/Phase_1_구현과_기준선.md)
 
+## 👁 2D Face Alignment (FA2D)
+
+### What it actually predicts
+
+![FA2D predictions](docs/FA2D/sota_examples_grid.jpg)
+
+### Evaluation
+
+All three benchmarks in one table. Every value is measured; references are measured under their own evaluation protocols.
+
+| Model | Backbone | Params | Input · crop | Face res. | Output | Distill | Train set | WFLW test in train | LaPa in train | **① WFLW Full** | FR10 | **② LaPa common-38** | FR10 | **③ base** | roll worst | pose-stress mean | style mean | style worst |
+|---|---|--:|---|--:|---|---|---|:--:|:--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| HRFFA teacher `clean_v3` | DINOv3 ViT-L/16 | 308.2M | 320 · head | 89px | coords | — | 34,986 | ✅ | ❌ | *1.698* | — | 2.547 | 0.70% | *1.861* | *1.901* | *1.855* | *1.830* | *2.404* |
+| HRFFA student vitt-256 | ViT-T/16 | 9.0M | 256 · head | — | coords | A | 〃 | ✅ | ❌ | *3.36* | — | no weights | — | — | — | — | — | — |
+| HRFFA student hg0-256 | HGNetV2-B0 | 1.6M | 256 · head | — | coords | A | 〃 | ✅ | ❌ | *5.32* | — | no weights | — | — | — | — | — | — |
+| D-ViT (paper) | ViT | 96.4M | 256 · face | — | coords | — | WFLW train | ❌ | ❌ | **3.75** | — | model not released | — | — | — | — | — | — |
+| Peppa Teacher | HRNet-W18 | 11.53M | 256 · face | 131px | heatmap+offset | — | WFLW train 7,500 | ❌ | ❌ | 3.959 | — | 2.164 | 0.65% | 4.440 | 124.851 | 39.097 | 4.941 | 7.271 |
+| Peppa Student | MobileNetV3 | 3.25M | 256 · face | 131px | heatmap+offset | B | WFLW train 7,500 | ❌ | ❌ | 4.353 | — | 2.214 | 0.70% | 4.777 | 122.079 | 38.872 | 5.308 | 7.112 |
+| **Our teacher `full_v12`** | DINOv3 ViT-L/16 | 311M | 448 · face | 245px | coords+coarse | — | 33,357 | ❌ | train+val | **3.916** | **1.48%** | **1.693** | 0.20% | **3.799** | **3.997** | **4.070** | **3.948** | **4.032** |
+| **Our student `stu_final_v2`** | ViT-T/16 | 10.54M | 448 · face | 245px | hm4+coords | A (`full_v12` frozen) | same as teacher | ❌ | train+val | **4.227** | 3.00% | **1.766** | **0.15%** | 4.033 | 4.119 | 4.358 | 4.316 | 4.470 |
+
+*Italic* = measured on images that model was trained on — not comparable.
+Distill **A** = frozen teacher · **B** = teacher fine-tuned jointly on GT.
+
 ## 🧊 3D Dense Face Alignment (FA3D)
 
 **3DDFA_V2 (ECCV 2020)** publishes inference code and released weights only — **there is no
