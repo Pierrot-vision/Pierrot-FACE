@@ -136,7 +136,7 @@ train+val 20,168 장을 학습했다** — 같은 데이터셋의 다른 분할�
 표본 가중 없이 학습됐다.** 09-15 에 연결했고(DDP 는 `gather_object` 로 랭크 간 동기),
 `full_v12`·`stu_final_v2` 부터 실제로 동작한다. 따라서
 
-- [HRFFA_Plus](../HRFFA_Plus.md) §1.4 의 "손실 기반 과표집(`hard_mining`)" 표기는
+- [Ours](../Ours.md) §1.4 의 "손실 기반 과표집(`hard_mining`)" 표기는
   `full_v12` 이후에만 참이다.
 - Phase 8~15 의 "`hard_mining` 포함 구성" 서술은 설정값이지 동작이 아니었다.
 - `full_v8`(448 · pad 0.05 · refine)의 이득은 표본 가중과 무관하다.

@@ -16,7 +16,7 @@
 | **FA2D** — 2D 얼굴 정렬 | |
 | [FA2D/FA2D.md](FA2D/FA2D.md) | 태스크 공통 — 랜드마크 규약 · 데이터셋 · NME 정규화 기준 · 조사한 저장소 |
 | [FA2D/HRFFA.md](FA2D/HRFFA.md) | 기반 알고리즘 HRFFA 조사 |
-| [FA2D/HRFFA_Plus.md](FA2D/HRFFA_Plus.md) | **구현 · 실험 기록** — HRFFA · Peppa 전면 대조 · 세 벤치마크 통합 표 |
+| [FA2D/Ours.md](FA2D/Ours.md) | **구현 · 실험 기록** — HRFFA · Peppa 전면 대조 · 세 벤치마크 통합 표 |
 | [FA2D/Exp/](FA2D/Exp/) | 단계별 기록 — Phase 1 조사 → 16 얼굴 크롭 교사와 최종 학생 |
 | **FA3D** — 3D 밀집 얼굴 정렬 | |
 | [FA3D/3DDFA_V2.md](FA3D/3DDFA_V2.md) | **알고리즘** — 3DMM 파라미터의 의미 · VDC/WPDC/fWPDC 유도 · meta-joint · svs |

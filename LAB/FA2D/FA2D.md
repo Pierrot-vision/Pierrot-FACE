@@ -8,7 +8,7 @@ Pierrot_FR Lab 의 **2D 랜드마크 정렬** 태스크 문서. 조사한 공개
 > | 문서 | 알고리즘 | 원저장소 |
 > |---|---|---|
 > | **[HRFFA.md](HRFFA.md)** | HRFFA — 고각도 강건 whole-head 정렬 + 증류 + ONNX | [PINTO0309/High-Angle_Robust_Fast_FaceAlignment](https://github.com/PINTO0309/High-Angle_Robust_Fast_FaceAlignment) |
-> | **[HRFFA_Plus.md](HRFFA_Plus.md)** | HRFFA+ — 우리 확장(시간축·상태 헤드·지터 지표) | 위 저장소의 `hrffa-plus` 브랜치 |
+> | **[Ours.md](Ours.md)** | HRFFA+ — 우리 확장(시간축·상태 헤드·지터 지표) | 위 저장소의 `hrffa-plus` 브랜치 |
 >
 > 아래 §5 의 나머지 4개 저장소는 **조사 단계**다 — README·구조만 확인했고 코드는 아직
 > 읽지 않았다. 개별 문서는 코드를 읽은 뒤에 만든다.

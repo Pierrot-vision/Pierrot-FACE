@@ -76,7 +76,7 @@
 우리의 목표는 **극단적인 자세에서도 랜드마크를 잘 찾는 것**입니다. 아래는 그 목표를 어느 정도 달성했음을 보여 주는 결과입니다.
 
 - 📘 **태스크 공통** (랜드마크 규약 · 데이터셋 · NME 정규화 기준) — [LAB/FA2D/FA2D.md](LAB/FA2D/FA2D.md)
-- 📗 **구현 · 실험 기록** (HRFFA · Peppa 전면 대조 · 세 벤치마크) — [LAB/FA2D/HRFFA_Plus.md](LAB/FA2D/HRFFA_Plus.md)
+- 📗 **구현 · 실험 기록** (HRFFA · Peppa 전면 대조 · 세 벤치마크) — [LAB/FA2D/Ours.md](LAB/FA2D/Ours.md)
 - 📙 **실험 단계별 기록** — [LAB/FA2D/Exp/](LAB/FA2D/Exp/) (Phase 1~16)
 - 🔀 **FA2D 와 FA3D 는 무엇이 다른가** — [LAB/FA2D_vs_FA3D.md](LAB/FA2D_vs_FA3D.md)
 
