@@ -59,7 +59,6 @@ face**.
   Teacher 3.959 · student **4.227** vs Peppa Student 4.353
 - 2026-09-16 — 🔍 **FA2D measured against HRFFA on the same ruler for the first time** — on LaPa test,
   which none of the three trained on: teacher **1.693** · student **1.766** vs HRFFA 2.547
-  (⚠ only we trained on LaPa train+val)
 - 2026-09-04 — 🔄 **flip-TTA adopted** — no retraining, AFLW2000-3D **3.622 → 3.508** and
   AFLW **5.125 → 5.035**. It can only be averaged in landmark space, so the dense mesh is left out
 - 2026-09-02 — 🚀 **FA3D inference code released** — image/video inference · AFLW2000-3D and
