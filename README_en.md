@@ -74,6 +74,8 @@ face**.
 
 ## 👁 2D Face Alignment (FA2D)
 
+Our goal is to **find landmarks well even under extreme poses**. The results below show that we have reached that goal to a good extent.
+
 ### What it actually predicts
 
 > ⚠ 9 of the 10 rows are **WFLW test** images — **HRFFA trained on these images, so its cells there are not a fair comparison** (orange cells). The only row none of the three trained on is the single **LaPa test** row.
