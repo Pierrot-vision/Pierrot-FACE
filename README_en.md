@@ -79,6 +79,8 @@ face**.
 
 Our goal is to **find landmarks well even under extreme poses**. The results below show that we have reached that goal to a good extent.
 
+![FA2D on 5 hard images](docs/FA2D/hard5_moderate_concat.jpg)
+
 - 📘 **Task basics** (landmark conventions · datasets · NME normalization) — [LAB/FA2D/FA2D.md](LAB/FA2D/FA2D.md)
 - 📗 **Implementation and experiment log** (full comparison with HRFFA · Peppa · three benchmarks) — [LAB/FA2D/Ours.md](LAB/FA2D/Ours.md)
 - 📙 **Phase-by-phase record** — [LAB/FA2D/Exp/](LAB/FA2D/Exp/) (Phase 1–16)
