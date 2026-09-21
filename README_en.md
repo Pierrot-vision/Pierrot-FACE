@@ -54,6 +54,12 @@ face**.
 
 * The training code and trained weights are not publicly released at this time.
 
+## 🧩 Current implementations
+
+- 👁 **[FA2D](#-2d-face-alignment-fa2d)** — 2D face alignment (98 points) · point-query decoder · teacher DINOv3 ViT-L/16 · student ViT-T/16
+- 🧊 **[FA3D](#-3d-dense-face-alignment-fa3d)** — 3D dense face alignment · 3DDFA_V2 reimplementation (3DMM 62-d · BFM)
+- 🎭 **[FAS](#-face-anti-spoofing-fas)** — face anti-spoofing · InstructFLIP reimplementation (CLIP ViT-B/16 · Q-Former)
+
 ## 📰 News
 
 - 2026-09-21 — 🚀 **FAS inference code released** — InstructFLIP reimplementation (the training-only LLM is removed at inference) ·

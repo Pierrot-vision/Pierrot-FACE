@@ -52,6 +52,12 @@
 
 * 현재 **학습 코드와 학습된 가중치는 공개하지 않고 있습니다.**
 
+## 🧩 현재 구현
+
+- 👁 **[FA2D](#-2d-face-alignment-fa2d)** — 2D 얼굴 정렬 (98점) · 점 쿼리 디코더 · 교사 DINOv3 ViT-L/16 · 학생 ViT-T/16
+- 🧊 **[FA3D](#-3d-dense-face-alignment-fa3d)** — 3D 밀집 얼굴 정렬 · 3DDFA_V2 재구현 (3DMM 62-d · BFM)
+- 🎭 **[FAS](#-face-anti-spoofing-fas)** — 얼굴 위조 방지 · InstructFLIP 재구현 (CLIP ViT-B/16 · Q-Former)
+
 ## 📰 News
 
 - 2026-09-21 — 🚀 **FAS 추론 코드 공개** — InstructFLIP 재구현 (학습용 LLM 은 추론에서 제거) ·
