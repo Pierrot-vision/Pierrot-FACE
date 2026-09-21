@@ -205,7 +205,7 @@
 ## 🎭 Face Anti-Spoofing (FAS)
 
 카메라 앞의 얼굴이 **진짜인지, 사진·화면·마스크 같은 위조물인지** 판별합니다.
-**InstructFLIP (ACM MM 2025)** 을 재구현했고, 학습용 LLM(FLAN-T5)은 추론 경로에서 떼어 냅니다 (추론 176M).
+**InstructFLIP (ACM MM 2025)** 을 재구현했습니다.
 
 - 📘 **태스크 · 데이터 · 설정 · 지표 · 실험 결과** — [LAB/FAS/FAS.md](LAB/FAS/FAS.md)
 - 📗 **알고리즘** — [LAB/FAS/InstructFLIP.md](LAB/FAS/InstructFLIP.md) · [LAB/FAS/MiniFASNet.md](LAB/FAS/MiniFASNet.md) (경량 대조군)

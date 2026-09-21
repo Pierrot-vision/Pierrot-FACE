@@ -218,7 +218,7 @@ released weights on that image**. The [worst 50](docs/FA3D/aflw2000_grid_worst.j
 ## 🎭 Face Anti-Spoofing (FAS)
 
 Decides whether the face in front of the camera is **real or a spoof such as a photo, a screen or a mask**.
-We reimplemented **InstructFLIP (ACM MM 2025)** and detach its training-only LLM (FLAN-T5) from the inference path (176M at inference).
+We reimplemented **InstructFLIP (ACM MM 2025)**.
 
 - 📘 **Task · data · setup · metrics · results** — [LAB/FAS/FAS.md](LAB/FAS/FAS.md)
 - 📗 **Algorithms** — [LAB/FAS/InstructFLIP.md](LAB/FAS/InstructFLIP.md) · [LAB/FAS/MiniFASNet.md](LAB/FAS/MiniFASNet.md) (lightweight control)
