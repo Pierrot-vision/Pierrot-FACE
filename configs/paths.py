@@ -2,6 +2,7 @@
 
     FA3D_DATA_ROOT   3DDFA 데이터 루트 (test.data/ test.configs/ bfm/ train.configs/)
     FA2D_DATA_ROOT   2DDFA 데이터 루트 (raw/WFLW · raw/LaPa)
+    FAS_DATA_ROOT    Spoof 데이터 루트 (processed/ca/{val,test}.csv + 정렬 crop)
     WEIGHT_ROOT      오피셜 배포 가중치 루트 (대조용 — 3DDFA_V2 의 mb1/mb05)
     CKPT_ROOT        학습 산출물 루트 — 여기서 best.pth 를 읽는다 (학습 저장소의 runs/)
     OUTPUT_ROOT      추론 시각화 출력 루트 (저장소 안 outputs/)
@@ -83,6 +84,12 @@ FA2D_300W_DIR = os.path.join(FA2D_DATA_ROOT, "raw", "300W")      # 300W Challeng
 FA2D_DINOV3_DIR = root("PIERROTFR_FA2D_DINOV3_DIR",
                        os.path.join(FA2D_DATA_ROOT, "ckpts", "dinov3-vitl16"))
 
+# ---- FAS 데이터 루트 ----
+# CelebA-Spoof 를 MTCNN 5점으로 정렬한 224² crop 과 라벨 CSV. 평가에는 val.csv(임계값) ·
+# test.csv 두 개면 된다.
+FAS_DATA_ROOT = root("PIERROTFR_FAS_DATA_ROOT", os.path.join(_REPO, "data", "Spoof"))
+FAS_CA_DIR = os.path.join(FAS_DATA_ROOT, "processed", "ca")
+
 # 3DDFA_V2 오피셜 저장소 — **선택**이다.
 #   · 배포 가중치(mb1/mb05) 대조: WEIGHT_ROOT 에 .pth 만 두면 이 경로 없이도 된다
 #   · FaceBoxes 검출기: 이 경로가 있으면 데모가 오피셜과 **같은 검출기**를 쓴다
@@ -92,6 +99,7 @@ V2_ROOT = root("PIERROTFR_3DDFA_V2_ROOT", "")
 # 추론 시각화 산출물 — 학습 산출물(runs/)과 나란한 트리를 쓴다.
 #     outputs/fa3d/<런 이름>/    demo.mp4 · grid.jpg · pred_3d.jpg …
 #     outputs/fa2d/<런 이름>/
+#     outputs/fas/<런 이름>/
 OUTPUT_ROOT = os.path.join(_REPO, "outputs")
 
 
@@ -110,6 +118,7 @@ def describe() -> str:
         f"{k}={v} ({_SOURCES.get(k, '?')})"
         for k, v in (("PIERROTFR_FA3D_DATA_ROOT", FA3D_DATA_ROOT),
                      ("PIERROTFR_FA2D_DATA_ROOT", FA2D_DATA_ROOT),
+                     ("PIERROTFR_FAS_DATA_ROOT", FAS_DATA_ROOT),
                      ("PIERROTFR_CKPT_ROOT", CKPT_ROOT),
                      ("PIERROTFR_WEIGHT_ROOT", WEIGHT_ROOT))
     )
@@ -118,7 +127,7 @@ def describe() -> str:
 def env_hint() -> str:
     """경로 오류 메시지 뒤에 붙일 안내문 (전부 해결돼 있으면 빈 문자열)."""
     unset = [n for n in ("PIERROTFR_FA3D_DATA_ROOT", "PIERROTFR_FA2D_DATA_ROOT",
-                         "PIERROTFR_CKPT_ROOT")
+                         "PIERROTFR_FAS_DATA_ROOT", "PIERROTFR_CKPT_ROOT")
              if _SOURCES.get(n) == "default"]
     if not unset:
         return ""

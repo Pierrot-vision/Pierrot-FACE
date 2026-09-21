@@ -1,10 +1,12 @@
 torch>=2.2
 torchvision          # MobileNetV2 백본(FA3D) · 경량 CNN 백본(FA2D) 정의
-transformers>=4.56   # FA2D 백본 정의 — DINOv3 ViT-L/16(교사) · ViT-T/16(학생)
+transformers>=4.56   # 백본 정의 — FA2D DINOv3 ViT-L/16 · ViT-T/16 / FAS CLIP ViT-B/16 + BERT 토크나이저
 opencv-python
 numpy
+pandas               # FAS 라벨 CSV
+scikit-learn         # FAS ROC 지표 (EER · AUC · R@FPR)
 matplotlib           # 예측 격자 · 3D 재렌더 그림 (scripts/FA3D/*.py)
-# 얼굴 검출 — 임의의 사진·영상 데모에만 필요하다. 평가셋은 사전 크롭이라 안 쓴다.
+# 얼굴 검출 — 임의의 사진·영상 데모와 FAS --align 에만 필요하다. 평가셋은 사전 크롭이라 안 쓴다.
 # 없으면 OpenCV Haar cascade 로 내려간다 (정면만 잡는다).
 facenet-pytorch
 # GIF 저장 (eval/FA*/infer.py --gif). mp4 는 시스템 ffmpeg 을 쓴다.

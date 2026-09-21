@@ -31,7 +31,7 @@ is to **separate the work into large categories** — anti-spoofing / 3D alignme
 recognition — rather than lumping them into a single pipeline, so that the algorithm at each
 stage can be reproduced, swapped and compared independently.
 
-This repository ships **only the inference paths of FA2D (2D Face Alignment) and FA3D (3D Dense Face Alignment)**.
+This repository ships **only the inference paths of FA2D (2D Face Alignment), FA3D (3D Dense Face Alignment) and FAS (Face Anti-Spoofing)**.
 Losses, optimization, augmentation and the training datasets have been stripped out of the
 training repository; what remains is **exactly what is needed to turn one checkpoint into a
 face**.
@@ -56,6 +56,8 @@ face**.
 
 ## 📰 News
 
+- 2026-09-21 — 🚀 **FAS inference code released** — InstructFLIP reimplementation (the training-only LLM is removed at inference) ·
+  CelebA-Spoof evaluation · cue-map visualization. It **reproduces the README table exactly**
 - 2026-09-17 — 🚀 **FA2D inference code released** — image/video inference · evaluation on all three benchmarks
   (WFLW · LaPa · difficulty). It **reproduces the README table to three decimal places** · FA2D vs FA3D 👉 [LAB/FA2D_vs_FA3D.md](LAB/FA2D_vs_FA3D.md)
 - 2026-09-16 — 🏆 **FA2D teacher and student beat the references** — WFLW teacher **3.916** vs Peppa
@@ -207,6 +209,35 @@ released weights on that image**. The [worst 50](docs/FA3D/aflw2000_grid_worst.j
 
 ![dense 3D reconstruction](docs/FA3D/pred_3d.jpg)
 
+## 🎭 Face Anti-Spoofing (FAS)
+
+Decides whether the face in front of the camera is **real or a spoof such as a photo, a screen or a mask**.
+We reimplemented **InstructFLIP (ACM MM 2025)** and detach its training-only LLM (FLAN-T5) from the inference path (176M at inference).
+
+- 📘 **Task · data · setup · metrics · results** — [LAB/FAS/FAS.md](LAB/FAS/FAS.md)
+- 📗 **Algorithms** — [LAB/FAS/InstructFLIP.md](LAB/FAS/InstructFLIP.md) · [LAB/FAS/MiniFASNet.md](LAB/FAS/MiniFASNet.md) (lightweight control)
+- 📙 **Step-by-step log** — [LAB/FAS/Exp/](LAB/FAS/Exp/) (Phase 1~2)
+
+### What it actually predicts
+
+CelebA-Spoof val · InstructFLIP baseline · val-based threshold (margin −33.3). Rows = real + 10 spoof types.
+
+![FAS predictions](docs/FAS/demo_gallery_val.jpg)
+
+### Evaluation
+
+CelebA-Spoof official test (intra-dataset, 67,170 images).
+
+| | ACER ↓ | APCER ↓ | BPCER ↓ | EER ↓ | AUC ↑ | R@FPR1% ↑ | R@FPR0.5% ↑ | R@FPR0.1% ↑ |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|
+| **InstructFLIP baseline** (ours, val-based) | **1.52** | **2.14** | 0.90 | 1.48 | 99.85 | 97.97 | 96.80 | **92.99** |
+| InstructFLIP + wide crop · degradation aug · quality supervision (ours, val-based) | 1.78 | 2.73 | 0.84 | 1.83 | 99.77 | 97.52 | 96.44 | 93.85 |
+| MiniFASNet (ours, val-based) | 27.19 | 52.51 | 1.87 | 19.15 | 89.70 | 40.83 | 33.57 | 19.20 |
+| AENet released weights (measured with our code, 0.5) | 2.73 | 5.16 | 0.30 | 1.04 | 99.92 | 98.87 | 97.35 | 86.75 |
+| AENet (paper, 0.5) | 1.63 | 2.29 | 0.96 | 0.90 | 99.89 | 98.90 | 97.30 | 87.30 |
+
+**val-based** = the threshold giving BPCER 1% on val, applied unchanged to test · **0.5** = the official CelebA-Spoof threshold.
+
 ## 🚀 Install
 
 ```bash
@@ -235,6 +266,11 @@ python eval/FA2D/infer.py    --ckpt … --source clip.mp4 --max-faces 4 --drop-e
 python eval/FA2D/evaluate.py --ckpt runs/fa2d/<run>/best.pth             # ① WFLW · ② LaPa · ③ difficulty
 python eval/FA2D/evaluate.py --ckpt <teacher> <student> --only wflw lapa # quick check
 bash scripts/FA2D/eval.sh · bash scripts/FA2D/infer.sh
+
+# ── FAS ──────────────────────────────────────────────────────────
+python eval/FAS/infer.py    --ckpt runs/fas/<run>/best.pth --dir data/samples --align --margin -33.3 --save_cue
+python eval/FAS/evaluate.py --ckpt runs/fas/<run>/best.pth    # test.csv · threshold from val.csv
+bash scripts/FAS/eval.sh · bash scripts/FAS/infer.sh
 
 # ── FA3D · Inference ──────────────────────────────────────────────
 # Accepts an image, a directory, a list.txt, or a video. Always prints speed.
@@ -277,7 +313,9 @@ Pierrot_FR_Infer/
 │   ├── paths.py            # 🗺️ dataset / weight / output roots (paths.local.env · env vars)
 │   └── eval_fa3d.py        #    eval-set and BFM paths — only what the checkpoint cannot know
 ├── paths.local.env         # machine-specific paths — not committed (copy the .example)
-├── pierrotfr/data/detect.py # face detection (FaceBoxes → MTCNN → Haar) — shared by FA2D · FA3D
+├── pierrotfr/data/
+│   ├── detect.py           # face detection (FaceBoxes → MTCNN → Haar) — shared by FA2D · FA3D
+│   └── align.py            #   MTCNN 5-point aligned crop — the FAS input convention
 ├── pierrotfr/FA2D/         # 📦 inference path only
 │   ├── infer.py            #   checkpoint loading · flip-TTA · FA2D class (detect → 2-pass crop) ★entry point
 │   ├── benchmark.py        #   ① WFLW · ② LaPa common-38 · ③ HRFFA difficulty protocol
@@ -293,13 +331,21 @@ Pierrot_FR_Infer/
 │   ├── metrics.py          #   AFLW2000-3D / AFLW NME (yaw-bin convention)
 │   ├── benchmark.py        #   eval-set pipeline (predict → landmarks → NME)
 │   └── models/             #   backbones — neither the lrr head nor the synergy cycle is built
+├── pierrotfr/FAS/          # 📦 inference path only (no LLM)
+│   ├── infer.py            #   checkpoint loading · fixed instruction tokens · batch inference ★entry
+│   ├── data.py · metrics.py #  CelebA-Spoof CSV · eval transform / APCER · BPCER · ACER · EER · R@FPR
+│   └── models/             #   InstructFLIP (CLIP ViT-B/16 → Q-Former×2 → fusion) · MiniFASNet
 ├── eval/FA2D/
 │   ├── infer.py            # 🔍 photos/video → 98 landmarks (+H.264/GIF, timing)
 │   └── evaluate.py         #    the three axes of the README table (several ckpts · flip-TTA)
 ├── eval/FA3D/
 │   ├── infer.py            # 🔍 photos/video → 68 points / 3D mesh (+H.264/GIF, timing)
 │   └── evaluate.py         #    AFLW2000-3D / AFLW NME (several ckpts + released weights)
+├── eval/FAS/
+│   ├── infer.py            # 🔍 image → LIVE / SPOOF + cue map
+│   └── evaluate.py         #    the README table (threshold 0.5 · val-based)
 ├── scripts/FA2D/           # 🧪 eval.sh · infer.sh bundles
+├── scripts/FAS/            # 🧪 eval.sh · infer.sh bundles
 ├── scripts/FA3D/           # 🧪 figures · analysis · speed (bundled by eval.sh · infer.sh)
 ├── LAB/                    # 📚 read-only copy of the training repo's experiment record
 ├── docs/                   # banner · result visualizations · demos
@@ -315,6 +361,7 @@ Pierrot_FR_Infer/
 | FA2D `train_fa2d*.py` · `engine.py` · `losses.py` | training loop · distillation · losses |
 | FA2D `trajectory.py` · `depthwarp.py` · augmentation · samplers | synthetic clips · extreme-pitch synthesis · training augmentation |
 | FA2D `configs/args_fa2d.py` (1,257 lines) | hyperparameters — **the checkpoint carries them** |
+| FAS FLAN-T5 · `engine.py` · training datasets · augmentation | instruction-tuning supervision — not on the inference path |
 | `train_fa3d.py` · `engine.py` | meta-joint optimization (Algorithm 1) — the training loop |
 | `losses.py` | VDC · fWPDC · lrr · parameter-space loss |
 | `svs.py` | short-video-synthesis — a training augmentation |
@@ -335,9 +382,11 @@ all**, so its parameter counts and latencies are those of the model that actuall
 
 📚 Papers —
 [3DDFA_V2 (ECCV 2020)](https://guojianzhu.com/assets/pdfs/3162.pdf) ·
-[SynergyNet (3DV 2021)](https://arxiv.org/abs/2110.09772)
+[SynergyNet (3DV 2021)](https://arxiv.org/abs/2110.09772) ·
+[InstructFLIP (ACM MM 2025)](https://arxiv.org/abs/2507.12060) ·
+[CelebA-Spoof (ECCV 2020)](https://arxiv.org/abs/2007.12342)
 
-🛠 Official code — [cleardusk/3DDFA_V2](https://github.com/cleardusk/3DDFA_V2) (source for the BFM, the crop convention and the released weights) · [cleardusk/3DDFA](https://github.com/cleardusk/3DDFA) (v1 — evaluation sets, tensor handling) · [choyingw/SynergyNet](https://github.com/choyingw/SynergyNet)
+🛠 Official code — [cleardusk/3DDFA_V2](https://github.com/cleardusk/3DDFA_V2) (source for the BFM, the crop convention and the released weights) · [cleardusk/3DDFA](https://github.com/cleardusk/3DDFA) (v1 — evaluation sets, tensor handling) · [choyingw/SynergyNet](https://github.com/choyingw/SynergyNet) · [kunkunlin1221/InstructFLIP](https://github.com/kunkunlin1221/InstructFLIP) · [ZhangYuanhan-AI/CelebA-Spoof](https://github.com/ZhangYuanhan-AI/CelebA-Spoof) (AENet) · [minivision-ai/Silent-Face-Anti-Spoofing](https://github.com/minivision-ai/Silent-Face-Anti-Spoofing) (MiniFASNet)
 
 ## 📄 License
 

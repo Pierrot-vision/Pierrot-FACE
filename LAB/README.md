@@ -4,7 +4,7 @@
 (`Pierrot_FR_Lab`)에서 수행한 실험의 기록을 그대로 옮겨 온 것이고,
 **이 저장소에서 재현할 수 있는 것은 그 결과의 평가·추론뿐**입니다.
 
-> ⚠ 문서 안의 실행 명령(`python train_fa2d.py`, `train_fa3d.py`, `sync_tables.py`,
+> ⚠ 문서 안의 실행 명령(`python train_fa2d.py`, `train_fa3d.py`, `train_fas.py`, `sync_tables.py`,
 > `FA3D_PRESET=…` 등)과 코드 파일 링크 일부는 **학습 저장소의 것**입니다. 이 저장소에는
 > 학습 코드가 없습니다. 여기서 되는 것은 [`eval/`](../eval/) 와 [`scripts/`](../scripts/) 입니다.
 
@@ -22,6 +22,11 @@
 | [FA3D/3DDFA_V2.md](FA3D/3DDFA_V2.md) | **알고리즘** — 3DMM 파라미터의 의미 · VDC/WPDC/fWPDC 유도 · meta-joint · svs |
 | [FA3D/FA3D.md](FA3D/FA3D.md) | **구현 · 실험 기록** — 버그 · 측정 · 분석 |
 | [FA3D/Exp/](FA3D/Exp/) | 단계별 기록 — Phase 1 구현·기준선 → 12 잡음 기준선과 flip-TTA |
+| **FAS** — 얼굴 위조 방지 | |
+| [FAS/FAS.md](FAS/FAS.md) | 태스크 · 데이터 · 설정 · 지표 · 실험 결과 |
+| [FAS/InstructFLIP.md](FAS/InstructFLIP.md) | **알고리즘** — content/style 지시문 분리 · Q-Former · 추론에서 LLM 제거 |
+| [FAS/MiniFASNet.md](FAS/MiniFASNet.md) | 경량 대조군 (0.43M) |
+| [FAS/Exp/](FAS/Exp/) | 단계별 기록 — Phase 1 첫 학습과 PC screen → 2 넓은 crop 과 촬영조건 처방 |
 
 ## 이 저장소에서 되는 것
 
@@ -29,6 +34,7 @@
 python eval/FA2D/evaluate.py --ckpt runs/fa2d/<런>/best.pth   # ① WFLW · ② LaPa · ③ 난이도
 python eval/FA3D/evaluate.py --ckpt runs/fa3d/<런>/best.pth --deployed mb1 --aflw
 python scripts/FA3D/shape_accuracy.py --ckpt …                 # FA3D — NME 가 재지 않는 형상 정확도
+python eval/FAS/evaluate.py --ckpt runs/fas/<런>/best.pth      # FAS — 임계값 0.5 · val 기준
 ```
 
 ## 읽을 산출물
@@ -37,5 +43,5 @@ python scripts/FA3D/shape_accuracy.py --ckpt …                 # FA3D — NME 
 
 | 경로 | 내용 |
 |---|---|
-| `runs/fa2d/<실험ID>/best.pth` · `runs/fa3d/<실험ID>/best.pth` | 체크포인트 — **설정이 안에 들어 있어** 구조·크롭 규약이 자동 복원됩니다 |
-| `outputs/fa2d/<실험ID>/` · `outputs/fa3d/<실험ID>/` | 이 저장소가 만드는 추론 시각화 — 언제든 재생성 |
+| `runs/{fa2d,fa3d,fas}/<실험ID>/best.pth` | 체크포인트 — **설정이 안에 들어 있어** 구조·크롭 규약이 자동 복원됩니다 |
+| `outputs/{fa2d,fa3d,fas}/<실험ID>/` | 이 저장소가 만드는 추론 시각화 — 언제든 재생성 |

@@ -31,7 +31,7 @@
 **큰 카테고리로 분리**해, 각 단계의 알고리즘을 독립적으로 재현·교체·비교할 수 있게
 만드는 것이 목표입니다.
 
-이 저장소는 그중 **FA2D(2D 얼굴 정렬)와 FA3D(3D 밀집 얼굴 정렬)의 추론 경로만** 떼어 낸 배포본입니다.
+이 저장소는 그중 **FA2D(2D 얼굴 정렬) · FA3D(3D 밀집 얼굴 정렬) · FAS(얼굴 위조 방지)의 추론 경로만** 떼어 낸 배포본입니다.
 학습 저장소에서 손실·최적화·증강·학습 데이터셋을 걷어내고, **체크포인트 하나로 얼굴을
 내는 데 필요한 것만** 남겼습니다.
 
@@ -54,6 +54,8 @@
 
 ## 📰 News
 
+- 2026-09-21 — 🚀 **FAS 추론 코드 공개** — InstructFLIP 재구현 (학습용 LLM 은 추론에서 제거) ·
+  CelebA-Spoof 평가 · cue map 시각화. README 표의 수치를 **그대로 재현**했습니다
 - 2026-09-17 — 🚀 **FA2D 추론 코드 공개** — 사진·영상 추론 · 세 벤치마크(WFLW · LaPa · 난이도) 평가.
   README 표의 수치를 **소수점 세 자리까지 재현**했습니다 · FA2D 와 FA3D 비교 👉 [LAB/FA2D_vs_FA3D.md](LAB/FA2D_vs_FA3D.md)
 - 2026-09-16 — 🏆 **FA2D 교사·학생이 참조를 넘었습니다** — WFLW 교사 **3.916** vs Peppa Teacher 3.959 ·
@@ -194,6 +196,35 @@
 
 ![3D 밀집 복원](docs/FA3D/pred_3d.jpg)
 
+## 🎭 Face Anti-Spoofing (FAS)
+
+카메라 앞의 얼굴이 **진짜인지, 사진·화면·마스크 같은 위조물인지** 판별합니다.
+**InstructFLIP (ACM MM 2025)** 을 재구현했고, 학습용 LLM(FLAN-T5)은 추론 경로에서 떼어 냅니다 (추론 176M).
+
+- 📘 **태스크 · 데이터 · 설정 · 지표 · 실험 결과** — [LAB/FAS/FAS.md](LAB/FAS/FAS.md)
+- 📗 **알고리즘** — [LAB/FAS/InstructFLIP.md](LAB/FAS/InstructFLIP.md) · [LAB/FAS/MiniFASNet.md](LAB/FAS/MiniFASNet.md) (경량 대조군)
+- 📙 **실험 단계별 기록** — [LAB/FAS/Exp/](LAB/FAS/Exp/) (Phase 1~2)
+
+### 우리 실제 예측 결과
+
+CelebA-Spoof val · InstructFLIP 기준선 · 임계값 val 기준 (margin −33.3). 행 = 진짜 + 위조 유형 10종.
+
+![FAS 예측 결과](docs/FAS/demo_gallery_val.jpg)
+
+### 평가 결과
+
+CelebA-Spoof 공식 test (intra-dataset, 67,170장).
+
+| | ACER ↓ | APCER ↓ | BPCER ↓ | EER ↓ | AUC ↑ | R@FPR1% ↑ | R@FPR0.5% ↑ | R@FPR0.1% ↑ |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|
+| **InstructFLIP 기준선** (우리, val 기준) | **1.52** | **2.14** | 0.90 | 1.48 | 99.85 | 97.97 | 96.80 | **92.99** |
+| InstructFLIP + 넓은 crop·저하 증강·품질 감독 (우리, val 기준) | 1.78 | 2.73 | 0.84 | 1.83 | 99.77 | 97.52 | 96.44 | 93.85 |
+| MiniFASNet (우리, val 기준) | 27.19 | 52.51 | 1.87 | 19.15 | 89.70 | 40.83 | 33.57 | 19.20 |
+| AENet 공개 가중치 (우리 코드로 측정, 0.5) | 2.73 | 5.16 | 0.30 | 1.04 | 99.92 | 98.87 | 97.35 | 86.75 |
+| AENet (논문, 0.5) | 1.63 | 2.29 | 0.96 | 0.90 | 99.89 | 98.90 | 97.30 | 87.30 |
+
+**val 기준** = val 에서 BPCER 1% 가 되는 임계값을 test 에 그대로 적용 · **0.5** = CelebA-Spoof 공식 임계값.
+
 ## 🚀 Install
 
 ```bash
@@ -221,6 +252,11 @@ python eval/FA2D/infer.py    --ckpt … --source clip.mp4 --max-faces 4 --drop-e
 python eval/FA2D/evaluate.py --ckpt runs/fa2d/<런>/best.pth              # ① WFLW · ② LaPa · ③ 난이도
 python eval/FA2D/evaluate.py --ckpt <교사> <학생> --only wflw lapa        # 빠른 확인
 bash scripts/FA2D/eval.sh · bash scripts/FA2D/infer.sh
+
+# ── FAS ──────────────────────────────────────────────────────────
+python eval/FAS/infer.py    --ckpt runs/fas/<런>/best.pth --dir data/samples --align --margin -33.3 --save_cue
+python eval/FAS/evaluate.py --ckpt runs/fas/<런>/best.pth    # test.csv · 임계값은 val.csv
+bash scripts/FAS/eval.sh · bash scripts/FAS/infer.sh
 
 # ── FA3D · 추론 ───────────────────────────────────────────────────
 # 이미지 · 디렉토리 · 목록.txt · 영상을 모두 받는다. 속도를 항상 함께 출력한다
@@ -263,7 +299,9 @@ Pierrot_FR_Infer/
 │   ├── paths.py            # 🗺️ 데이터/가중치/산출물 루트 (paths.local.env · 환경변수)
 │   └── eval_fa3d.py        #    평가셋·BFM 경로 — 체크포인트가 모르는 것만
 ├── paths.local.env         # 서버 고유 경로 — 커밋 제외 (.example 을 복사해 쓴다)
-├── pierrotfr/data/detect.py # 얼굴 검출 (FaceBoxes → MTCNN → Haar) — FA2D · FA3D 공용
+├── pierrotfr/data/
+│   ├── detect.py           # 얼굴 검출 (FaceBoxes → MTCNN → Haar) — FA2D · FA3D 공용
+│   └── align.py            #   MTCNN 5점 정렬 crop — FAS 입력 규약
 ├── pierrotfr/FA2D/         # 📦 추론 경로만
 │   ├── infer.py            #   체크포인트 로드 · flip-TTA · FA2D 클래스(검출 → 2 패스 크롭) ★진입점
 │   ├── benchmark.py        #   ① WFLW · ② LaPa 공통 38점 · ③ HRFFA 난이도 프로토콜
@@ -279,13 +317,21 @@ Pierrot_FR_Infer/
 │   ├── metrics.py          #   AFLW2000-3D / AFLW NME (yaw 구간 규약)
 │   ├── benchmark.py        #   평가셋 파이프라인 (예측 → 랜드마크 → NME)
 │   └── models/             #   백본 — lrr 헤드도 synergy 순환도 만들지 않는다
+├── pierrotfr/FAS/          # 📦 추론 경로만 (LLM 없음)
+│   ├── infer.py            #   체크포인트 로드 · 고정 지시문 토큰 · 배치 추론 ★진입점
+│   ├── data.py · metrics.py #  CelebA-Spoof CSV · 평가 변환 / APCER · BPCER · ACER · EER · R@FPR
+│   └── models/             #   InstructFLIP (CLIP ViT-B/16 → Q-Former×2 → 융합) · MiniFASNet
 ├── eval/FA2D/
 │   ├── infer.py            # 🔍 사진·영상 → 98 랜드마크 (+H.264/GIF, 속도 계측)
 │   └── evaluate.py         #    README 평가 표의 세 축 (여러 ckpt · flip-TTA)
 ├── eval/FA3D/
 │   ├── infer.py            # 🔍 사진·영상 → 68점 / 3D 메쉬 (+H.264/GIF, 속도 계측)
 │   └── evaluate.py         #    AFLW2000-3D / AFLW NME (여러 ckpt + 배포 가중치)
+├── eval/FAS/
+│   ├── infer.py            # 🔍 사진 → LIVE / SPOOF + cue map
+│   └── evaluate.py         #    README 평가 표 (임계값 0.5 · val 기준)
 ├── scripts/FA2D/           # 🧪 eval.sh · infer.sh 묶음 실행
+├── scripts/FAS/            # 🧪 eval.sh · infer.sh 묶음 실행
 ├── scripts/FA3D/           # 🧪 그림·분석·속도 (eval.sh · infer.sh 로 묶음 실행)
 ├── LAB/                    # 📚 학습 저장소의 실험 기록 사본 (읽기 전용)
 ├── docs/                   # 배너 · 결과 시각화 · 데모
@@ -301,6 +347,7 @@ Pierrot_FR_Infer/
 | FA2D `train_fa2d*.py` · `engine.py` · `losses.py` | 학습 루프 · 증류 · 손실 |
 | FA2D `trajectory.py` · `depthwarp.py` · 증강 · 샘플러 | 합성 클립 · 극단 pitch 합성 · 학습 증강 |
 | FA2D `configs/args_fa2d.py` (1,257줄) | 하이퍼파라미터 — **체크포인트가 들고 있다** |
+| FAS FLAN-T5 · `engine.py` · 학습 데이터셋 · 증강 | instruction tuning 감독 — 추론 경로에 없다 |
 | `train_fa3d.py` · `engine.py` | meta-joint 최적화(Algorithm 1) — 학습 루프 |
 | `losses.py` | VDC · fWPDC · lrr · 파라미터 손실 |
 | `svs.py` | short-video-synthesis — 학습 증강 |
@@ -320,9 +367,11 @@ lrr 헤드와 synergy 순환은 **추론 비용이 0** 입니다 (`predict()` �
 
 📚 원본 논문 —
 [3DDFA_V2 (ECCV 2020)](https://guojianzhu.com/assets/pdfs/3162.pdf) ·
-[SynergyNet (3DV 2021)](https://arxiv.org/abs/2110.09772)
+[SynergyNet (3DV 2021)](https://arxiv.org/abs/2110.09772) ·
+[InstructFLIP (ACM MM 2025)](https://arxiv.org/abs/2507.12060) ·
+[CelebA-Spoof (ECCV 2020)](https://arxiv.org/abs/2007.12342)
 
-🛠 오피셜 코드 — [cleardusk/3DDFA_V2](https://github.com/cleardusk/3DDFA_V2) (BFM · 크롭 규약 · 배포 가중치의 이식 원본) · [cleardusk/3DDFA](https://github.com/cleardusk/3DDFA) (v1 — 평가셋 · 텐서 처리 참조) · [choyingw/SynergyNet](https://github.com/choyingw/SynergyNet)
+🛠 오피셜 코드 — [cleardusk/3DDFA_V2](https://github.com/cleardusk/3DDFA_V2) (BFM · 크롭 규약 · 배포 가중치의 이식 원본) · [cleardusk/3DDFA](https://github.com/cleardusk/3DDFA) (v1 — 평가셋 · 텐서 처리 참조) · [choyingw/SynergyNet](https://github.com/choyingw/SynergyNet) · [kunkunlin1221/InstructFLIP](https://github.com/kunkunlin1221/InstructFLIP) · [ZhangYuanhan-AI/CelebA-Spoof](https://github.com/ZhangYuanhan-AI/CelebA-Spoof) (AENet) · [minivision-ai/Silent-Face-Anti-Spoofing](https://github.com/minivision-ai/Silent-Face-Anti-Spoofing) (MiniFASNet)
 
 ## 📄 라이센스
 
